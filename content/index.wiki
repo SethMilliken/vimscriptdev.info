@@ -1,5 +1,25 @@
 %title Vimscript Dev Info
 %tocindex
 
-= Summary =
-This will be the contents of this page.
+== content ==
+  - research
+  - writing articles
+
+== content authoring toolset ==
+  - article template establishment
+  - snippet curation
+  - code excerpt inclusion mechanism
+
+== editorial direction ==
+  - editing content
+  - topic selection
+  - content selection (and rejection
+
+== infrastructure management ==
+  - repository maintenance
+  - publishing toolset
+  - markup rendering
+  - dog food compliance
+
+== early ideas ==
+VimprovementWiki

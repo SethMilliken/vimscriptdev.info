@@ -1,0 +1,280 @@
+Jump to the Longest Line
+========================
+Barry Arthur
+v0.4, September 14, 2011
+
+_A demonstration of the foo._
+
+Ignoring the prosaic question of ``Why would you ever want to?!'',
+consider how, in your editor of choice, you would jump to the longest
+line in the file.
+
+Vim provides a _lot_ of jump commands, possibly more so than any
+other editor. We can jump to a matching item; jump between words,
+sentences and paragraphs; jump between classes or #defined regions in
+a source file; jump between files and back and more.
+Jump-to-longest-line, however, is missing. This forces us to craft a
+solution using either existing builtin Vim commands, the ex commands,
+VimL (Vim's scripting language), or (more typically) a mixture of all
+three.
+
+We compare three different approaches to solving this problem, each
+one arguably a little further along in the ``evolution'' of a Vim
+user.
+
+Approach #1: Normal and Ex Commands
+-----------------------------------
+
+[LongestLine_Ex -- Uses mostly Vim Normal and Ex commands]
+---------------------------------------------
+  function! LongestLine_Ex()
+    global/^/substitute/^/\=len(getline('.')).' '.line('.').' '
+    sort rn
+    normal Gwyiwu
+    return @"
+  endfunction
+---------------------------------------------
+
+This style of solution would be considered by capable Vim users who
+have not yet ventured very far (if at all) into VimL -- limiting their
+choices to just Normal Mode and Ex commands.
+
+Although this solution is presented here in a function (for
+comparative purposes with the other solutions presented later), these
+sorts of solutions are typically hand-typed when needed or, at best,
+briefly stored in macros.
+
+Walkthrough
+~~~~~~~~~~~
+
+NOTE: Line numbers are relative to the body of the function, so line 1
+is: ++ global/^/substitute/^/\=len(getline('.')).' '.line('.').' ' ++
+
+The Ex command ++global/^/+++ is a way to do something for every line
+of the file. Every line, even blank ones, match ++/^/++. The
+++substitute///++ prepends the length of the line and the line number
+as two space-delimited fields to the beginning of the current line
+(and as that is a sub-command of the ++global++ command, for every
+line of the file.)
+
+NOTE: The ++'.'++ parameter of the ++getline()++ function means
+'current line in the file'.)
+
+Line 2 uses the Ex command ++sort rn++ which does a reverse
+numeric sort of the whole file -- putting the longest line at the
+bottom of the file.
+
+The series of Normal mode commands on line 3 look like a Gaelic curse,
+but they really mean:
+  * G = Go to the end of the file (NOTE: the cursor will already be in
+    column 0 due to the preceding commands.)
+  * w = Move forward one word (jumping over the line length)
+  * yiw = Yank the next inner word (the line number before sort)
+  * u = undo (the sort and line modifications. NOTE: If this were in a
+    macro or the commands were issued manually, you would need two
+    undo commands here.)
+
+The end result is that the longest line number is now in the Unnamed
+register (++@"++) and ready to be used in a jump command like:
+
+  :<c-r>"<CR>
+
+If you're wondering if this is the messiest solution possible, then
+know that it isn't. It's close though.
+
+Approach #2: Procedural VimL
+----------------------------
+
+If you're a programmer of C (or java/perl/python) descent then this
+will feel like more familiar ground to you. How would a C programmer
+think about the problem at hand?
+
+**Input:** <nothing (additional)>
+
+**Output:** line number of the longest line in the file
+
+**Processing:**
+
+  for lines in file
+    if len(line) > max_len
+      max_len = len(line)
+      max_line = current-line-number
+    endif
+  endfor
+  return max_line
+
+Nice. Simple. Neat. Small. Easy... _Let's do it!_
+
+[LongestLine_VimL -- Uses all (procedural) VimL
+----------------------------------------------
+function! LongestLine_VimL()
+  let max_len = 0
+  let max_line = 0
+  let current_line_number = 0
+  for line in getline(1, '$')
+    let current_line_number += 1
+    if len(line) > max_len
+      let max_len  = len(line)
+      let max_line = current_line_number
+    endif
+  endfor
+  return max_line
+endfunction
+---------------------------------------------
+
+That has to be better, right? For one, we're *NOT* modifying the
+buffer -- always a good thing when you don't need to. Secondly, we're
+not messing with the registers -- we don't lose whatever was in the
+unnamed register like we did with the LongestLine_Ex version.
+
+Okay, so it's a tad longer in SLOC than the LongestLine_Ex version,
+and could still benefit from a drop or two of optimisation yet
+(removing the extra call to len(), for instance)... but it's certainly
+**no worse** than our previous attempt.
+
+Walkthrough
+~~~~~~~~~~~
+
+There isn't too much to explain here, except:
+
+* ++len()++ returns the length of a string, as the name suggests.
+* ++getline(1, '$')++ returns all the lines in the file as a list (the
+  ++'$'++ parameter means 'last line in the file'.)
+
+Is this as good as it gets? While we're feeling all sort of warm and
+comfortable, gloating in our achievements, the emacsians are laughing
+at us from their REPLs. Fear not; we need not cringe at their taunts
+any longer. We now have powers in VimL equal to the task and packed
+with the sort of expressiveness that will raise an eyebrow of even the
+most ardent Functional Programmer.
+
+Approach #3: Functional(ish) VimL
+---------------------------------
+
+<pending>
+
+[LongestLine_newVimL -- Uses newVimL -- it's all about list processing, baby]
+---------------------------------------------------------------------------
+function! LongestLine_newVimL()
+  let lines = map(getline(1, '$'), 'len(v:val)')
+  return index(lines, max(lines))+1
+endfunction
+---------------------------------------------------------------------------
+
+Walkthrough
+~~~~~~~~~~~
+
+Don't be deceived by the small SLOC count. This version packs some
+conceptual punch. Remembering that we're taking a lisp-y list approach
+in this version, let's first talk about ++map()++.
+
+Anyone familiar with ++lisp++ or 'any' of the modern hip languages
+(perl, python and ruby just to name a few) will know that ++map()++
+applies a function to every element of a lisp and then returns each
+so-modified element in a new list.
+
+[Map Example in Python: Collecting line lengths for a file]
+======================================================================
+
+  file = open("somefile.txt")
+  lines = map(len, file.readlines())
+
+The ++lines++ list will now contain not the actual text lines of
+++somefile.txt++, but the corresponding line lengths for each line in
+that file.
+======================================================================
+
+
+[NOTE]
+======================================================================
+Most languages, like python, perl and even lisp use the following
+signature for the ++map()++ function:
+
+  map(function, list)
+
+But in VimL, the signature is:
+
+  map({expr}, {string})
+
+Where:
+
+  * {expr} is a list (or a dictionary - but we won't worry about that
+    here), and
+  * {string} is 'evaluated' for each element of {expr}
+
+  ++v:val++ is Vim's way of referring to the current element of the
+  list within the evaluated string.
+======================================================================
+
+In LongestLine_newVimL, the function being applied is ++len()++.  So,
+all said, line 1 creates a list of line lengths for each line in the
+file. The resulting ++lines++ list will have as many entries as there
+are lines in the file, each entry corresponding to that line's length
+(exactly as the python example earlier did).
+
+Which brings us to the second and final line:
+
+  return index(lines, max(lines))+1
+
+This might take some mind bending to see what's happening, so we'll
+break it down:
+
+* the ++max(lines)++ function will return the maximum (longest) line
+  length from the ++lines++ list. Great. That's a number, but not
+  'the' number we want. We don't want to know 'how long' the longest
+  line is... we want to know on which line that longest line is. That
+  is, we want the 'line number'.
+* the ++index(lines, <number>)++ function returns the position within the
+  ++lines++ list that contains <number> (remembering here that
+  <number> is the length of the longest line as returned by
+  ++max()++.)
+
+Recall that the ++lines++ list contains an 'ordered' (in the 'same'
+order as the original file) list of line lengths. Line 1's length is
+in position 0 (VimL uses zero-based lists, as you would expect), and
+line 2's length is in position 1, etc. The longest line is in position
+++index(lines, max(lines)) +1 ++ (the ++ +1 ++ being necessary to allow
+for zero-based indexing.)
+
+NOTE: Of course, if there is more than one maximally long line in the
+file then this function (and the LongestLine_VimL version) will return
+the (original line-order-ly) first one. Due to the use of ++:sort++,
+the LongestLine_Ex version will return the 'last' such line.
+
+So, that's newVimL. You might be wondering why I call it newVimL. It's
+inspired by my newfound interest in the newLisp language
+(http://www.newlisp.org[]). There is a (sickening to the initiated)
+adage that ``Learning lisp will forever change your thinking as a
+programmer, even if you never *use* lisp in anger.'' (Some might argue
+that they *only* use lisp in anger.) I'm here to say: yep. Worked for
+me. After learning the mind-bending (there is no spoon, after all)
+Ways of Lisp... My approach to VimL changed dramatically. ``What?! I
+have to loop?! No! Where's my map()?! Oh! VimL *has* map()?! And
+filter()! OMFG!'' <enlightenment/>
+
+.Credit where due...
+
+Just over a year ago, while hanging out on ++#vim++, as all the cool
+kids do, someone asked for something and I sprang into action. ``I can
+do this!'' I said hubrisly. I crafted a solution in my awkward
+procedural VimL and pastie'd it to the channel. It worked. I was a god
+among vimmers. The angelic choir hymned. Life was good... Until
+godlygeek crushed me with a one-liner of near-indecipherable newVimL.
+
+It had join and split and map and filter all wrapped mischievously,
+one around the other, performing some arcane dance I, at that time,
+couldn't fathom. It worked though. Whatever he'd conjured, it actually
+worked. It looked to me like... fucking magic.
+
+This was all the motivation I needed. A good and thorough pantsing
+often does that, happily. And that's the story of how I started to
+drag my consciousness up to the level of Lisp. I'm not there yet, by a
+long shot. But I'm far enough along now to start to know how much I
+'really' don't know, and to be able to help others find the path too.
+
+.Brave newVimL World
+
+So... welcome to the brave newVimL world. If you find a new and exotic
+flower along the path, share it with your fellow travellers. If you
+find a thorn, share that too - who are we, after all, to decide which
+one holds more value?
