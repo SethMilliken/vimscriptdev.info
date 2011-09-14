@@ -1,0 +1,5 @@
+%title Vimscript Dev Info
+%tocindex
+
+= Summary =
+This will be the contents of this page.
