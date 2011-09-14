@@ -1,0 +1,31 @@
+DOING  {{{
+ 
+= uncategorized or in-progress tasks
+}}}
+@setup {{{
+- establish and setup git branches 
+- setup domain properly (no more redirect to araxia.net)
+- incorporate previous discussions of this project into notes
+- establish editorial guidelines
+- establish mission statement thing
+- write README.markdown contents
+  = how to setup authoring environment 
+  = summary of project
+  = emphasis of status being as-yet unready for publication
+- establish conventions
+- establish publishing workflow
+}}}
+COMPLETED {{{
+DATES {{{
+2011-09-14 {{{
+o [2011-09-14 09:12:27 PDT] create directory structure: should be infectable vim plugin layout
+o [2011-09-14 09:10:38 PDT] create initial todo list
+o [2011-09-14 09:08:02 PDT] link github repository to web server
+o [2011-09-14 09:07:15 PDT] add Raimondi as contributor
+o [2011-09-14 09:07:14 PDT] add dahu as contributor
+o [2011-09-14 09:06:47 PDT] create github repository
+}}}
+
+}}}
+}}}
+vim: set ft=tst.txt
