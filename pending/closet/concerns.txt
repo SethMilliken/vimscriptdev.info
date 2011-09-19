@@ -1,0 +1,39 @@
+* keep your cpo stuff consistent across all skeletons
+
+Colors
+------
+
+* do colors ever need cpo handling?
+
+Compiler
+--------
+
+* general cpo concerns
+* consider having a commented-out example errorformat line (taken
+  straight from the help - indeed, with a suitable :help line as well)
+
+FtPlugin
+--------
+
+Indent
+------
+
+* no cpo
+
+Keymap
+------
+
+Lang
+----
+
+Plugin
+------
+
+* lacks consistent firs line comment    " Vim plugin file
+* license == public domain?!
+* cpo setting different from other plugins
+
+Syntax
+------
+
+* No cpo?
