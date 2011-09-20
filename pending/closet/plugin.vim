@@ -1,9 +1,10 @@
-" File:		%Plugin_File%
-" Description:	Vim global plugin that provides some feature.
+" Vim global plugin
+" Description:	%Plugin% provides some nice feature.
 " Maintainer:	%Maintainer% <%Email%>
 " Version:	%Version%
 " Last Change:	%Date%
-" License:	This file is placed in the public domain.
+" License:	Vim License (see :help license)
+" Location:	plugin/%Plugin_File%
 
 if exists("g:loaded_%Plugin%")
 "      \ || v:version < 700 || &compatible
@@ -11,10 +12,12 @@ if exists("g:loaded_%Plugin%")
 endif
 let g:loaded_%Plugin% = 1
 
+" Allow use of line continuation.
 let s:save_cpo = &cpo
 set cpo&vim
 
-
+" What should we put here?
+"
 
 
 let &cpo = s:save_cpo

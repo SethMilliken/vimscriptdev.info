@@ -12,6 +12,7 @@ if exists("g:loaded_%Plugin%")
 endif
 let g:loaded_%Plugin% = 1
 
+" Allow use of line continuation.
 let s:save_cpo = &cpo
 set cpo&vim
 

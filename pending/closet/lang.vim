@@ -1,3 +1,4 @@
+" Vim menu traslation file
 " Menu Translations:	%Language%
 " Maintainer:		%Maintainer% <%Email%>
 " Last Change:		%Date%

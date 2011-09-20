@@ -1,19 +1,22 @@
 " Vim filetype plugin file
 " Language:	%Language%
 " Maintainer:	%Maintainer% <%Email%>
+" Version:	%Version%
 " Last Change:	%Date%
+" License:	Vim License (see :help license)
+" Location:	ftplugin/%Plugin_File%
 
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin")
   finish
 endif
 
-" Don't load another plugin for this buffer
+" Don't load another filetype plugin for this buffer
 let b:did_ftplugin = 1
 
-" Using line continuation here.
-let s:cpo_save = &cpo
-set cpo-=C
+" Allow use of line continuation.
+let s:save_cpo = &cpo
+set cpo&vim
 
 " Restore things when changing filetype.
 let b:undo_ftplugin = "setl fo< com< ofu<"
@@ -29,13 +32,13 @@ setlocal fo-=t fo+=croql
 
 " Set completion with CTRL-X CTRL-O to autoloaded function.
 "if exists('&ofu')
-"  setlocal ofu=complete#Complete
+"  setlocal ofu=%FileType%complete#Complete
 "endif
 
 " Set 'comments'.
 "setlocal comments&
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpo = s:save_cpo
+unlet s:save_cpo
 
 " vim: et sw=2 sts=2
