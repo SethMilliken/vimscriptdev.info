@@ -1,0 +1,17 @@
+%toc Article Ideas
+
+= Summary =
+Ideas for articles
+
+- Life after usr_41.txt
+- viml best practices
+- vimloo (what works...and what doesn't)
+- newviml (thinking in lists)
+- language bindings pros and cons
+   - many useful plugins that rely on bindings
+   - enumerate
+- why use viml at all?
+  - vs other powerful editors
+  - vs other editors
+
+

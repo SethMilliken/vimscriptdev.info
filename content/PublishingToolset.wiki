@@ -1,0 +1,25 @@
+%toc Publishing Toolset
+
+= Summary =
+Tools used for publishing vimscriptdev.info
+
+== todo == 
+- [ ] write up instructions for installing and configuring tools for contributing
+  - [ ] gollum 
+  - [ ] gollum-site
+  - [ ] asciidoc
+- [ ] look into disqus for comments
+- [ ] look into github commenting system
+
+== Mac OS X ==
+{{{
+brew install asciidoc
+gem install gollum
+gem install gollum-site
+}}}
+
+== eventually ==
+  - consider asciidoc
+    - add capability to vimwiki?
+  - consider viki
+  - excerpt inclusion mechanism
