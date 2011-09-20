@@ -5,12 +5,12 @@ Ideas (circa 2011-01-18) for the creation of an advanced techniques and best-pra
 
 == topics ==
 * prerequisites
-    - assume mastery or at least understanding or at the very least accessibility to all of the conents in the existing vim books
+    - assume mastery or at least understanding or at the very least accessibility to all of the contents in the existing vim books
         - ora vi and vim
         - kim vim book
         - any other well-maintained vim information sites
         - help pages included
-    - but can still cover material that we feel hasn't been given sufficent treatment by these resources, or for which updates for new techniques are essential
+    - but can still cover material that we feel hasn't been given sufficient treatment by these resources, or for which updates for new techniques are essential
 * managing plugins with pathogen
 * managing plugins with git
 * having written a function
@@ -18,7 +18,7 @@ Ideas (circa 2011-01-18) for the creation of an advanced techniques and best-pra
 * having tinkered with an exisitng plugin
 * knowing how to use vimgrep
 * knowing how to use helpgrep
-* knowing how to use c_Ctrl-D when issing :help command
+* knowing how to use c_Ctrl-D when issuing :help command
 * mastery of correct terminology
     * acceptance of vim help as authority on correct terminology
 * knowing what tab-pages really are and what the common difficulties associated with them are
@@ -29,7 +29,9 @@ Ideas (circa 2011-01-18) for the creation of an advanced techniques and best-pra
         * using vimperator, pentadactyl, or vimium
         * kr4mb
         * readline vi mode
+          * zsh equivalent
         * bash fc with $FCEDITOR
+          * zsh equivalent
         * some websites starting to use vim-like bindings
         * others?
 * doing development in a particular language
@@ -41,7 +43,9 @@ Ideas (circa 2011-01-18) for the creation of an advanced techniques and best-pra
     * ways in which language bindings make it more difficult to share code
     * ways in which language bindings make it more difficult for others to understand your code
         * potentially fewer bugfix and feature contributions to your plugin
-* why isn't there a sort of standard libary of higher-level vim functions
+* why isn't there a sort of standard library of higher-level vim functions
+    * tlib?
+    * other lib that fow mentioned recently?
     * "gui" functions in particular
         * utility windows
         * mapping a function
@@ -61,7 +65,7 @@ Ideas (circa 2011-01-18) for the creation of an advanced techniques and best-pra
 == mechanics ==
 * what is necessary for the contribution of materials to such a site?
 * use of vimwiki
-* adherence to a set of editiorial standards
+* adherence to a set of editorial standards
     * distributed as snipMate snippets perhaps?
     * adding vimwiki configuration for this sites's files
         * can this be automated?

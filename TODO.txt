@@ -1,10 +1,13 @@
 DOING  {{{
- 
+- 
 = uncategorized or in-progress tasks
 }}}
 @setup {{{
 - establish and setup git branches 
+  - create new `draft` branch as incubation branch from which content is cherry picked into master
+  = master will be the approved, published version of the site 
 - setup domain properly (no more redirect to araxia.net)
+  = docroot for domain should be an `html` directory derived from the `content` directory
 - incorporate previous discussions of this project into notes
 - establish editorial guidelines
 - establish mission statement thing

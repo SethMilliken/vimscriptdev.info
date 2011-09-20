@@ -12,14 +12,16 @@
 
 == editorial direction ==
   - editing content
-  - topic selection
-  - content selection (and rejection
+  - ArticleIdeas
+  - content selection (and rejection)
 
 == infrastructure management ==
   - repository maintenance
-  - publishing toolset
+  - PublishingToolset
   - markup rendering
   - dog food compliance
 
 == early ideas ==
 VimprovementWiki
+
+VimProjectNameCandidates
