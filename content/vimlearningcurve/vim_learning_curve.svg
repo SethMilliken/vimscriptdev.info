@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="621.10083"
@@ -17,6 +18,18 @@
    sodipodi:docname="vim_learning_curve.svg">
   <defs
      id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5058">
+      <stop
+         style="stop-color:#73d216;stop-opacity:1;"
+         offset="0"
+         id="stop5060" />
+      <stop
+         style="stop-color:#73d216;stop-opacity:0;"
+         offset="1"
+         id="stop5062" />
+    </linearGradient>
     <marker
        inkscape:stockid="Arrow1Lend"
        orient="auto"
@@ -45,6 +58,16 @@
          transform="matrix(0.8,0,0,0.8,10,0)"
          inkscape:connector-curvature="0" />
     </marker>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5058"
+       id="radialGradient5064"
+       cx="109.57621"
+       cy="152.69136"
+       fx="109.57621"
+       fy="152.69136"
+       r="8.8578053"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -53,11 +76,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.62092132"
-     inkscape:cx="150.71412"
-     inkscape:cy="318.64113"
+     inkscape:zoom="0.7513148"
+     inkscape:cx="235.29655"
+     inkscape:cy="365.48369"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="1399"
      inkscape:window-height="847"
@@ -264,29 +287,6 @@
          id="tspan5004">teaches best-practice</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="315.22595"
-       y="708.09448"
-       id="text5025"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan5027"
-         x="315.22595"
-         y="708.09448">Knowledge</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="-443.16644"
-       y="86.166054"
-       id="text5029"
-       sodipodi:linespacing="125%"
-       transform="matrix(0,-1,1,0,0,0)"><tspan
-         sodipodi:role="line"
-         id="tspan5031"
-         x="-443.16644"
-         y="86.166054">Time</tspan></text>
-    <text
-       xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        x="114.08313"
        y="71.415184"
@@ -296,6 +296,94 @@
          id="tspan5050"
          x="114.08313"
          y="71.415184">The Vim Learning Curve</tspan></text>
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g5078"
+       id="use5083"
+       transform="matrix(0.61403493,0,0,0.61403493,200.23567,159.73311)"
+       width="621.10083"
+       height="703.36389" />
+    <use
+       height="703.36389"
+       width="621.10083"
+       transform="matrix(0.61403493,0,0,0.61403493,200.23567,185.5971)"
+       id="use5085"
+       xlink:href="#g5078"
+       y="0"
+       x="0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g5078"
+       id="use5087"
+       transform="matrix(0.61403493,0,0,0.61403493,163.33918,251.75633)"
+       width="621.10083"
+       height="703.36389" />
+    <use
+       height="703.36389"
+       width="621.10083"
+       transform="matrix(0.61403493,0,0,0.61403493,163.33918,276.77809)"
+       id="use5089"
+       xlink:href="#g5078"
+       y="0"
+       x="0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g5078"
+       id="use5091"
+       transform="matrix(0.61403493,0,0,0.61403493,163.33918,300.95165)"
+       width="621.10083"
+       height="703.36389" />
+    <use
+       height="703.36389"
+       width="621.10083"
+       transform="matrix(0.61403493,0,0,0.61403493,67.314995,67.004166)"
+       id="use5093"
+       xlink:href="#g5078"
+       y="0"
+       x="0" />
+    <use
+       height="703.36389"
+       width="621.10083"
+       transform="matrix(0.61403493,0,0,0.61403493,14.905014,352.69156)"
+       id="use5097"
+       xlink:href="#g5078"
+       y="0"
+       x="0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g5078"
+       id="use5099"
+       transform="matrix(0.61403493,0,0,0.61403493,14.905014,378.56151)"
+       width="621.10083"
+       height="703.36389" />
+    <use
+       height="703.36389"
+       width="621.10083"
+       transform="matrix(0.61403493,0,0,0.61403493,32.717114,431.99781)"
+       id="use5101"
+       xlink:href="#g5078"
+       y="0"
+       x="0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g5078"
+       id="use5103"
+       transform="matrix(0.61403493,0,0,0.61403493,33.565309,492.21967)"
+       width="621.10083"
+       height="703.36389" />
+    <use
+       height="703.36389"
+       width="621.10083"
+       transform="matrix(0.61403493,0,0,0.61403493,33.565309,516.81733)"
+       id="use5105"
+       xlink:href="#g5078"
+       y="0"
+       x="0" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -310,5 +398,54 @@
        height="706.36969"
        x="24.15765"
        y="26.512569" />
+    <g
+       id="g5078">
+      <g
+         id="g5068">
+        <path
+           transform="translate(45.775429,31.024559)"
+           d="m 120.78825,154.98523 c 0,4.89203 -3.96578,8.8578 -8.85781,8.8578 -4.89203,0 -8.8578,-3.96577 -8.8578,-8.8578 0,-4.89203 3.96577,-8.85781 8.8578,-8.85781 4.89203,0 8.85781,3.96578 8.85781,8.85781 z"
+           sodipodi:ry="8.8578053"
+           sodipodi:rx="8.8578053"
+           sodipodi:cy="154.98523"
+           sodipodi:cx="111.93044"
+           id="path5066"
+           style="opacity:1;color:#000000;fill:#4e9a06;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           sodipodi:type="arc" />
+        <path
+           sodipodi:type="arc"
+           style="opacity:1;color:#000000;fill:url(#radialGradient5064);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="path5056"
+           sodipodi:cx="111.93044"
+           sodipodi:cy="154.98523"
+           sodipodi:rx="8.8578053"
+           sodipodi:ry="8.8578053"
+           d="m 120.78825,154.98523 c 0,4.89203 -3.96578,8.8578 -8.85781,8.8578 -4.89203,0 -8.8578,-3.96577 -8.8578,-8.8578 0,-4.89203 3.96577,-8.85781 8.8578,-8.85781 4.89203,0 8.85781,3.96578 8.85781,8.85781 z"
+           transform="translate(45.775429,31.024559)" />
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-520.42816"
+       y="83.587265"
+       id="text5025"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan5027"
+         x="-520.42816"
+         y="83.587265">Knowledge</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="382.57541"
+       y="709.81116"
+       id="text5029"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5031"
+         x="382.57541"
+         y="709.81116">Time</tspan></text>
   </g>
 </svg>
