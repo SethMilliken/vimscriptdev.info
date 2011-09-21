@@ -1,0 +1,76 @@
+The Vim Learning Curve
+======================
+ARB
+v1.0, September 17, 2011
+
+The more people recognize what level they're at and what the
+characteristics are at that level, the better they are able to
+understand each other and where they're coming from.
+
+Facets
+------
+
+Modal editing
+Normal Mode commands
+Ex Commands
+Creating Maps & Commands
+VimL
+Text objects
+usr_41
+macros
+
+Novice
+------
+
+* Stops crying about modal editing
+* Went through vimtutor
+* Little to no experience with creating maps and commands
+* No macro skills
+* No VimL skills
+* Doesn't have a .vimrc, or has copied one and doesn't know some or
+  any of the commands therein
+
+Advanced Beginner
+-----------------
+
+* Able to use Vim's normal and ex mode commands efficiently
+* Totally comfortable and conversant with Text Objects
+* Creates small macros, but infrequently
+* Little to no experince using VimL
+* Starting to create maps and commands
+* Knows of .vimrc's existence and is starting to play with settings
+
+Competent
+---------
+
+* Able to find help using Vim's built-in documentation or from other
+  sources
+* Able to ask pertinent questions of Proficient and Expert users
+* Able to help Novice and Advanced Beginner users
+* Explores Vim and experiments with new features and combinations to
+  extend understanding.
+* Creates macros as and when needed
+* Uses VimL when needed, but needs to refer to documentation
+  frequently
+* Well versed in Vim regular expressions
+* Knows about usr_41 and tries to adhere to the guidelines
+
+Proficient
+----------
+
+* Knows the right type of solution for a given problem and adheres to
+  Best Practice approaches as outlined in usr_41 and other
+  authoritative sources
+* Able to quickly locate appropriate documentation using Vim's :help
+  system
+* Creates and publishes new plugins for the Vim community
+* Supports the community through writing blog posts, participating on
+  #vim, subscribing to Vim mailing lists, etc.
+
+Expert
+------
+
+* Sets Best Practice guidelines for others to follow
+* Able to distill expert knowledge into lessons for others to follow
+  (lessons that Proficient users understand completely and Competent
+  users are able to study/learn from)
