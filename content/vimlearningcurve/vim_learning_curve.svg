@@ -19,18 +19,6 @@
   <defs
      id="defs4">
     <linearGradient
-       inkscape:collect="always"
-       id="linearGradient4398">
-      <stop
-         style="stop-color:#36630a;stop-opacity:1;"
-         offset="0"
-         id="stop4400" />
-      <stop
-         style="stop-color:#36630a;stop-opacity:0;"
-         offset="1"
-         id="stop4402" />
-    </linearGradient>
-    <linearGradient
        id="linearGradient4190">
       <stop
          style="stop-color:#000000;stop-opacity:1;"
@@ -201,50 +189,6 @@
        fx="109.57621"
        fy="152.69136"
        r="8.8578053" />
-    <radialGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4398"
-       id="radialGradient4404"
-       cx="161.51961"
-       cy="812.89221"
-       fx="161.51961"
-       fy="812.89221"
-       r="39.513378"
-       gradientTransform="matrix(1,0,0,1.1929825,0,-156.87394)"
-       gradientUnits="userSpaceOnUse" />
-    <radialGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4398"
-       id="radialGradient4418"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1,0,0,1.1929825,-213.51088,-192.92122)"
-       cx="161.51961"
-       cy="812.89221"
-       fx="161.51961"
-       fy="812.89221"
-       r="39.513378" />
-    <radialGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4398"
-       id="radialGradient4422"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1,0,0,1.1929825,-212.12446,-191.53478)"
-       cx="375.03049"
-       cy="843.10834"
-       fx="375.03049"
-       fy="843.10834"
-       r="39.513378" />
-    <radialGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient4398"
-       id="radialGradient4428"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1,0,0,1.1929825,-468.61481,-195.69408)"
-       cx="375.03049"
-       cy="843.10834"
-       fx="375.03049"
-       fy="843.10834"
-       r="39.513378" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -253,9 +197,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.87274237"
-     inkscape:cx="245.2811"
-     inkscape:cy="238.8127"
+     inkscape:zoom="0.79340216"
+     inkscape:cx="275.30912"
+     inkscape:cy="334.9948"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -741,96 +685,100 @@
          y="86.179169">The Vim Learning Curve</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="134.2032"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="234.545"
        y="291.7417"
        id="text4994"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4996"
-         x="134.2032"
+         x="234.545"
          y="291.7417">plugins</tspan><tspan
          sodipodi:role="line"
-         x="134.2032"
+         x="234.545"
          y="316.7417"
          id="tspan4998">usr_41</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="135.30672"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="234.545"
        y="385.04227"
        id="text4986"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4988"
-         x="135.30672"
+         x="234.545"
          y="385.04227">macros</tspan><tspan
          sodipodi:role="line"
-         x="135.30672"
+         x="234.545"
          y="410.04227"
          id="tspan4990">regexp</tspan><tspan
          sodipodi:role="line"
-         x="135.30672"
+         x="234.545"
          y="435.04227"
          id="tspan4992">viml</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="135.36531"
-       y="199.19173"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="234.545"
+       y="186.69173"
        id="text5000"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="135.36531"
-         y="199.19173"
-         id="tspan5004">teaches best-practice</tspan></text>
+         x="234.545"
+         y="186.69173"
+         id="tspan5004">teaches</tspan><tspan
+         sodipodi:role="line"
+         x="234.545"
+         y="211.69173"
+         id="tspan4486">best-practice</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="134.08601"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="235.37508"
        y="578.30591"
        id="text4976"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="134.08601"
+         x="235.37508"
          y="578.30591"
          id="tspan4980">modal editing</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="135.30672"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="233.5782"
        y="627.80463"
        id="text4972"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4974"
-         x="135.30672"
+         x="233.5782"
          y="627.80463">:quit</tspan><tspan
          sodipodi:role="line"
-         x="135.30672"
+         x="233.5782"
          y="652.80463"
          id="tspan5033">vimtutor</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="135.36531"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="234.545"
        y="467.91727"
        id="text4982"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4984"
-         x="135.36531"
+         x="234.545"
          y="467.91727">text-objects</tspan><tspan
          sodipodi:role="line"
-         x="135.36531"
+         x="234.545"
          y="492.91727"
          id="tspan5054">maps</tspan><tspan
          sodipodi:role="line"
-         x="135.36531"
+         x="234.545"
          y="517.91724"
          id="tspan4484">commands</tspan><tspan
          sodipodi:role="line"
-         x="135.36531"
+         x="234.545"
          y="542.91724"
          id="tspan3054">vimrc</tspan></text>
   </g>
