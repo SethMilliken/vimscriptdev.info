@@ -76,11 +76,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7513148"
-     inkscape:cx="235.29655"
-     inkscape:cy="365.48369"
+     inkscape:zoom="0.90909091"
+     inkscape:cx="299.21996"
+     inkscape:cy="329.36264"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1399"
      inkscape:window-height="847"
@@ -101,7 +101,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -120,13 +120,13 @@
        xml:space="preserve"
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
        x="309.59973"
-       y="575.95404"
+       y="569.95404"
        id="text3758"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3760"
          x="309.59973"
-         y="575.95404">Novice</tspan></text>
+         y="569.95404">Novice</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
@@ -183,22 +183,6 @@
        id="path3778"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
-    <path
-       style="color:#000000;fill:none;stroke:#2e3436;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="m 251.29068,653.26289 0,37.97321"
-       id="path4966"
-       inkscape:connector-curvature="0" />
-    <text
-       xml:space="preserve"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="241.1188"
-       y="723.9353"
-       id="text4968"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4970"
-         x="241.1188"
-         y="723.9353">0</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
@@ -218,28 +202,32 @@
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
        x="138.56624"
-       y="551.04053"
+       y="566.74164"
        id="text4976"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          x="138.56624"
-         y="551.04053"
+         y="566.74164"
          id="tspan4980">modal editing</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="121.2788"
-       y="473.41681"
+       x="125.2788"
+       y="463.41681"
        id="text4982"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4984"
-         x="121.2788"
-         y="473.41681">text-objects</tspan><tspan
+         x="125.2788"
+         y="463.41681">text-objects</tspan><tspan
          sodipodi:role="line"
-         x="121.2788"
-         y="498.41681"
-         id="tspan5054">maps &amp; commands</tspan></text>
+         x="125.2788"
+         y="488.41681"
+         id="tspan5054">maps &amp; commands</tspan><tspan
+         sodipodi:role="line"
+         x="125.2788"
+         y="513.41681"
+         id="tspan3054">vimrc</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
@@ -339,7 +327,7 @@
     <use
        height="703.36389"
        width="621.10083"
-       transform="matrix(0.61403493,0,0,0.61403493,67.314995,67.004166)"
+       transform="matrix(0.61403493,0,0,0.61403493,65.314995,67.004166)"
        id="use5093"
        xlink:href="#g5078"
        y="0"
@@ -347,7 +335,7 @@
     <use
        height="703.36389"
        width="621.10083"
-       transform="matrix(0.61403493,0,0,0.61403493,14.905014,352.69156)"
+       transform="matrix(0.61403493,0,0,0.61403493,18.905014,369.93185)"
        id="use5097"
        xlink:href="#g5078"
        y="0"
@@ -357,13 +345,13 @@
        y="0"
        xlink:href="#g5078"
        id="use5099"
-       transform="matrix(0.61403493,0,0,0.61403493,14.905014,378.56151)"
+       transform="matrix(0.61403493,0,0,0.61403493,18.905014,392.61549)"
        width="621.10083"
        height="703.36389" />
     <use
        height="703.36389"
        width="621.10083"
-       transform="matrix(0.61403493,0,0,0.61403493,32.717114,431.99781)"
+       transform="matrix(0.61403493,0,0,0.61403493,32.717114,447.69894)"
        id="use5101"
        xlink:href="#g5078"
        y="0"
@@ -384,6 +372,14 @@
        xlink:href="#g5078"
        y="0"
        x="0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g5078"
+       id="use3056"
+       transform="matrix(0.61403493,0,0,0.61403493,18.905014,342.84823)"
+       width="621.10083"
+       height="703.36389" />
   </g>
   <g
      inkscape:groupmode="layer"
