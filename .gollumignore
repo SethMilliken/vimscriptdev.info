@@ -4,6 +4,15 @@ autoload/*
 doc/*
 html/*
 plugin/*
+admin/*
 .rvmrc
-javascript/*
 css/*
+javascript/*
+javascript/**/*
+javascript/**/**/*
+javascript/**/**/**/*
+javascript/**/**/**/**/*
+javascript/**/**/**/**/**/*
+javascript/**/**/**/**/**/**/*
+javascript/**/**/**/**/**/**/**/*
+javascript/**/**/**/**/**/**/**/**/*
