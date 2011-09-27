@@ -5,3 +5,5 @@ doc/*
 html/*
 plugin/*
 .rvmrc
+javascript/*
+css/*
