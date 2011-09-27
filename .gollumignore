@@ -1,2 +1,7 @@
+README.*
+TODO.*
+autoload/*
+doc/*
 html/*
 plugin/*
+.rvmrc
