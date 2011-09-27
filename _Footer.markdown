@@ -1,1 +1,3 @@
-foobar
+```bash
+footer here
+```
