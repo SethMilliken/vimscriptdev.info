@@ -4,15 +4,10 @@ autoload/*
 doc/*
 html/*
 plugin/*
+staging/*
+staging/**/*
 admin/*
 .rvmrc
 css/*
 javascript/*
 javascript/**/*
-javascript/**/**/*
-javascript/**/**/**/*
-javascript/**/**/**/**/*
-javascript/**/**/**/**/**/*
-javascript/**/**/**/**/**/**/*
-javascript/**/**/**/**/**/**/**/*
-javascript/**/**/**/**/**/**/**/**/*

@@ -1,9 +1,9 @@
 Jump to the Longest Line
 ========================
 Barry Arthur
-v0.4, September 14, 2011
+v0.5, September 14, 2011
 
-_A demonstration of the foo._
+__The evolution of a Vimmer__
 
 Ignoring the prosaic question of ``Why would you ever want to?!'',
 consider how, in your editor of choice, you would jump to the longest
@@ -25,21 +25,22 @@ user.
 Approach #1: Normal and Ex Commands
 -----------------------------------
 
-[LongestLine_Ex -- Uses mostly Vim Normal and Ex commands]
----------------------------------------------
+.++LongestLine_Ex++ - Uses mostly Vim Normal and Ex commands:
+------------------------------------------------------------------
+
   function! LongestLine_Ex()
     global/^/substitute/^/\=len(getline('.')).' '.line('.').' '
     sort rn
     normal Gwyiwu
     return @"
   endfunction
----------------------------------------------
+-------------------------------------------------------------------
 
 This style of solution would be considered by capable Vim users who
 have not yet ventured very far (if at all) into VimL -- limiting their
 choices to just Normal Mode and Ex commands.
 
-Although this solution is presented here in a function (for
+NOTE: Although this solution is presented here in a function (for
 comparative purposes with the other solutions presented later), these
 sorts of solutions are typically hand-typed when needed or, at best,
 briefly stored in macros.
@@ -48,31 +49,36 @@ Walkthrough
 ~~~~~~~~~~~
 
 NOTE: Line numbers are relative to the body of the function, so line 1
-is: ++ global/^/substitute/^/\=len(getline('.')).' '.line('.').' ' ++
+is: ++ global/\^/substitute/^/\=len(getline('.')).' '.line('.').' ' ++
 
-The Ex command ++global/^/+++ is a way to do something for every line
-of the file. Every line, even blank ones, match ++/^/++. The
+The Ex command ++global/\^/++ is a way to do something for every line
+of the file. Every line, even blank ones, matches ++/^/++. The
 ++substitute///++ prepends the length of the line and the line number
 as two space-delimited fields to the beginning of the current line
 (and as that is a sub-command of the ++global++ command, for every
 line of the file.)
 
 NOTE: The ++'.'++ parameter of the ++getline()++ function means
-'current line in the file'.)
+'current line in the file'.
 
 Line 2 uses the Ex command ++sort rn++ which does a reverse
 numeric sort of the whole file -- putting the longest line at the
 bottom of the file.
 
-The series of Normal mode commands on line 3 look like a Gaelic curse,
-but they really mean:
-  * G = Go to the end of the file (NOTE: the cursor will already be in
-    column 0 due to the preceding commands.)
-  * w = Move forward one word (jumping over the line length)
-  * yiw = Yank the next inner word (the line number before sort)
-  * u = undo (the sort and line modifications. NOTE: If this were in a
+The series of Normal mode commands on line 3 (+Gwyiwu+) look like a
+Gaelic curse, but they really mean:
+
+  * +G+ = Go to the end of the file
++
+NOTE: the cursor will already be in column 1 due to the preceding commands.
++
+  * +w+ = Move forward one word (jumping over the line length)
+  * +yiw+ = Yank the next inner word (the line number before sort)
+  * +u+ = undo (the sort and line modifications. NOTE: If this were in a
     macro or the commands were issued manually, you would need two
     undo commands here.)
+
+image::content/longestline/gaelic.png[]
 
 The end result is that the longest line number is now in the Unnamed
 register (++@"++) and ready to be used in a jump command like:
@@ -105,32 +111,34 @@ think about the problem at hand?
 
 Nice. Simple. Neat. Small. Easy... _Let's do it!_
 
-[LongestLine_VimL -- Uses all (procedural) VimL
-----------------------------------------------
-function! LongestLine_VimL()
-  let max_len = 0
-  let max_line = 0
-  let current_line_number = 0
-  for line in getline(1, '$')
-    let current_line_number += 1
-    if len(line) > max_len
-      let max_len  = len(line)
-      let max_line = current_line_number
-    endif
-  endfor
-  return max_line
-endfunction
----------------------------------------------
+.++LongestLine_VimL++ -- Uses all (procedural) VimL:
+--------------------------------------------------------------
+
+  function! LongestLine_VimL()
+    let max_len = 0
+    let max_line = 0
+    let current_line_number = 0
+    for line in getline(1, '$')
+      let current_line_number += 1
+      if len(line) > max_len
+        let max_len  = len(line)
+        let max_line = current_line_number
+      endif
+    endfor
+    return max_line
+  endfunction
+
+--------------------------------------------------------------
 
 That has to be better, right? For one, we're *NOT* modifying the
 buffer -- always a good thing when you don't need to. Secondly, we're
 not messing with the registers -- we don't lose whatever was in the
-unnamed register like we did with the LongestLine_Ex version.
+unnamed register like we did with the ++LongestLine_Ex++ version.
 
-Okay, so it's a tad longer in SLOC than the LongestLine_Ex version,
-and could still benefit from a drop or two of optimisation yet
-(removing the extra call to len(), for instance)... but it's certainly
-**no worse** than our previous attempt.
+Okay, so it's a tad longer in SLOC than the ++LongestLine_Ex++
+version, and could still benefit from a drop or two of optimisation
+yet (removing the extra call to len(), for instance)... but it's
+certainly **no worse** than our previous attempt.
 
 Walkthrough
 ~~~~~~~~~~~
@@ -140,6 +148,12 @@ There isn't too much to explain here, except:
 * ++len()++ returns the length of a string, as the name suggests.
 * ++getline(1, '$')++ returns all the lines in the file as a list (the
   ++'$'++ parameter means 'last line in the file'.)
+  
+NOTE: ++getline(1)++ differs from ++getline(1,2)++ -- in the first
+case, a string is returned containing the requested line, but in the
+second case, a list of strings is returned. Earlier we used the form
+++getline('.')++ (where ++'.'++ means the 'current line') which is the
+single argument form and therefore returns a string.
 
 Is this as good as it gets? While we're feeling all sort of warm and
 comfortable, gloating in our achievements, the emacsians are laughing
@@ -151,15 +165,72 @@ most ardent Functional Programmer.
 Approach #3: Functional(ish) VimL
 ---------------------------------
 
-<pending>
+Sometimes as (procedurally indoctinated) programmers we think too much
+in the 'How' of things rather than seeing the 'What'. We're too close
+to the trees to see the forest, or in coderspeak, too close to the code
+to see the abstractions. When we start thinking about a problem like
+this our problem solving hammer starts banging away at a solution,
+cranking out gobs of loops and conditions and assignments. Before
+we've even begun to think of the bigger picture, our minds are fussing
+over the minutia -- ``should I use a while loop here or a for loop?''
 
-[LongestLine_newVimL -- Uses newVimL -- it's all about list processing, baby]
----------------------------------------------------------------------------
+image::content/longestline/hammer.png[]
+
+The cure for this begins with the mantra: __Don't Use Loops!__
+
+Ok, so that might be a 'bit' strong, but it might be just what's
+necessary to break the habit you're in of reaching for 'How' pieces
+before you've fully digested the 'What'.
+
+This philosophy is succinctly reduced to the pithy aphorism that, ``if
+you have a dog you shouldn't do your own barking''. If you have lists
+and functions that process those lists... don't write your own loop
+code.
+
+Lispers and other Functional thinkers approach problems in a different
+way. They don't worry about how to iterate the elements of a list, or
+oftentimes 'that' they're even 'iterating' it. They think about the
+deeper abstractions of manipulating and shaping the data from source
+to target. They do this by thinking of functions to apply to the
+elements of lists. Languages that support this type of programming
+(thinking) provide numerous functions that can operate on whole lists
+and the elements of lists. Functions to apply another function to each
+element, collecting and returning the resulting elements in a new
+list; functions to remove elements from a list that match (or don't)
+an expression; functions to sort lists (using definable comparators if
+necessary); functions to reverse lists; functions to split strings
+into lists and join lists into strings, and more...
+
+Clearly there are times when you 'need' to write loops -- the
+point is, be on the lookout for times when you 'shouldn't'. Look for
+patterns that walk and talk like a list. Start asking yourself, ``Can
+I solve this through a series of operations on a list?'' and ``If this
+data were in a list, could I join(sort(map(filter(split(...))))) the
+sucker to get what I want?''
+
+Eventually, you might even start thinking in S-Expressions all the
+time...
+
+image::content/longestline/frank_take_her.png[]
+
+The petulant proceduralist within you might be grumbling now that all
+we've done is hide the looping behind a layer of functions. ``We could
+do that in [our procedural] language too! In a library!'' It's not
+that we're merely hding the toys under our bed here. The point is that
+*someone* would still have to write that (procedural) library and all
+the messy looping therein. In Functionally Friendly languages, this
+goodness is already baked right in, ready for your lists from the
+get-go.
+
+Here's a functional approach to our longest line problem:
+
+.++LongestLine_newVimL++ -- Uses newVimL -- it's all about lists, baby:
+-----
 function! LongestLine_newVimL()
   let lines = map(getline(1, '$'), 'len(v:val)')
   return index(lines, max(lines))+1
 endfunction
----------------------------------------------------------------------------
+-----
 
 Walkthrough
 ~~~~~~~~~~~
@@ -173,7 +244,7 @@ Anyone familiar with ++lisp++ or 'any' of the modern hip languages
 applies a function to every element of a lisp and then returns each
 so-modified element in a new list.
 
-[Map Example in Python: Collecting line lengths for a file]
+.Map Example in Python: Collecting line lengths for a file:
 ======================================================================
 
   file = open("somefile.txt")
@@ -198,19 +269,19 @@ But in VimL, the signature is:
 
 Where:
 
-  * {expr} is a list (or a dictionary - but we won't worry about that
+  * \{expr\} is a list (or a dictionary - but we won't worry about that
     here), and
-  * {string} is 'evaluated' for each element of {expr}
+  * \{string\} is 'evaluated' for each element of \{expr\}
 
-  ++v:val++ is Vim's way of referring to the current element of the
-  list within the evaluated string.
+NOTE: ++v:val++ is Vim's way of referring to the current element of
+the list within the evaluated string.
 ======================================================================
 
-In LongestLine_newVimL, the function being applied is ++len()++.  So,
-all said, line 1 creates a list of line lengths for each line in the
-file. The resulting ++lines++ list will have as many entries as there
-are lines in the file, each entry corresponding to that line's length
-(exactly as the python example earlier did).
+In ++LongestLine_newVimL++, the function being applied is ++len()++.
+So, all said, line 1 creates a list of line lengths for each line in
+the file. The resulting ++lines++ list will have as many entries as
+there are lines in the file, each entry corresponding to that line's
+length (exactly as the python example earlier did).
 
 Which brings us to the second and final line:
 
@@ -237,9 +308,10 @@ line 2's length is in position 1, etc. The longest line is in position
 for zero-based indexing.)
 
 NOTE: Of course, if there is more than one maximally long line in the
-file then this function (and the LongestLine_VimL version) will return
-the (original line-order-ly) first one. Due to the use of ++:sort++,
-the LongestLine_Ex version will return the 'last' such line.
+file then this function (and the ++LongestLine_VimL++ version) will
+return the (original line-order-ly) first one. Due to the use of
+++:sort++, the ++LongestLine_Ex++ version will return the 'last' such
+line.
 
 So, that's newVimL. You might be wondering why I call it newVimL. It's
 inspired by my newfound interest in the newLisp language
