@@ -3,6 +3,8 @@ Jump to the Longest Line
 Barry Arthur
 v0.5, September 14, 2011
 
+:pygments:
+
 __The evolution of a Vimmer__
 
 Ignoring the prosaic question of ``Why would you ever want to?!'',
@@ -26,6 +28,7 @@ Approach #1: Normal and Ex Commands
 -----------------------------------
 
 .++LongestLine_Ex++ - Uses mostly Vim Normal and Ex commands:
+[source,vim]
 ------------------------------------------------------------------
 
   function! LongestLine_Ex()
@@ -34,6 +37,7 @@ Approach #1: Normal and Ex Commands
     normal Gwyiwu
     return @"
   endfunction
+
 -------------------------------------------------------------------
 
 This style of solution would be considered by capable Vim users who
@@ -101,6 +105,9 @@ think about the problem at hand?
 
 **Processing:**
 
+[source,vim]
+---------------------------------------------------------------------
+
   for lines in file
     if len(line) > max_len
       max_len = len(line)
@@ -109,9 +116,12 @@ think about the problem at hand?
   endfor
   return max_line
 
+---------------------------------------------------------------------
+
 Nice. Simple. Neat. Small. Easy... _Let's do it!_
 
 .++LongestLine_VimL++ -- Uses all (procedural) VimL:
+[source,vim]
 --------------------------------------------------------------
 
   function! LongestLine_VimL()
@@ -225,6 +235,7 @@ get-go.
 Here's a functional approach to our longest line problem:
 
 .++LongestLine_newVimL++ -- Uses newVimL -- it's all about lists, baby:
+[source,vim]
 -----
 function! LongestLine_newVimL()
   let lines = map(getline(1, '$'), 'len(v:val)')
@@ -247,8 +258,13 @@ so-modified element in a new list.
 .Map Example in Python: Collecting line lengths for a file:
 ======================================================================
 
+[source,python]
+---------------------------------------------------------------------
+
   file = open("somefile.txt")
   lines = map(len, file.readlines())
+
+---------------------------------------------------------------------
 
 The ++lines++ list will now contain not the actual text lines of
 ++somefile.txt++, but the corresponding line lengths for each line in
