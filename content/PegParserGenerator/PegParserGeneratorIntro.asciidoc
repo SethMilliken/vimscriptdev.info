@@ -1,0 +1,167 @@
+Introducing Vimpeg -- A PEG Parser Generator for Vim.
+=====================================================
+Barry Arthur
+v1.0, October 06, 2011
+
+image:content/PegParserGenerator/vimpeg.png[]
+
+Parsing
+-------
+
+Feel free to skip to the next section if you're comfortable with the
+following concepts:
+
+* parsing
+* pasrer generators
+* (E)BNF and PEGs
+
+I wrote an analytical essay for legal studies in senior high which
+attracted praise from the teacher due in no small part to how I opened
+-- with definitions of key terms and phrases within the challenge
+statement.  Let's see if I can't aim for another A+ in this article
+by starting in the same way  --  what is parsing?
+
+(Let's all assume we know what http://www.vim.org[Vim] is.)
+
+.What is 'Parsing'?
+
+Parsing is making sense of something. When we want a computer to
+understand something we've written down for it to do, it needs to
+'parse' that writing.  Without going into too much detail yet, let's
+consider a sentence uttered at one time or another by your parental
+unit: "Take the rubbish out!". When you (eventually -- after you unplug
+your iPod, put down your PS3 controller, pocket your smart-phone and
+wipe the disdain off your face) parse this sentence, your brain goes
+through two processes -- firstly, it scans the words to make sure
+they're legitimate (they're in a language you know, they're all valid
+words and they're all in the right order), and secondly, it filters
+out the 'meaning' and presents that to a higher actor for further
+deliberation. In this case, the parser would extract the verb 'take'
+and the noun 'rubbish'. Your higher self (sarcasm aside) *knows* where
+to take the rubbish. We'll come back to these two processes ('syntax
+recognition' and 'semantic analysis') later.
+
+.What is a 'Parser Generator'?
+
+Writing a parser is not easy. Well, it's not simple. It's fussy. It's
+messy.  There's a lot of repetition and edge cases and minutia that
+bores a good coder to tears. Sure, writing your *first* recursive
+descent parser is better than sex, but writing your second one isn't.
+Writing many is tending towards abstinence. Enough said. So, we (as
+fun loving coders) want a better alternative. Parser generators
+provide that alternative. They generate parsers; which means they do
+all the boring, tedious, repetitive hard-labour and book-keeping
+clerical stuff for us (I hope I've painted that with just the right
+amount of negative emotion to convince you on a subliminal level that
+Parser Generators are a Good Thing.)
+
+.How do they generate a parser? or What's a 'PEG'?
+
+Parser Generators are told *what* to expect -- what is valid or invalid
+- through what is called a Parsing Expression Grammar (PEG) -- a set of
+rules describing the allowed constructs in the language it's reading.
+Defining these rules in a declarative form is *much* easier, quicker
+and more accurate than hand-coding the equivalent parser.
+
+Without lingering in the land of ye olde parsing approaches for too
+long, we *used to* declare these parsing rules in
+http://en.wikipedia.org/wiki/Ebnf[EBNF], intended for a recursive
+descent parser (or an LL or LALR -- which we will *not* go into here).
+(And before you drown vsdi in comments of "They so still use that,
+dude!" -- I know. *They* do.) Bryan Ford recently (circa 2004)
+described a Better Way to declare these rules in the form of what he
+called http://en.wikipedia.org/wiki/Parsing_expression_grammar[Parsing
+Expression Grammars] -- PEGs. In a nutshell, PEGs describe what is
+expected in the input, rather than the (E)BNF approach of describing
+what is possible. The difference is subtle but liberating. We'll not
+go too much into that now -- except to say: PEGs offer a cleaner way to
+describe languages that computers are expected to parse. If you want
+to re-program your 13 year old brother, you might not reach for a PEG
+parser generator, but as we're dabbling here in the confines of
+computers and the valley of vim, PEGs will do just fine.
+
+Vimpeg
+------
+
+So, Vimpeg is a Parser Generator which uses a Parsing Expression Grammar to
+specify the parse rules.
+
+.What would I use Vimpeg for?
+
+* you've come to that paralysing sinkhole in your Vimming when you've
+  said to youself, "Damn... I wish Vim had a parser."
+* you've asked for something on #vim and the reply is "you can't do
+  that because Vim doesn't have a parser."
+* you're up to your neck in wrecklessly recursive regexes.
+
+What does it look like?
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.Defining the Parser Grammar
+[source,vim]
+---------------------------------------------------------------------
+let p = Vimpeg({'skip_white': 1})
+
+call p.e('\d\+', {'id': 'integer'})
+call p.e('[-+]\?\d*\.\?\d\+\%([eE][-+]\?\d\+\)\?', {'id': 'float'})
+let number = p.or(['float', 'integer'], {'id': 'number'})
+
+---------------------------------------------------------------------
+
+This example demonstrates several aspects of Vimpeg's API:
+
+1. The fundamental expression type is a Vim regular expression. Typical PEG
+   parsers use a plain string as the fundamental expression type, but Vimpeg
+   uses regexes seeing as we have them at our easy disposal.
+2. Elements that have been 'identfied' can be referred to in other expressions.
+3. Only root-level elements need to be assigned to a Vim variable. In this
+   case, the 'number' element is considered to be a root element - we can
+   directly call on that element now to parse numbers.
+
+.Matching Text
+[source,vim]
+---------------------------------------------------------------------
+function! IsNumber(str)
+  let res = g:number.match(a:str)
+  return res['is_matched']
+endfunction
+---------------------------------------------------------------------
+
+The ++res++ object holds a lot of information about what was actually
+parsed (and an ++errmsg++  if parsing failed), but here we're only
+checking to see if a match was found.
+
+.Using the Matcher
+[source,vim]
+---------------------------------------------------------------------
+function! FindNumbers()
+  let lnum = 0
+  for line in getline(1, '$')
+    let lnum += 1
+    for word in split(line, '[[:space:]{}()<>,\[\]]')
+      if IsNumber(word)
+        echo lnum . ': ' . word
+      endif
+    endfor
+  endfor
+endfunction
+---------------------------------------------------------------------
+
+This is just a simple example of iterating through every word of every
+line in the current file, passing each word off to the IsNumber()
+matcher, printing the current line number and the matched number
+accordingly.
+
+Admittedly, this is a very simplistic example and could more easily
+have been accomplished using the pattern bar operator ( ++\|++ ) to
+join the two 'integer' and 'float' regular expressions :
+
+  if match(word, '^\d\+$\|^[-+]\?\d*\.\?\d\+\%([eE][-+]\?\d\+\)\?$') != -1
+
+Arguably, that's not as easy to read, though.
+
+Onwards
+-------
+
+In the next article, I'll show several more practical examples of
+using a parser within Vim.
