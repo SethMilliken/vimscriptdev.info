@@ -3,6 +3,7 @@ Introducing Vimpeg -- A PEG Parser Generator for Vim.
 Barry Arthur
 v1.0, October 06, 2011
 
+
 image:content/PegParserGenerator/vimpeg.png[]
 
 Parsing
@@ -97,14 +98,67 @@ specify the parse rules.
 What does it look like?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+Most beginner Parsing tutorials show you how to scan for numbers or at best,
+the addition of two numbers. Well, that's lame. It leaves you feeling -
+``what?! I can do that with regexes. More easily!'' And you're right (for that
+exact simplified case - not for the more general expression parsing case)- but
+to give credit to these parsing tutorial writers, they're trying to make it
+easy for 'you'. But here at vsdi, we know our audience and we know you're not
+afraid to get your nerd on. So, our introduction to parsing here is going to be
+the slight modification of the VimL function declaration syntax to allow for
+'default values in parameters'.
+
+Currently, VimL provides for variable arguments (varargs - the ability to have
+an unknown at declaration-time number of arguments), but *doesn't* allow you to
+specify a default value for those arguments.
+
+Let's say you wanted to control various window options in a single neat little
+function. We want something like:
+
+  function! MinWinWidth(textwidth, numberwidth: &numberwidth, foldcolumn: &foldcolumn)
+    exe "set textwidth=" . textwidth
+    exe "set numberwidth=" . numberwidth
+    exe "set foldcolumn=" . foldcolumn
+  endfunction
+
+And be able to call it in various ways, like:
+
+  call MinWinWidth(80)          " Just re-set the textwidth to 80, leaving the other two alone
+  call MinWinWidth(80, 4)       " Change textwidth to 80 and numberwidth to 4, leaving fdc alone
+  call MinWinWidth(80, 4, 4)    " Change textwidth to 80 and both nuw and fdc to 4
+
+And having all this just work nicely.
+
+Of course, this won't work in vanilla Vim because Vim doesn't allow default
+parameters - and that's why we're here. How should the specification of default
+parameters look? And while we're at it... should be change any of the rest of
+the function declaration syntax to make it a little easier on the eyeballs? For
+instance - let's lose that nasty ++function!++ stuff and his evil twin
+++endfunction++. And how about a simple way to specify a (brief) function body?
+What about this syntax?
+
+  " MinWinWidth(textwidth, numberwidth = &numberwidth, foldcolumn = &foldcolumn) ->
+
+or, with a body:
+
+  " MinWinWidth(textwidth, numberwidth = &numberwidth, foldcolumn = &foldcolumn) -> exe "set textwidth=" . textwidth | exe "set numberwidth=" . numberwidth | exe "set foldcolumn=" . foldcolumn
+
+This syntax was originally intended for single-line function declarations, but
+by using the familiar Vim ++|++ to separate lines of the function body we've
+also bought ourselves another X that VimL-coders have been desiring for a while
+now - inline function definition.
+
+Of course, the ++exe "set...++ syntax would have tollerated that all appearing
+in a single call, so we *could* have done that as:
+
+  " MinWinWidth(textwidth, numberwidth = &numberwidth, foldcolumn = &foldcolumn) -> exe "set textwidth=" . textwidth . " numberwidth=" . numberwidth . " foldcolumn=" . foldcolumn
+
+But then you wouldn't have seen the cool multi-line support. :-p
+
 .Defining the Parser Grammar
 [source,vim]
 ---------------------------------------------------------------------
 let p = Vimpeg({'skip_white': 1})
-
-call p.e('\d\+', {'id': 'integer'})
-call p.e('[-+]\?\d*\.\?\d\+\%([eE][-+]\?\d\+\)\?', {'id': 'float'})
-let number = p.or(['float', 'integer'], {'id': 'number'})
 
 ---------------------------------------------------------------------
 
@@ -118,50 +172,43 @@ This example demonstrates several aspects of Vimpeg's API:
    case, the 'number' element is considered to be a root element - we can
    directly call on that element now to parse numbers.
 
-.Matching Text
+.on-match Callbacks
+
+.Call Interface (need a better name)
+NOTE: This is the public API interface
 [source,vim]
 ---------------------------------------------------------------------
-function! IsNumber(str)
-  let res = g:number.match(a:str)
-  return res['is_matched']
-endfunction
 ---------------------------------------------------------------------
 
 The ++res++ object holds a lot of information about what was actually
 parsed (and an ++errmsg++  if parsing failed), but here we're only
 checking to see if a match was found.
 
-.Using the Matcher
+.Using It
 [source,vim]
 ---------------------------------------------------------------------
-function! FindNumbers()
-  let lnum = 0
-  for line in getline(1, '$')
-    let lnum += 1
-    for word in split(line, '[[:space:]{}()<>,\[\]]')
-      if IsNumber(word)
-        echo lnum . ': ' . word
-      endif
-    endfor
-  endfor
-endfunction
 ---------------------------------------------------------------------
-
-This is just a simple example of iterating through every word of every
-line in the current file, passing each word off to the IsNumber()
-matcher, printing the current line number and the matched number
-accordingly.
-
-Admittedly, this is a very simplistic example and could more easily
-have been accomplished using the pattern bar operator ( ++\|++ ) to
-join the two 'integer' and 'float' regular expressions :
-
-  if match(word, '^\d\+$\|^[-+]\?\d*\.\?\d\+\%([eE][-+]\?\d\+\)\?$') != -1
-
-Arguably, that's not as easy to read, though.
 
 Onwards
 -------
 
-In the next article, I'll show several more practical examples of
-using a parser within Vim.
+What do we show next with Vimpeg? More extensions to the Vigor language - I'd
+like to tackle end-less statements that use whitespace to denote blocks, as in:
+
+  if expression
+  <indent>
+
+And having if-expressions would be nice too, allowing things like:
+
+  exe "set textwidth=".textwidth if textwidth > 0
+
+And while we're wishing - how about that terrible need to use ++exe++ here in
+the first place? Wouldn't this be nicer?
+
+  set textwidth=textwidth if textwidth > 0
+
+Or something like that... Yes, I can see the hairy monster lurking in their too.
+Let's see if we can't shave that yack next time then.
+
+TODO: Mention currying - What is a curry after all, if not a way to call a
+function with some defaults?
