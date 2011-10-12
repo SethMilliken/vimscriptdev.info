@@ -192,7 +192,7 @@ connected with ++ + ++ operators.
 * Non-terminal symbols are names referring to combinations of other
   terminal and/or non-terminal symbols.
 
-* Each rule is of the form:   ++A <-- e++
+* Each rule is of the form:   ++A <- e++
 ** ++A++ is a non-terminal symbol
 ** ++e++ is a parsing expression
 
@@ -204,7 +204,7 @@ connected with ++ + ++ operators.
 ** Sequence: ++ e1 e2 ++
 ** Ordered choice: ++ e1 / e2 ++
 ** Zero-or-more: ++ e* ++
-** One-or-more: ++e\+ ++
+** One-or-more: ++e+ ++
 ** Optional: ++ e? ++
 ** And-predicate: ++ &e ++
 ** Not-predicate: ++ !e ++
@@ -218,23 +218,22 @@ Sum        <-- Integer '+' Expression
 Expression <-- Sum / Integer
 ---------------------------------------------------------------------
 
-In the abover PEG for matching a Sum Series of Integers, we have:
+In the above PEG for matching a Sum Series of Integers, we have:
 
 * Three non-terminal symbols: 'Integer', 'Sum' and 'Expression'
-* Two terminal symbols: ++[0-9]\+ ++  and  ++ + ++
-* One use of *Sequence*: 'Integer' \'+' 'Expression'
+* Two terminal symbols: ++[0-9]+ ++  and  ++'+' ++
+* One use of *Sequence* with the three pieces: 'Integer' \'+' 'Expression'
 * One use of *Ordered choice*: 'Sum' / 'Integer'
 
 NOTE: The original (and actual) PEG formalism specifies the
-fundamental expression type as a simple string -- hence the use of ++
-\'+' ++ to specify a literal ++ + ++ character. PEGs also provide some
-regular-expression-esque constructs too, like: ++[0-9]\+ ++ and the
-use of ++ * ++, ++\+ ++ and ++ ? ++.  However, any strings in PEGs are
-just that - strings. *Not* rugular expressions. Vimpeg shuns (at
-probable cost) this restriction and allows regular expressions as the
-fundamental expression type. So, in Vimpeg, the ++[0-9]\+ ++ construct
-can more idiomatically be represented in the Vim regex as: ++\d\\\+
-++.
+fundamental expression type as a simple string -- hence the use of ++ \'\+' ++ to
+specify a literal ++ + ++ character. PEGs also provide some
+regular-expression-esque constructs too, like: ++[0-9]+ ++ and the use of ++*
+++, ++ + ++ and ++? ++.  However, any strings in PEGs are just that -- strings,
+*not* rugular expressions. Vimpeg shuns (at probable cost) this restriction and
+allows regular expressions as the fundamental expression type. So, in Vimpeg,
+the ++[0-9]+ ++ construct can more idiomatically be represented using the Vim
+regex: ++\d\+ ++.
 
 .The Vimpeg API
 *********************************************************************
@@ -252,7 +251,7 @@ The Vimpeg API provides all of the standard PEG constructs:
 
 *********************************************************************
 
-.Defining the PEG in Vimpeg
+.Defining the Sum Series of Integers PEG in Vimpeg
 [source,vim]
 ---------------------------------------------------------------------
 let p = Vimpeg({'skip_white': 1})
@@ -271,7 +270,7 @@ This example demonstrates several aspects of Vimpeg's API:
 
 2. Only root-level elements need to be assigned to a Vim variable. In
    this case, the 'expression' element is considered to be a root
-   element - we can directly call on that element now to parse a sum
+   element -- we can directly call on that element now to parse a sum
    series of integers.
 
 3. Intermediate processing (for evaluations, reductions, lookups,
@@ -288,7 +287,7 @@ function! Integer(elems)
 endfunction
 ---------------------------------------------------------------------
 +
-NOTE: This is not *strictly* necessary in this example - Vim happily
+NOTE: This is not *strictly* necessary in this example -- Vim happily
 automatically converts string representations of numbers for us in all
 the right places for this example to work without the extra overhead
 of this callback. It was included in this example only for the purpose
@@ -313,7 +312,7 @@ parsed (and an ++errmsg++  if parsing failed). The ++'value'++ element
 will contain the cumulative result of all the 'on-match' callbacks as
 the input was being parsed.
 
-NOTE: This is a provider-side utility function.
+.A provider-side utility function:
 [source,vim]
 ---------------------------------------------------------------------
 function! SumList(s)
