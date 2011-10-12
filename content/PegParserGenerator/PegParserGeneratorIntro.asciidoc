@@ -8,88 +8,104 @@ image:content/PegParserGenerator/vimpeg.png[]
 Parsing
 -------
 
-Feel free to skip to the next section if you're comfortable with the following
-concepts:
+Feel free to skip to the next section if you're comfortable with the
+following concepts:
 
 * parsing
 * pasrer generators
 * (E)BNF and PEGs
 
-I wrote an analytical essay for legal studies in senior high which attracted
-praise from the teacher due in no small part to how I opened -- with
-definitions of key terms and phrases within the challenge statement.  Let's see
-if I can't aim for another A+ in this article by starting in the same way  --
-what is parsing?
+Let's begin by defining some terms:
 
 (Let's all assume we know what http://www.vim.org[Vim] is.)
 
-.What is 'Parsing'?
+What is 'Parsing'?
+~~~~~~~~~~~~~~~~~~
 
-Parsing is making sense of something. When we want a computer to understand
-something we've written down for it to do, it needs to 'parse' that writing.
-Without going into too much detail yet, let's consider a sentence uttered at
-one time or another by your parental unit: "Take the rubbish out!". When you
-(eventually -- after you unplug your iPod, put down your PS3 controller, pocket
-your smart-phone and wipe the disdain off your face) parse this sentence, your
-brain goes through two processes -- firstly, it scans the words to make sure
-they're legitimate (they're in a language you know, they're all valid words and
-they're all in the right order), and secondly, it filters out the 'meaning' and
-presents that to a higher actor for further deliberation. In this case, the
-parser would extract the verb 'take' and the noun 'rubbish'. Your higher self
-(sarcasm aside) *knows* where to take the rubbish. We'll come back to these two
-processes ('syntax recognition' and 'semantic analysis') later.
+http://en.wikipedia.org/wiki/Parsing[Parsing] is making sense of
+something.  When we want a computer to understand something we've
+written down for it to do, it needs to 'parse' that writing.  Without
+going into too much detail yet, let's consider a sentence uttered at
+one time or another by your parental unit: "Take the rubbish out!".
+When you (eventually -- after you unplug your iPod, put down your PS3
+controller, pocket your smart-phone and wipe the disdain off your
+face) parse this sentence, your brain goes through two processes:
 
-.What is a 'Parser Generator'?
+.firstly (syntax recognition):
+* it scans the words to make sure they're legitimate:
+** they're in a language you know
+** they're all valid words, and
+** they're all in the right order
++
+.and secondly (semantic analysis):
++
+* it filters out the 'meaning' and presents that to a higher actor
+  for further deliberation
 
-Writing a parser is not easy. Well, it's not simple. It's fussy. It's messy.
-There's a lot of repetition and edge cases and minutia that bores a good coder
-to tears. Sure, writing your *first* recursive descent parser is better than
-sex, but writing your second one isn't.  Writing many is tending towards
-abstinence. Enough said. So, we (as fun loving coders) want a better
-alternative. Parser generators provide that alternative. They generate parsers;
-which means they do all the boring, tedious, repetitive hard-labour and
-clerical book-keeping stuff for us (I hope I've painted that with just the
-right amount of negative emotion to convince you on a subliminal level that
-Parser Generators are a Good Thing.)
+In this case, the parser would extract the verb phrase 'take out' and
+the noun 'rubbish'. Your higher self (sarcasm aside) *knows* where
+this magic 'out' place is. We'll come back to these two processes
+('syntax recognition' and 'semantic analysis') later.
 
-.How do they generate a parser? or What's a 'PEG'?
+What is a 'Parser Generator'?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Writing a parser is not easy. Well, it's not simple. It's fussy. It's
+messy.  There's a lot of repetition and many edge cases and minutia
+that bores a good coder to tears. Sure, writing your *first* recursive
+descent parser is better than sex, but writing your second one isn't.
+Writing many is tending towards abstinence. Enough said. So, we (as
+fun loving coders) want a better alternative.
+http://en.wikipedia.org/wiki/Parser_generator[Parser generators]
+provide that alternative. They generate parsers; which means they do
+all the boring, tedious, repetitive hard-labour and clerical
+book-keeping stuff for us (I hope I've painted that with just the
+right amount of negative emotion to convince you on a subliminal level
+that Parser Generators are a Good Thing(TM).)
+
+How do they generate a parser? or What's a 'PEG'?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parser Generators are told *what* to expect (what is valid or invalid)
-through what is called a Parsing Expression Grammar (PEG) -- a set of rules
-describing the allowed constructs in the language it's reading.  Defining these
-rules in a declarative form is *much* easier, quicker and less error-prone than
-hand-coding the equivalent parser.
+through a grammar -- a set of rules describing the allowed constructs
+in the language it's reading. Defining these rules in a declarative
+form is *much* easier, quicker and less error-prone than hand-coding
+the equivalent parser.
 
-Without lingering in the land of ye olde parsing approaches for too long, we
-*used to* declare these parsing rules in
-http://en.wikipedia.org/wiki/Ebnf[EBNF], intended for a recursive descent
-parser (or an LL or LALR -- which we will *not* go into here).  (And before you
-drown vsdi in comments of "They so still use that, dude!" -- I know. *They*
-do.) Bryan Ford recently (circa 2004) described a Better Way to declare these
-rules in the form of what he called
-http://en.wikipedia.org/wiki/Parsing_expression_grammar[Parsing Expression Grammars]
--- PEGs. In a nutshell, PEGs describe what is expected in the input,
-rather than the (E)BNF approach of describing what is possible. The difference
-is subtle but liberating. We'll not go too much into that now -- except to say:
-PEGs offer a cleaner way to describe languages that computers are expected to
-parse. If you want to re-program your 13 year old brother, you might not reach
-for a PEG parser generator, but as we're dabbling here in the confines of
+Without lingering in the land of ye olde parsing approaches for too
+long, we *used to* declare these parsing rules in
+http://en.wikipedia.org/wiki/Ebnf[EBNF], intended for a
+http://en.wikipedia.org/wiki/Recursive_descent_parser[recursive
+descent parser] (or an LL or LALR parser -- which we will *not* go
+into here).  (And before you drown vsdi in comments of "They so still
+use that, dude!" -- I know. *They* do.) Bryan Ford recently (circa
+2004) described a better way to declare these rules in the form of
+what he called
+http://en.wikipedia.org/wiki/Parsing_expression_grammar[Parsing
+Expression Grammars] -- PEGs. In a nutshell, PEGs describe what is
+expected in the input, rather than the (E)BNF approach of describing
+what is possible. The difference is subtle but liberating. We'll not
+go too much into that now -- except to say: PEGs offer a cleaner way
+to describe languages that computers are expected to parse. If you
+want to re-program your 13 year old brother, you might not reach for a
+PEG parser generator, but as we're dabbling here in the confines of
 computers and the valley of vim, PEGs will do just fine.
 
-A major benefit to PEG parsers is that there is no separate lexical analysis
-phase is necessary. Because PEG parsers 'expect' to see the input in a certain
-way, they can ask for it in those expected chunks.  If it matches, great, move
-on. If it doesn't match, try another alternative. If all the alternatives fail,
-then the input doesn't match. Allow for backtracking, and you have all you need
-to parse 'expected' input.
+A major benefit to PEG parsers is that there is no separate lexical
+analysis phase necessary. Because PEG parsers 'expect' to see the
+input in a certain way, they can ask for it in those expected chunks.
+If it matches, great, move on. If it doesn't match, try another
+alternative. If all the alternatives fail, then the input doesn't
+match. Allow for backtracking, and you have all you need to parse
+'expected' input.
 
 NOTE: Vimpeg is *not* a memoising (packrat) parser - not yet, anyway.
 
 Vimpeg
 ------
 
-So, Vimpeg is a Parser Generator which uses a Parsing Expression Grammar to
-specify the parse rules.
+Vimpeg is a Parser Generator which uses the newer Parsing Expression
+Grammar formalism to specify the parse rules.
 
 .What would I use Vimpeg for?
 
@@ -99,235 +115,238 @@ specify the parse rules.
   that because Vim doesn't have a parser."
 * you're up to your neck in wrecklessly recursive regexes.
 
-What does it look like?
-~~~~~~~~~~~~~~~~~~~~~~~
+.Some ideas:
 
-Most beginner Parsing tutorials show you how to scan for numbers or at best,
-the addition of two numbers. Well, that's lame. It leaves you feeling - ``what?!
-I can do that with regexes. More easily!'' And you're right (for that exact
-simplified case - not for the more general 'expression parsing' case)- but to
-give credit to these parsing tutorial writers, they're trying to make it easy
-for 'you'.  But here at vsdi, we know our audience and we know you're not afraid
-to get your nerd on. So, our introduction to parsing here is going to be the
-slight modification of the VimL function declaration syntax to allow for
-'default values in parameters'.
+* An expression calculator (the beginnings of which we explore here)
+* Expanding tokens in typed text (think: snippets, abbrevs, maps)
+* Semantic analysis of code -- for refactoring, reindenting (but sadly
+  not syntax highlighting yet)
+* C Code bifurcation based on #define values -- want to see what the C
+  code would look like with ++#define DEBUG++ disabled?
+* Coffeescript for Vim -- sugar-coating some of the uglies in VimL --
+  this example will be presented in a subsequent Vimpeg article.
 
-Currently, VimL provides for variable arguments (varargs - the ability to have
-an unknown-at-declaration-time number of arguments), but *doesn't* allow you to
-specify a default value for those arguments.
+In fact, most of these ideas have been explored in part inside the
+++examples/++ directory of the https://github.com/dahu/Vimpeg[Vimpeg]
+plugin.
 
-Let's say you wanted to control various window options in a single neat little
-function. We want something like:
+A Conceptual Model
+~~~~~~~~~~~~~~~~~~
 
-[source,vim]
+There are three players in the Vimpeg game
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. The Vimpeg Parser Generator (Vim plugin)
+2. The Language Provider
+3. The Client
+
+.The Vimpeg Parser Generator
+
+This is a Vim https://github.com/dahu/Vimpeg[plugin] you'll need to
+install to both create and use Vimpeg based parsers.
+
+.The Language Provider
+
+This is someone who creates a parser for a new or existing language or
+data-structure. They create the grammar, data-munging callbacks,
+utility functions and a public interface into their 'parser'.
+
+.The Client
+
+This is someone who wants to 'use' a parser to get some real work
+done. Clients can either be Vim end-users or other VimL coders using a
+parser as a support layer for even more awesome and complicated
+higher-level purposes.
+
+There are five pieces to Vimpeg
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+image:vimpeg_puzzle.png[]
+
+1. The Vimpeg library (plugin)
+2. A PEG Grammar (provider-side)
+3. Callbacks and utility functions [optional] (provider-side)
+4. A public interface (provider-side)
+5. Client code that calls the provider's public interface.
+   (client-side)
+
+A Parsing Example
+~~~~~~~~~~~~~~~~~
+
+Most beginner Parsing tutorials show you how to scan for numbers or at
+best, the addition of two numbers. Who am I to blow against the wind?
+Let's do that. Let's create a parser that expects a series of integers
+connected with ++ + ++ operators.
+
+.Examples of our expected Input:
+
+* 123
+* 1 + 2 + 3
+* 12 + 34 + 56 + 78
+
+.A brief overview of the PEG parsing rule syntax:
+*********************************************************************
+
+* Terminal symbols are concrete and represent actual strings to be
+  matched.
+* Non-terminal symbols are names referring to combinations of other
+  terminal and/or non-terminal symbols.
+
+* Each rule is of the form:   ++A <-- e++
+** ++A++ is a non-terminal symbol
+** ++e++ is a parsing expression
+
+* Each parsing expression is either: a terminal symbol, a non-terminal
+  symbol or the empty string.
+
+* Given the parsing expressions, ++e1++, ++e2++, and ++e3++, a new
+  parsing expression can be constructed using the following operators:
+** Sequence: ++ e1 e2 ++
+** Ordered choice: ++ e1 / e2 ++
+** Zero-or-more: ++ e* ++
+** One-or-more: ++e\+ ++
+** Optional: ++ e? ++
+** And-predicate: ++ &e ++
+** Not-predicate: ++ !e ++
+
+*********************************************************************
+
+.The PEG for a Sum Series of Integers
 ---------------------------------------------------------------------
-function! MinWinWidth(textwidth, numberwidth: &numberwidth, foldcolumn: &foldcolumn)
-  exe "set textwidth=" . textwidth
-  exe "set numberwidth=" . numberwidth
-  exe "set foldcolumn=" . foldcolumn
-endfunction
+Integer    <-- [0-9]+
+Sum        <-- Integer '+' Expression
+Expression <-- Sum / Integer
 ---------------------------------------------------------------------
 
-And be able to call it in various ways, like:
+In the abover PEG for matching a Sum Series of Integers, we have:
 
-[source,vim]
----------------------------------------------------------------------
-call MinWinWidth(80)          " Just re-set the textwidth to 80, leaving the other two alone
-call MinWinWidth(80, 4)       " Change textwidth to 80 and numberwidth to 4, leaving fdc alone
-call MinWinWidth(80, 4, 4)    " Change textwidth to 80 and both nuw and fdc to 4
----------------------------------------------------------------------
+* Three non-terminal symbols: 'Integer', 'Sum' and 'Expression'
+* Two terminal symbols: ++[0-9]\+ ++  and  ++ + ++
+* One use of *Sequence*: 'Integer' \'+' 'Expression'
+* One use of *Ordered choice*: 'Sum' / 'Integer'
 
-And having all this just work nicely.
+NOTE: The original (and actual) PEG formalism specifies the
+fundamental expression type as a simple string -- hence the use of ++
+\'+' ++ to specify a literal ++ + ++ character. PEGs also provide some
+regular-expression-esque constructs too, like: ++[0-9]\+ ++ and the
+use of ++ * ++, ++\+ ++ and ++ ? ++.  However, any strings in PEGs are
+just that - strings. *Not* rugular expressions. Vimpeg shuns (at
+probable cost) this restriction and allows regular expressions as the
+fundamental expression type. So, in Vimpeg, the ++[0-9]\+ ++ construct
+can more idiomatically be represented in the Vim regex as: ++\d\\\+
+++.
 
-Of course, this won't work in vanilla Vim because Vim doesn't allow default
-parameters -- and that's why we're here. How should the specification of
-default parameters look? And while we're at it...  should we change any of the
-rest of the function declaration syntax to make it a little easier on the
-eyeballs? For instance -- let's lose that nasty ++function!++ stuff and his evil
-twin, ++endfunction++. And how about a simple way to specify a (brief) function
-body?  What about this syntax?
+.The Vimpeg API
+*********************************************************************
+The Vimpeg API provides all of the standard PEG constructs:
 
-[source,vim]
----------------------------------------------------------------------
-" MinWinWidth (textwidth, numberwidth: &numberwidth, foldcolumn: &foldcolumn) ->
----------------------------------------------------------------------
+   peg.e(expression, options)
+   peg.and(sequence, options)
+   peg.or(choices, options)
+   peg.maybe_many(expression, options)
+   peg.many(expression, options)
+   peg.maybe_one(expression, options)
+   peg.between(expression, min, max, options)
+   peg.has(expression, options)
+   peg.not_has(expression, options)
 
-or, with a body:
+*********************************************************************
 
-[source,vim]
----------------------------------------------------------------------
-" MinWinWidth (textwidth, numberwidth: &numberwidth, foldcolumn: &foldcolumn) -> exe "set textwidth=" . textwidth | exe "set numberwidth=" . numberwidth | exe "set foldcolumn=" . foldcolumn
----------------------------------------------------------------------
-
-This syntax was originally intended for single-line function declarations, but
-by using the familiar Vim ++|++ operator to separate lines of the function body
-we've bought ourselves another feature that VimL-coders have been desiring for a
-while now -- inline function definition.
-
-Of course, the ++exe "set...++ syntax would have tollerated that all appearing
-in a single call, so we *could* have done that as:
-
-[source,vim]
----------------------------------------------------------------------
-" MinWinWidth (textwidth, numberwidth: &numberwidth, foldcolumn: &foldcolumn) -> exe "set textwidth=" . textwidth . " numberwidth=" . numberwidth . " foldcolumn=" . foldcolumn
----------------------------------------------------------------------
-
-But then you wouldn't have seen the cool multi-line support feature. :-p
-
-.Defining the Parser Grammar
+.Defining the PEG in Vimpeg
 [source,vim]
 ---------------------------------------------------------------------
 let p = Vimpeg({'skip_white': 1})
-call p.e('"', {'id': 'comment'})
-call p.e('[[:alnum:]&]\+', {'id': 'value'})
-call p.e('\w\+', {'id': 'ident'})
-call p.and(['ident', p.maybe_one(p.and([p.e(':'), 'value']))], {'id': 'arg', 'on_match': 'Arg'})
 
-call p.and(['arg', p.maybe_many(p.and([p.e(','), 'arg']))], {'id': 'arglist', 'on_match': 'ArgList'})
-call p.and([p.e('('), 'arglist', p.e(')')], {'id': 'args', 'on_match': 'Args'})
-
-let vigoriously = p.and(['comment', 'ident', 'args', p.e('->'), p.e('.*')], {'id': 'fdecl', 'on_match': 'FDecl'})
+call p.e('\d\+', {'id': 'integer', 'on_match': 'Integer'})
+call p.and(['integer', p.e('+'), 'expression'], {'id': 'sum'})
+let expression =  p.or(['sum', 'integer'], {'id': 'expression'})
 ---------------------------------------------------------------------
 
 This example demonstrates several aspects of Vimpeg's API:
 
-1. The fundamental expression type is a Vim regular expression. Typical PEG
-   parsers use a plain string as the fundamental expression type, but Vimpeg
-   uses regexes seeing as we have them at our easy disposal.
+1. Elements that have been 'identfied' (using an ++\'id'++ attribute)
+   can be referred to in other expressions. 'Sum', 'Integer' and
+   'Expression' are all identified in this case and are all referenced
+   by other non-terminals.
 
-2. Elements that have been 'identfied' can be referred to in other expressions.
+2. Only root-level elements need to be assigned to a Vim variable. In
+   this case, the 'expression' element is considered to be a root
+   element - we can directly call on that element now to parse a sum
+   series of integers.
 
-3. Only root-level elements need to be assigned to a Vim variable. In this
-   case, the 'vigoriously' element is considered to be a root element - we can
-   directly call on that element now to parse Vigorious Function Declarations.
-
-.on-match Callbacks
-
-Several of the above elements have an 'on_match' attribute. This is a function
-that is called on successful match of that element type. It is passed the
-matched text and the return value is used to set the current accumulated 'value'
-of the parse state.
-
-Take for example the ++Arg()++ 'on-match' function:
-
+3. Intermediate processing (for evaluations, reductions, lookups,
+   whatever) are achieved through callback functions through the
+   ++\'on_match'++ attribute.  The 'Integer' rule uses such a callback
+   to convert the string representation of the parsed series of digits
+   into a single integer value (using the builtin Vim function
+   ++str2nr()++.) Here is that callback function:
++
 [source,vim]
 ---------------------------------------------------------------------
-func! Arg(elems)
-  let assignment = {}
-  let assignment[a:elems[0]] = '__vigor_manarg'
-  if len(a:elems[1]) > 0
-    let assignment[a:elems[0]] = a:elems[1][0][1]
-  endif
-  return assignment
-endfunc
+function! Integer(elems)
+  return str2nr(a:elems)
+endfunction
 ---------------------------------------------------------------------
++
+NOTE: This is not *strictly* necessary in this example - Vim happily
+automatically converts string representations of numbers for us in all
+the right places for this example to work without the extra overhead
+of this callback. It was included in this example only for the purpose
+of showing you that it is possible to do so, and how you'd go about
+doing it.
 
-The ++a:elems++ argument contains the matched elements necessary to trigger this
-'on-match' function. In this case, it is a single function argument with an
-optional default value. The ++a:elems++ list will be ++['numberwidth', [[':',
-'&numberwidth']]]++ for the second argument in our ++MinWinWidth()++ function
-above. We use the internal constant, ++__vigor_manarg++ for a manually-provided
-(non-default) argument.
-
-The 'on-match' callback functions in the provided source-code each have a
-commented-out ++echo a:elems++ as the first line -- useful for seeing what
-matched chunks look like along the parsing path.
-
-.VimL me Vigoriously
-NOTE: This is the public API interface
+.The public API interface:
 [source,vim]
 ---------------------------------------------------------------------
-func! Vigoriously()
-  let res = g:vigoriously.match(getline('.'))
+function! Sum(str)
+  let res = g:expression.match(a:str)
   if res['is_matched']
-    call append('.', split(res['value'], '\n'))
+    return SumList(res['value'])
   else
-    echo res['errmsg']
+    return res['errmsg']
   endif
-endfunc
----------------------------------------------------------------------
-
-The ++res++ object holds a lot of information about what was actually parsed
-(and an ++errmsg++  if parsing failed). The ++'value'++ element will contain the
-cumulative result of all the 'on-match' callbacks as the input was being parsed.
-
-.Punch It
-
-Let's use a key map to make the running of this code a little easier:
-
-[source,vim]
----------------------------------------------------------------------
-nnoremap <leader>x :call Vigoriously()<CR>
----------------------------------------------------------------------
-
-Now we can position our cursor on a Vigorious function declaration and press
-++<leader>x++ and have the associated VimL generated beneath it for us. Joy.
-
-Let's use the last one we defined earlier:
-
-[source,vim]
----------------------------------------------------------------------
-" MinWinWidth (textwidth, numberwidth: &numberwidth, foldcolumn: &foldcolumn) -> exe "set textwidth=" . textwidth . " numberwidth=" . numberwidth . " foldcolumn=" . foldcolumn
----------------------------------------------------------------------
-
-Which will generate the following VimL code:
-
-[source,vim]
----------------------------------------------------------------------
-function! MinWinWidth (textwidth,...)
-  " vigoriously {{{
-  let __vigor_args = ['numberwidth', 'foldcolumn']
-  let __vigor_argvals = {'numberwidth': '&numberwidth', 'foldcolumn': '&foldcolumn', 'textwidth': 'a:textwidth'}
-  let i = 0
-  while i < a:0
-    let __vigor_argvals[__vigor_args[i]] = a:000[i]
-    let i += 1
-  endwhile
-  for i in keys(__vigor_argvals)
-    exe 'let ' . i . ' = ' . __vigor_argvals[i]
-  endfor
-  unlet i "}}}
-
-  exe "set textwidth=" . textwidth . " numberwidth=" . numberwidth . " foldcolumn=" . foldcolumn
 endfunction
 ---------------------------------------------------------------------
 
-Re-source the file to vivify this new function. Now you can experiment by
-calling it in the ways we suggested earlier:
+The ++res++ object holds a lot of information about what was actually
+parsed (and an ++errmsg++  if parsing failed). The ++'value'++ element
+will contain the cumulative result of all the 'on-match' callbacks as
+the input was being parsed.
+
+NOTE: This is a provider-side utility function.
+[source,vim]
+---------------------------------------------------------------------
+function! SumList(s)
+  return type(a:s) == type(1) ? a:s : a:s[0] + SumList(a:s[2])
+endfunction
+---------------------------------------------------------------------
+
+Using it
+--------
 
 [source,vim]
 ---------------------------------------------------------------------
-  call MinWinWidth(80)
-  call MinWinWidth(80, 4)
-  call MinWinWidth(80, 4, 4)
+echo Sum('123')
+echo Sum('1 + 2')
+echo Sum('1 + 2 + 3')
+echo Sum('12 + 34 + 56 + 78')
 ---------------------------------------------------------------------
 
-Onwards
--------
+Not terribly exciting, granted, but hopefully this serves as a
+reasonable introduction to the Vimpeg Parser Generator. What can *you*
+do with it? I look forward to seeing weird and wonderful creations and
+possibilities in Vim now that real parsing tasks are more accessible.
 
-What do we show next with Vimpeg? More extensions to the Vigor language - I'd
-like to tackle end-less statements that use whitespace to denote blocks, as in:
+Resources
+---------
 
-[source,vim]
----------------------------------------------------------------------
-  if <expression>
-    <indented statements>
----------------------------------------------------------------------
+* http://github.com/dahu/Vimpeg[]
 
-And having if-expressions would be nice too, allowing things like:
+What's Next?
+------------
 
-[source,vim]
----------------------------------------------------------------------
-  exe "set textwidth=".textwidth if textwidth > 0
----------------------------------------------------------------------
-
-And while we're wishing - how about that terrible need to use ++exe++ here in
-the first place? Wouldn't this be nicer?
-
-[source,vim]
----------------------------------------------------------------------
-  set textwidth=textwidth if textwidth > 0
----------------------------------------------------------------------
-
-Or something like that... Yes, I can see the hairy monster lurking in there
-too.  Let's see if we can't shave that yack next time then.
+In the next article I will show an example of sugar-coating the VimL
+language to make function declarations both a little easier on the
+eyes and fingers as well as adding two long-missing features from
+VimL -- default values in function parameters and inline function
+declarations, a la ++ if <condition> | something | endif ++.
