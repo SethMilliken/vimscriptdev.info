@@ -5,6 +5,88 @@ v1.1, October 10, 2011
 
 image:content/PegParserGenerator/vimpeg.png[]
 
+What is Vimpeg?
+---------------
+
+Vimpeg is a Parser Generator which uses the newer Parsing Expression
+Grammar formalism to specify the parse rules.
+
+Why Vimpeg?
+-----------
+
+Vim is a powerful editor. It has lots of features baked right in to
+make it an editor most awesome. It has a deliciously potent regular
+expression engine, jaw-dropping text-object manipulations, and
+fabulous scriptability -- just to name a few of its aces.
+
+One thing our little Vim still lacks, though, is an actual parser.
+Regular expressions will only get you so far when you're trying to
+analyse and understand complex chunks of text. If your text is
+inherently infinite or recursive, then regular expressions become at
+best combersome, and at worst, useless.
+
+So, Vim *needs* a parser. I've needed one myself several times when
+wanting to build a new plugin -- "awesome! This idea will so rock! Now
+all I need to do is parse <SomeLanguage> and I'll be able to... awww...
+:-(" I've seen people ask on ++#vim++: How can I
+<DoSomethingThatNeedsAParser>? And invariable the answer is: You
+can't.
+
+Well...
+
+You *couldn't*. Until now. Vimpeg aims to solve this problem.
+
+.What would I use Vimpeg for?
+
+* You've come to that paralysing sinkhole in your Vimming when you've
+  said to youself, "Damn... I wish Vim had a parser."
+* You've asked for something on #vim and the reply is "you can't do
+  that because Vim doesn't have a parser."
+* You're up to your neck in wrecklessly recursive regexes.
+
+.Some ideas:
+
+* An expression calculator (the beginnings of which we explore here.)
+* Expanding tokens in typed text (think: snippets, abbrevs, maps.)
+* Semantic analysis of code -- for refactoring, reindenting (but sadly
+  not syntax highlighting yet.)
+* C Code bifurcation based on #define values -- want to see what the C
+  code would look like with ++#define DEBUG++ disabled?
+* Coffeescript for Vim -- sugar-coating some of the uglies in VimL --
+  this example will be presented in a subsequent Vimpeg article.
+
+In fact, most of these ideas have been explored in part inside the
+++examples/++ directory of the https://github.com/dahu/Vimpeg[Vimpeg]
+plugin.
+
+For the purposes of introducing Vimpeg and parsing in general (if
+you're new to it), let's consider a fairly easy example of reading &
+understanding (perhaps calculating) a sum series of integers. They
+look like this:
+
+1 + 2 + 12 + 34
+
+They can be any (reasonable) length, from a single integer upwards.
+So, this is a valid input to our parser:
+
+123
+
+As are all of the following:
+
+1 + 2
+3 + 4 + 5
+123 + 456 + 789
+
+Stop. Right now. And think: How would *you* parse such an arbitrarily
+long series of integers separated by ++ + ++ operators? What tool
+would you reach for? What if you *had* to do it in Vim?
+
+We'll continue to use this example throughout this article and
+eventually show you how Vimpeg solves this little parsing requirement.
+
+But first, let's make sure we're all on the same page about the
+question: ``What is parsing?''
+
 Parsing
 -------
 
@@ -46,6 +128,45 @@ the noun 'rubbish'. Your higher self (sarcasm aside) *knows* where
 this magic 'out' place is. We'll come back to these two processes
 ('syntax recognition' and 'semantic analysis') later.
 
+In the case of our sum series of integers, syntax recognition would
+involve collecting the sequence of digits that comprise an integer,
+skipping unnecessary whitespace and expecting either an end of input
+or a ++ + ++ character and another integer and... so on. If the input
+contained an alphabetic character it would fail in this phase --
+alphabetic characters are just not expected in the input. If the
+lexical recogniser found two integers separated by whitespace or two
+++ + ++ characters in a row...  it would *not* fail in this phase --
+these are all valid tokens in 'this' lexical recogniser.
+
+TODO: Clean this next paragraph up:
+
+NOTE: I am describing the more general process of lexical recognition and
+it being a seperate stage to semantic analysis which is typical of
+most parsers. PEG parsers, however, do not have separate phases as
+described here -- they are quite strict about not only what shape the
+next token must have, but also its purpose in this place (context) of
+the input. Having two consecutive integers or two consecutive ++ + ++
+characters *will* upset a PEG parser expecting a sum series of
+integers -- it's just that he gets upset all in his single parse phase
+-- he doesn't delay his expression of disappointment in not matching
+both the desired structure and the desired meaning simultaneously.
+
+The semantic analysis phase is all about doing something
+``meaningful'' with the collected integers. Maybe we should sum them?
+Maybe we just want to pass back a nested list structure representing
+the parse tree, like this:
+
+[1 '+' [2 '+' [3 + '4']]]
+
+given this input:
+
+1 + 2 + 3 + 4
+
+Either way, whatever is done, it's the job of the semantic analysis
+phase to do so. In our example in this article, we produce a sum of
+the collected integer series. So, our parser would return: ++ 10 ++
+for the example input given above.
+
 What is a 'Parser Generator'?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -55,8 +176,7 @@ that bores a good coder to tears. Sure, writing your *first* recursive
 descent parser is better than sex, but writing your second one isn't.
 Writing many is tending towards abstinence. Enough said.
 
-So, we (as
-fun loving coders) want a better alternative.
+So, we (as fun loving coders) want a better alternative.
 http://en.wikipedia.org/wiki/Parser_generator[Parser generators]
 provide that alternative. They generate parsers; which means they do
 all the boring, tedious, repetitive hard-labour and clerical
@@ -73,15 +193,8 @@ in the language it's reading. Defining these rules in a declarative
 form is *much* easier, quicker and less error-prone than hand-coding
 the equivalent parser.
 
-Without lingering in the land of ye olde parsing approaches for too
-long, we *used to* declare these parsing rules in
-http://en.wikipedia.org/wiki/Ebnf[EBNF], intended for a
-http://en.wikipedia.org/wiki/Recursive_descent_parser[recursive
-descent parser] (or an LL or LALR parser -- which we will *not* go
-into here).  (And before you drown vsdi in comments of "They so still
-use that, dude!" -- I know. *They* do.) Bryan Ford recently (circa
-2004) described a better way to declare these rules in the form of
-what he called
+Bryan Ford recently (circa 2004) described a better way[:footnote-1:]
+to declare these rules in the form of what he called
 http://en.wikipedia.org/wiki/Parsing_expression_grammar[Parsing
 Expression Grammars] -- PEGs.
 
@@ -104,37 +217,35 @@ match. Allow for backtracking, and you have all you need to parse
 
 NOTE: Vimpeg is *not* a memoising (packrat) parser - not yet, anyway.
 
-Vimpeg
-------
+.A brief overview of the PEG parsing rule syntax:
+*********************************************************************
 
-Vimpeg is a Parser Generator which uses the newer Parsing Expression
-Grammar formalism to specify the parse rules.
+* Terminal symbols are concrete and represent actual strings to be
+  matched.
+* Non-terminal symbols are names referring to combinations of other
+  terminal and/or non-terminal symbols.
 
-.What would I use Vimpeg for?
+* Each rule is of the form:   ++A <- e++
+** ++A++ is a non-terminal symbol
+** ++e++ is a parsing expression
 
-* You've come to that paralysing sinkhole in your Vimming when you've
-  said to youself, "Damn... I wish Vim had a parser."
-* You've asked for something on #vim and the reply is "you can't do
-  that because Vim doesn't have a parser."
-* You're up to your neck in wrecklessly recursive regexes.
+* Each parsing expression is either: a terminal symbol, a non-terminal
+  symbol or the empty string.
 
-.Some ideas:
+* Given the parsing expressions, ++e1++, ++e2++, and ++e3++, a new
+  parsing expression can be constructed using the following operators:
+** Sequence: ++ e1 e2 ++
+** Ordered choice: ++ e1 / e2 ++
+** Zero-or-more: ++ e* ++
+** One-or-more: ++e+ ++
+** Optional: ++ e? ++
+** And-predicate: ++ &e ++
+** Not-predicate: ++ !e ++
 
-* An expression calculator (the beginnings of which we explore here.)
-* Expanding tokens in typed text (think: snippets, abbrevs, maps.)
-* Semantic analysis of code -- for refactoring, reindenting (but sadly
-  not syntax highlighting yet.)
-* C Code bifurcation based on #define values -- want to see what the C
-  code would look like with ++#define DEBUG++ disabled?
-* Coffeescript for Vim -- sugar-coating some of the uglies in VimL --
-  this example will be presented in a subsequent Vimpeg article.
+*********************************************************************
 
-In fact, most of these ideas have been explored in part inside the
-++examples/++ directory of the https://github.com/dahu/Vimpeg[Vimpeg]
-plugin.
-
-A Conceptual Model
-~~~~~~~~~~~~~~~~~~
+A Conceptual Model of Vimpeg
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are three players in the Vimpeg game
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -173,46 +284,17 @@ image:content/PegParserGenerator/vimpeg_puzzle.png[]
 5. Client code that calls the provider's public interface.
    (client-side)
 
-A Parsing Example
-~~~~~~~~~~~~~~~~~
+Our Parsing Example
+~~~~~~~~~~~~~~~~~~~
 
-Most beginner Parsing tutorials show you how to scan for numbers or at
-best, the addition of two numbers. Who am I to blow against the wind?
-Let's do that. Let's create a parser that expects a series of integers
-connected with ++ + ++ operators.
+Let's return to our parsing example: recognising (and eventually
+summing) a sum series of integers.
 
 .Examples of our expected Input:
 
 * 123
 * 1 + 2 + 3
 * 12 + 34 + 56 + 78
-
-.A brief overview of the PEG parsing rule syntax:
-*********************************************************************
-
-* Terminal symbols are concrete and represent actual strings to be
-  matched.
-* Non-terminal symbols are names referring to combinations of other
-  terminal and/or non-terminal symbols.
-
-* Each rule is of the form:   ++A <- e++
-** ++A++ is a non-terminal symbol
-** ++e++ is a parsing expression
-
-* Each parsing expression is either: a terminal symbol, a non-terminal
-  symbol or the empty string.
-
-* Given the parsing expressions, ++e1++, ++e2++, and ++e3++, a new
-  parsing expression can be constructed using the following operators:
-** Sequence: ++ e1 e2 ++
-** Ordered choice: ++ e1 / e2 ++
-** Zero-or-more: ++ e* ++
-** One-or-more: ++e+ ++
-** Optional: ++ e? ++
-** And-predicate: ++ &e ++
-** Not-predicate: ++ !e ++
-
-*********************************************************************
 
 .The PEG for a Sum Series of Integers
 ---------------------------------------------------------------------
@@ -229,14 +311,14 @@ In the above PEG for matching a Sum Series of Integers, we have:
 * One use of *Ordered choice*: 'Sum' / 'Integer'
 
 NOTE: The original (and actual) PEG formalism specifies the
-fundamental expression type as a simple string -- hence the use of ++ \'\+' ++ to
-specify a literal ++ + ++ character. PEGs also provide some
-regular-expression-esque constructs too, like: ++[0-9]+ ++ and the use of ++*
-++, ++ + ++ and ++? ++.  However, any strings in PEGs are just that -- strings,
-*not* rugular expressions. Vimpeg shuns (at probable cost) this restriction and
-allows regular expressions as the fundamental expression type. So, in Vimpeg,
-the ++[0-9]+ ++ construct can more idiomatically be represented using the Vim
-regex: ++\d\+ ++.
+fundamental expression type as a simple string -- hence the use of ++
+\'\+' ++ to specify a literal ++ + ++ character. PEGs also provide
+some regular-expression-esque constructs too, like: ++[0-9]+ ++ and
+the use of ++* ++, ++ + ++ and ++? ++.  However, any strings in PEGs
+are just that -- strings, *not* rugular expressions. Vimpeg shuns (at
+probable cost) this restriction and allows regular expressions as the
+fundamental expression type. So, in Vimpeg, the ++[0-9]+ ++ construct
+can more idiomatically be represented using the Vim regex: ++\d\+ ++.
 
 .The Vimpeg API
 *********************************************************************
@@ -323,12 +405,17 @@ function! SumList(s)
 endfunction
 ---------------------------------------------------------------------
 
-As mentioned earlier, this function is not strictly necessary because
-Vim will automatically cast our string representation of an integer
-('12') into the corresponding actual integer (12) for us in the right
-places. This function is included here mainly for completeness to show
-how, in Vimpeg, callback functions can be used to modify values in the
-middle of parsing.
+This function performs the second half of 'semantic analysis', which
+is transforming the successfully parsed inout into some desired output
+form. In this case, we desire the calculated sum of the series of
+integers. This recursive function performs that task on the
+intermediate parse-tree that Vimpeg built during the parsing phase.
+
+Some might object to including this in 'semantic analysis' and I
+concede it's probably a bit shabby to do so. Call it what you will...
+this part of the process is all about taking a now known good
+intermediate structure and transforming it into a desired output
+structure.
 
 Using it
 --------
@@ -359,3 +446,12 @@ language to make function declarations both a little easier on the
 eyes and fingers as well as adding two long-missing features from
 VimL -- default values in function parameters and inline function
 declarations, a la ++ if <condition> | something | endif ++.
+
+
+[footnote-1]
+We *used to* declare these parsing rules in
+http://en.wikipedia.org/wiki/Ebnf[EBNF], intended for a
+http://en.wikipedia.org/wiki/Recursive_descent_parser[recursive
+descent parser] (or an LL or LALR parser -- which we will *not* go
+into here).  (And before you drown vsdi in comments of "They so still
+use that, dude!" -- I know. *They* do.) 
