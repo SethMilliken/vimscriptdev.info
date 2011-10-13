@@ -36,9 +36,8 @@ face) parse this sentence, your brain goes through two processes:
 ** they're in a language you know
 ** they're all valid words, and
 ** they're all in the right order
-+
+
 .and secondly (semantic analysis):
-+
 * it filters out the 'meaning' and presents that to a higher actor
   for further deliberation
 
@@ -54,14 +53,16 @@ Writing a parser is not easy. Well, it's not simple. It's fussy. It's
 messy.  There's a lot of repetition and many edge cases and minutia
 that bores a good coder to tears. Sure, writing your *first* recursive
 descent parser is better than sex, but writing your second one isn't.
-Writing many is tending towards abstinence. Enough said. So, we (as
+Writing many is tending towards abstinence. Enough said.
+
+So, we (as
 fun loving coders) want a better alternative.
 http://en.wikipedia.org/wiki/Parser_generator[Parser generators]
 provide that alternative. They generate parsers; which means they do
 all the boring, tedious, repetitive hard-labour and clerical
-book-keeping stuff for us (I hope I've painted that with just the
+book-keeping stuff for us. I hope I've painted that with just the
 right amount of negative emotion to convince you on a subliminal level
-that Parser Generators are a Good Thing(TM).)
+that Parser Generators are a Good Thing(TM).
 
 How do they generate a parser? or What's a 'PEG'?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -82,7 +83,9 @@ use that, dude!" -- I know. *They* do.) Bryan Ford recently (circa
 2004) described a better way to declare these rules in the form of
 what he called
 http://en.wikipedia.org/wiki/Parsing_expression_grammar[Parsing
-Expression Grammars] -- PEGs. In a nutshell, PEGs describe what is
+Expression Grammars] -- PEGs.
+
+In a nutshell, PEGs describe what is
 expected in the input, rather than the (E)BNF approach of describing
 what is possible. The difference is subtle but liberating. We'll not
 go too much into that now -- except to say: PEGs offer a cleaner way
@@ -109,18 +112,18 @@ Grammar formalism to specify the parse rules.
 
 .What would I use Vimpeg for?
 
-* you've come to that paralysing sinkhole in your Vimming when you've
+* You've come to that paralysing sinkhole in your Vimming when you've
   said to youself, "Damn... I wish Vim had a parser."
-* you've asked for something on #vim and the reply is "you can't do
+* You've asked for something on #vim and the reply is "you can't do
   that because Vim doesn't have a parser."
-* you're up to your neck in wrecklessly recursive regexes.
+* You're up to your neck in wrecklessly recursive regexes.
 
 .Some ideas:
 
-* An expression calculator (the beginnings of which we explore here)
-* Expanding tokens in typed text (think: snippets, abbrevs, maps)
+* An expression calculator (the beginnings of which we explore here.)
+* Expanding tokens in typed text (think: snippets, abbrevs, maps.)
 * Semantic analysis of code -- for refactoring, reindenting (but sadly
-  not syntax highlighting yet)
+  not syntax highlighting yet.)
 * C Code bifurcation based on #define values -- want to see what the C
   code would look like with ++#define DEBUG++ disabled?
 * Coffeescript for Vim -- sugar-coating some of the uglies in VimL --
@@ -161,7 +164,7 @@ higher-level purposes.
 There are five pieces to Vimpeg
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-image:vimpeg_puzzle.png[]
+image:content/PegParserGenerator/vimpeg_puzzle.png[]
 
 1. The Vimpeg library (plugin)
 2. A PEG Grammar (provider-side)
@@ -239,15 +242,15 @@ regex: ++\d\+ ++.
 *********************************************************************
 The Vimpeg API provides all of the standard PEG constructs:
 
-   peg.e(expression, options)
-   peg.and(sequence, options)
-   peg.or(choices, options)
-   peg.maybe_many(expression, options)
-   peg.many(expression, options)
-   peg.maybe_one(expression, options)
+   peg.e(expression, options)           (Expression)
+   peg.and(sequence, options)           (Sequence)
+   peg.or(choices, options)             (Ordered Choice)
+   peg.maybe_many(expression, options)  (Zero or More)
+   peg.many(expression, options)        (One or More)
+   peg.maybe_one(expression, options)   (Optional)
    peg.between(expression, min, max, options)
-   peg.has(expression, options)
-   peg.not_has(expression, options)
+   peg.has(expression, options)         (And Predicate)
+   peg.not_has(expression, options)     (Not Predicate)
 
 *********************************************************************
 
@@ -319,6 +322,13 @@ function! SumList(s)
   return type(a:s) == type(1) ? a:s : a:s[0] + SumList(a:s[2])
 endfunction
 ---------------------------------------------------------------------
+
+As mentioned earlier, this function is not strictly necessary because
+Vim will automatically cast our string representation of an integer
+('12') into the corresponding actual integer (12) for us in the right
+places. This function is included here mainly for completeness to show
+how, in Vimpeg, callback functions can be used to modify values in the
+middle of parsing.
 
 Using it
 --------
