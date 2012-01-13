@@ -33,7 +33,7 @@ Approach #1: Normal and Ex Commands
 
   function! LongestLine_Ex()
     global/^/substitute/^/\=len(getline('.')).' '.line('.').' '
-    sort rn
+    sort n
     normal! Gwyiwu
     return @"
   endfunction
@@ -61,9 +61,8 @@ sub-command of the ++global++ command, for every line of the file.)
 NOTE: The ++ ''.'' ++ parameter of the ++getline()++ function means
 'current line in the file'.
 
-Line 3 uses the Ex command ++sort rn++ which does a reverse
-numeric sort of the whole file -- putting the longest line at the
-bottom of the file.
+Line 3 uses the Ex command ++sort n++ which does a numeric sort of the whole
+file -- putting the longest line at the bottom of the file.
 
 The series of Normal mode commands on line 4 (+Gwyiwu+) look like a
 Gaelic curse, but they really mean:
