@@ -1,7 +1,7 @@
 Jump to the Longest Line
 ========================
 Barry Arthur
-v0.5, September 14, 2011
+v0.6, January 13, 2012
 
 :pygments:
 
@@ -28,13 +28,13 @@ Approach #1: Normal and Ex Commands
 -----------------------------------
 
 .++LongestLine_Ex++ - Uses mostly Vim Normal and Ex commands:
-[source,vim]
+[source,vim,numbered]
 ------------------------------------------------------------------
 
   function! LongestLine_Ex()
     global/^/substitute/^/\=len(getline('.')).' '.line('.').' '
     sort rn
-    normal Gwyiwu
+    normal! Gwyiwu
     return @"
   endfunction
 
@@ -52,24 +52,20 @@ briefly stored in macros.
 Walkthrough
 ~~~~~~~~~~~
 
-NOTE: Line numbers are relative to the body of the function, so line 1
-is: ++ global/\^/substitute/^/\=len(getline('.')).' '.line('.').' ' ++
+The Ex command ++global/\^/++ on line 2 is a way to do something for every line
+of the file. Every line, even a blank one, matches ++/^/++. The
+++substitute///++ prepends the length of the line and the line number as two
+space-delimited fields to the beginning of the current line (and as that is a
+sub-command of the ++global++ command, for every line of the file.)
 
-The Ex command ++global/\^/++ is a way to do something for every line
-of the file. Every line, even blank ones, matches ++/^/++. The
-++substitute///++ prepends the length of the line and the line number
-as two space-delimited fields to the beginning of the current line
-(and as that is a sub-command of the ++global++ command, for every
-line of the file.)
-
-NOTE: The ++'.'++ parameter of the ++getline()++ function means
+NOTE: The ++ ''.'' ++ parameter of the ++getline()++ function means
 'current line in the file'.
 
-Line 2 uses the Ex command ++sort rn++ which does a reverse
+Line 3 uses the Ex command ++sort rn++ which does a reverse
 numeric sort of the whole file -- putting the longest line at the
 bottom of the file.
 
-The series of Normal mode commands on line 3 (+Gwyiwu+) look like a
+The series of Normal mode commands on line 4 (+Gwyiwu+) look like a
 Gaelic curse, but they really mean:
 
   * +G+ = Go to the end of the file
@@ -81,6 +77,10 @@ NOTE: the cursor will already be in column 1 due to the preceding commands.
   * +u+ = undo (the sort and line modifications. NOTE: If this were in a
     macro or the commands were issued manually, you would need two
     undo commands here.)
++
+NOTE: the ++!++ at the end of ++normal!++ prevents Vim from using user-provided
+normal mode maps when executing the command. This should be the default when
+you write your own VimL - only use the bare ++normal++ when you _need_ to.
 
 image::content/longestline/gaelic.png[]
 
@@ -105,7 +105,7 @@ think about the problem at hand?
 
 **Processing:**
 
-[source,vim]
+[source,vim,numbered]
 ---------------------------------------------------------------------
 
   for lines in file
@@ -121,7 +121,7 @@ think about the problem at hand?
 Nice. Simple. Neat. Small. Easy... _Let's do it!_
 
 .++LongestLine_VimL++ -- Uses all (procedural) VimL:
-[source,vim]
+[source,vim,numbered]
 --------------------------------------------------------------
 
   function! LongestLine_VimL()
@@ -156,14 +156,14 @@ Walkthrough
 There isn't too much to explain here, except:
 
 * ++len()++ returns the length of a string, as the name suggests.
-* ++getline(1, '$')++ returns all the lines in the file as a list (the
-  ++'$'++ parameter means 'last line in the file'.)
-  
-NOTE: ++getline(1)++ differs from ++getline(1,2)++ -- in the first
-case, a string is returned containing the requested line, but in the
-second case, a list of strings is returned. Earlier we used the form
-++getline('.')++ (where ++'.'++ means the 'current line') which is the
-single argument form and therefore returns a string.
+* ++getline(1, ''$'')++ returns all the lines in the file as a list (the
+  ++ ''$'' ++ parameter means 'last line in the file'.)
+
+NOTE: ++getline(1)++ differs from ++getline(1,2)++ -- in the first case, a
+string is returned containing the requested line, but in the second case, a
+list of strings is returned. Earlier we used the form ++getline( ''.'' )++
+(where ++ ''.'' ++ means the 'current line') which is the single argument form
+and therefore returns a string.
 
 Is this as good as it gets? While we're feeling all sort of warm and
 comfortable, gloating in our achievements, the emacsians are laughing
@@ -235,13 +235,15 @@ get-go.
 Here's a functional approach to our longest line problem:
 
 .++LongestLine_newVimL++ -- Uses newVimL -- it's all about lists, baby:
-[source,vim]
------
+[source,vim,numbered]
+---------------------------------------------------------------------
+
 function! LongestLine_newVimL()
   let lines = map(getline(1, '$'), 'len(v:val)')
   return index(lines, max(lines))+1
 endfunction
------
+
+---------------------------------------------------------------------
 
 Walkthrough
 ~~~~~~~~~~~
@@ -255,10 +257,11 @@ Anyone familiar with ++lisp++ or 'any' of the modern hip languages
 applies a function to every element of a lisp and then returns each
 so-modified element in a new list.
 
-.Map Example in Python: Collecting line lengths for a file:
+.Using ++map++ in Python: Collecting line lengths for a file:
+[caption=""]
 ======================================================================
 
-[source,python]
+[source,python,numbered]
 ---------------------------------------------------------------------
 
   file = open("somefile.txt")
@@ -279,7 +282,7 @@ signature for the ++map()++ function:
 
   map(function, list)
 
-But in VimL, the signature is:
+But in VimL it is the reverse:
 
   map({expr}, {string})
 
