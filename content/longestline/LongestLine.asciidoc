@@ -253,7 +253,7 @@ in this version, let's first talk about ++map()++.
 
 Anyone familiar with ++lisp++ or 'any' of the modern hip languages
 (perl, python and ruby just to name a few) will know that ++map()++
-applies a function to every element of a lisp and then returns each
+applies a function to every element of a list and then returns each
 so-modified element in a new list.
 
 .Using ++map++ in Python: Collecting line lengths for a file:
