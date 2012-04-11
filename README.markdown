@@ -6,8 +6,25 @@ me know what you think.
 
 Start
 --------------------------------------------------------------------------------
+* install asciidoc
+* install pygments
+* neuter asciidoc's auto-inlined pygments style
+  * on mac os x installed via brew, here: `/usr/local/Cellar/asciidoc/8.6.7/etc/asciidoc/stylesheets`. make `pygments.css` empty.
+* add to `~/.asciidoc/asciidoc.conf`:
+
+  ```conf
+  [attributes]
+  pygments=
+  icons=
+  ```
+
+* `git clone git://github.com/SethMilliken/vimscriptdev.info.git`
+* `cd vimscriptdev.info`
+* `git checkout nanoc`
 * `bundle`
 * `mkdir -p output/images/icons/callouts/`
+* `nanoc compile && nanoc view`
+* visit <http://localhost:3000>
 
 TODO
 --------------------------------------------------------------------------------
@@ -15,19 +32,18 @@ Random list of things to do.
 
 __Essential__
 
-* move nanoc setup to existing vsdi repo
-* switch vimscriptdev.info domain to point at github pages repo
-* .rvmrc
-* Gemfile
-* document pygments modifications
+* `[X]` move nanoc setup to existing vsdi repo
+* `[ ]` switch vimscriptdev.info domain to point at github pages repo
+* `[X]` .rvmrc
+* `[X]` Gemfile
+* `[ ]` document pygments modifications
   * ideally fix nanoc to allow pygments args so this isn't necessary
-* strip out asciidoc auto-inlined style info
-* add links to helpers documentation pages in lib/default.rb
+* `[ ]` strip out asciidoc auto-inlined style info in compile step
+* `[ ]` clean up syntax.css
+
+__Nice__
+
+* `[ ]` add links to helpers documentation pages in lib/default.rb
   * maybe just make nanoc a subrepo?
-
-__Fun__
-
-* compile-to-css tech
-* create nice-looking callout graphics
-  * ideally, css-only
-* clean up syntax.css
+* `[ ]` compile-to-css tech
+* `[ ]` create nicer-looking callout graphics (ideally, css-only)
