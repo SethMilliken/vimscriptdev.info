@@ -1,0 +1,11 @@
+<%
+
+        tags = []
+        sorted_articles.each do |item|
+        unless item[:title].to_s.length == 0 %>
+             <h2><a href="<%= item.identifier %>"><%= item[:title] %></a></h2>
+             <%= item.compiled_content %>
+<%
+        end
+end
+%>

@@ -1,0 +1,36 @@
+    <div id="sidebar">
+        <h2><a href="/">Home</a></h2>
+        <%
+        tags = []
+        @items.each do |item|
+             if item[:title].to_s.length > 0 && item.identifier != "/" 
+             unless item[:tags].nil?
+               tags |= item[:tags]
+             end
+             #<li><a href="<%= item.identifier %>"><%= item[:title] %></a></li>
+        %><%
+        end
+        end %><%
+          tags.sort.each do |tag|
+        %>
+        <h3><%= link_for_tag(tag, "/") %></h3>
+                <ul>
+                <%
+                testing = sorted_articles & items_with_tag(tag)
+
+                testing.each do |item|
+        %><li><a href="<%= item.identifier %>"><%= item[:title] %></a></li><%
+                end
+                %>
+                </ul>
+        <%
+        end %>
+      <h2>nanoc</h2>
+      <ul>
+        <li><a href="http://nanoc.stoneship.org/docs/">Documentation</a></li>
+        <li><a href="http://nanoc.stoneship.org/docs/3-getting-started/">Getting Started</a></li>
+        <li><a href="http://groups.google.com/group/nanoc/">Discussion Group</a></li>
+        <li><a href="irc://chat.freenode.net/#nanoc">IRC Channel</a></li>
+        <li><a href="http://projects.stoneship.org/trac/nanoc/">Wiki</a></li>
+      </ul>
+    </div>
