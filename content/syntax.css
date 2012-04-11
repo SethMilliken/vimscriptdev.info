@@ -1,7 +1,7 @@
 pre { color: #62acce; background-color: #222222; font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; padding: 1em           !important; } /* pre sections */
-pre span, pre code { font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; !important; } /* pre sections */
+.highlight pre, pre tt, pre span, pre code {  color: #62acce; background-color: #222222; font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; !important; } /* pre sections */
 code { font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; !important; } /* inline code sections */
-li code, p code{padding:3px 4px;color:#333333;background-color:#eeeeee;border:1px solid #aaaaaa;}
+p tt, li code, p code{ padding:.1em .2em .1em .2em; color:#333333; background-color:#eeeeee; border:1px solid #aaaaaa;}
 .hll { background-color: #333333                              !important; } /* ? */
 .c   { color: #d1c79e; font-style: italic;                    !important; } /* Comment */
 .err { color: #ff0000; background-color: #ffffff;             !important; } /* Error */

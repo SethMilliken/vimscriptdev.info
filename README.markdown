@@ -4,6 +4,10 @@ Okay, phase two, or ten or whatever it is now. [nanoc](http://nanoc.stoneship.or
 seems to be a much better fit for what I'd like to do here. Give it a try and let
 me know what you think.
 
+Start
+--------------------------------------------------------------------------------
+* `bundle`
+* `mkdir -p output/images/icons/callouts/`
 
 TODO
 --------------------------------------------------------------------------------

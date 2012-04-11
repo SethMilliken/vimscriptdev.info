@@ -24,6 +24,17 @@ compile '/asciidoc/*' do
   end
 end
 
+## Compilation Phase
+compile '/markdown/*' do
+  if item.binary?
+    # don’t filter binary items
+  else
+    # FIXME: kramdown is causing an encoding incompatibility problme
+    #filter :kramdown
+    layout 'default'
+  end
+end
+
 compile '/syntax/' do
   # don’t filter or layout
 end

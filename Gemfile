@@ -1,8 +1,9 @@
 source :rubygems
 
-gem "nanoc"
 gem "adsf"
-gem "kramdown"
 gem "haml"
+gem "kramdown"
 gem "less"
+gem "nanoc"
+gem "nokogiri", "~> 1.5.2"
 gem "systemu"

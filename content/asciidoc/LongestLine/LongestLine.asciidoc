@@ -81,7 +81,7 @@ NOTE: the ++!++ at the end of ++normal!++ prevents Vim from using user-provided
 normal mode maps when executing the command. This should be the default when
 you write your own VimL - only use the bare ++normal++ when you _need_ to.
 
-image::content/longestline/gaelic.png[]
+image::/LongestLine/gaelic.png[]
 
 The end result is that the longest line number is now in the Unnamed
 register (++@"++) and ready to be used in a jump command like:
@@ -183,7 +183,7 @@ cranking out gobs of loops and conditions and assignments. Before
 we've even begun to think of the bigger picture, our minds are fussing
 over the minutia -- ``should I use a while loop here or a for loop?''
 
-image::content/longestline/hammer.png[]
+image::/LongestLine/hammer.png[]
 
 The cure for this begins with the mantra: __Don't Use Loops!__
 
@@ -220,7 +220,7 @@ sucker to get what I want?''
 Eventually, you might even start thinking in S-Expressions all the
 time...
 
-image::content/longestline/frank_take_her.png[]
+image::/LongestLine/frank_take_her.png[]
 
 The petulant proceduralist within you might be grumbling now that all
 we've done is hide the looping behind a layer of functions. ``We could
@@ -279,10 +279,12 @@ that file.
 Most languages, like python, perl and even lisp use the following
 signature for the ++map()++ function:
 
+[source,python]
   map(function, list)
 
 But in VimL it is the reverse:
 
+[source,vim]
   map({expr}, {string})
 
 Where:
@@ -303,6 +305,7 @@ length (exactly as the python example earlier did).
 
 Which brings us to the second and final line:
 
+[source,vim]
   return index(lines, max(lines))+1
 
 This might take some mind bending to see what's happening, so we'll
