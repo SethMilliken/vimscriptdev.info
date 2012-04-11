@@ -1,0 +1,1540 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Seth - Peg Parser Generator</title>
+    <link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/syntax.css" media="screen">
+    <meta name="generator" content="nanoc 3.3.2">
+  </head>
+  <body>
+    <div id="main">
+      <h1>Peg Parser Generator</h1>
+      
+      <em>2012-04-10 11:34:32 -0700</em>
+      
+      
+      ["advanced", "learn", "vim"]
+      
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.7" />
+<title>Introducing Vimpeg&#8201;&#8212;&#8201;A PEG Parser Generator for Vim</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+/*
+  pygmentize filter
+*/
+/*.highlight .hll { background-color: #ffffcc }
+/*.highlight  { background: #f4f4f4; }
+/*.highlight .c { color: #008800; font-style: italic } /* Comment */
+/*.highlight .err { border: 1px solid #FF0000 } /* Error */
+/*.highlight .k { color: #AA22FF; font-weight: bold } /* Keyword */
+/*.highlight .o { color: #666666 } /* Operator */
+/*.highlight .cm { color: #008800; font-style: italic } /* Comment.Multiline */
+/*.highlight .cp { color: #008800 } /* Comment.Preproc */
+/*.highlight .c1 { color: #008800; font-style: italic } /* Comment.Single */
+/*.highlight .cs { color: #008800; font-weight: bold } /* Comment.Special */
+/*.highlight .gd { color: #A00000 } /* Generic.Deleted */
+/*.highlight .ge { font-style: italic } /* Generic.Emph */
+/*.highlight .gr { color: #FF0000 } /* Generic.Error */
+/*.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+/*.highlight .gi { color: #00A000 } /* Generic.Inserted */
+/*.highlight .go { color: #808080 } /* Generic.Output */
+/*.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+/*.highlight .gs { font-weight: bold } /* Generic.Strong */
+/*.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+/*.highlight .gt { color: #0040D0 } /* Generic.Traceback */
+/*.highlight .kc { color: #AA22FF; font-weight: bold } /* Keyword.Constant */
+/*.highlight .kd { color: #AA22FF; font-weight: bold } /* Keyword.Declaration */
+/*.highlight .kn { color: #AA22FF; font-weight: bold } /* Keyword.Namespace */
+/*.highlight .kp { color: #AA22FF } /* Keyword.Pseudo */
+/*.highlight .kr { color: #AA22FF; font-weight: bold } /* Keyword.Reserved */
+/*.highlight .kt { color: #00BB00; font-weight: bold } /* Keyword.Type */
+/*.highlight .m { color: #666666 } /* Literal.Number */
+/*.highlight .s { color: #BB4444 } /* Literal.String */
+/*.highlight .na { color: #BB4444 } /* Name.Attribute */
+/*.highlight .nb { color: #AA22FF } /* Name.Builtin */
+/*.highlight .nc { color: #0000FF } /* Name.Class */
+/*.highlight .no { color: #880000 } /* Name.Constant */
+/*.highlight .nd { color: #AA22FF } /* Name.Decorator */
+/*.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+/*.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+/*.highlight .nf { color: #00A000 } /* Name.Function */
+/*.highlight .nl { color: #A0A000 } /* Name.Label */
+/*.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+/*.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+/*.highlight .nv { color: #B8860B } /* Name.Variable */
+/*.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+/*.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+/*.highlight .mf { color: #666666 } /* Literal.Number.Float */
+/*.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+/*.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+/*.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+/*.highlight .sb { color: #BB4444 } /* Literal.String.Backtick */
+/*.highlight .sc { color: #BB4444 } /* Literal.String.Char */
+/*.highlight .sd { color: #BB4444; font-style: italic } /* Literal.String.Doc */
+/*.highlight .s2 { color: #BB4444 } /* Literal.String.Double */
+/*.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+/*.highlight .sh { color: #BB4444 } /* Literal.String.Heredoc */
+/*.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+/*.highlight .sx { color: #008000 } /* Literal.String.Other */
+/*.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+/*.highlight .s1 { color: #BB4444 } /* Literal.String.Single */
+/*.highlight .ss { color: #B8860B } /* Literal.String.Symbol */
+/*.highlight .bp { color: #AA22FF } /* Name.Builtin.Pseudo */
+/*.highlight .vc { color: #B8860B } /* Name.Variable.Class */
+/*.highlight .vg { color: #B8860B } /* Name.Variable.Global */
+/*.highlight .vi { color: #B8860B } /* Name.Variable.Instance */
+/*.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Introducing Vimpeg&#8201;&#8212;&#8201;A PEG Parser Generator for Vim</h1>
+<span id="author">Barry Arthur</span><br />
+<span id="revnumber">version 1.1,</span>
+<span id="revdate">October 10, 2011</span>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><span class="image">
+<img src="/PegParserGenerator/vimpeg.png" alt="/PegParserGenerator/vimpeg.png" />
+</span></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_vimpeg">What is Vimpeg?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Vimpeg is a Parser Generator which uses the newer Parsing Expression
+Grammar formalism to specify the parse rules.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_vimpeg">Why Vimpeg?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Vim is a powerful editor. It has lots of features baked right in to
+make it an editor most awesome. It has a deliciously potent regular
+expression engine, jaw-dropping text-object manipulations, and
+fabulous scriptability&#8201;&#8212;&#8201;just to name a few of its aces.</p></div>
+<div class="paragraph"><p>One thing our little Vim still lacks, though, is an actual parser.
+Regular expressions will only get you so far when you&#8217;re trying to
+analyse and understand complex chunks of text. If your text is
+inherently infinite or recursive, then regular expressions become at
+best combersome, and at worst, useless.</p></div>
+<div class="paragraph"><p>So, Vim <strong>needs</strong> a parser. I&#8217;ve needed one myself several times when
+wanting to build a new plugin&#8201;&#8212;&#8201;"awesome! This idea will so rock! Now
+all I need to do is parse &lt;SomeLanguage&gt; and I&#8217;ll be able to&#8230; awww&#8230;
+:-(" I&#8217;ve seen people ask on <tt>#vim</tt>: How can I
+&lt;DoSomethingThatNeedsAParser&gt;? And invariable the answer is: You
+can&#8217;t.</p></div>
+<div class="paragraph"><p>Well&#8230;</p></div>
+<div class="paragraph"><p>You <strong>couldn&#8217;t</strong>. Until now. Vimpeg aims to solve this problem.</p></div>
+<div class="ulist"><div class="title">What would I use Vimpeg for?</div><ul>
+<li>
+<p>
+You&#8217;ve come to that paralysing sinkhole in your Vimming when you&#8217;ve
+  said to youself, "Damn&#8230; I wish Vim had a parser."
+</p>
+</li>
+<li>
+<p>
+You&#8217;ve asked for something on #vim and the reply is "you can&#8217;t do
+  that because Vim doesn&#8217;t have a parser."
+</p>
+</li>
+<li>
+<p>
+You&#8217;re up to your neck in wrecklessly recursive regexes.
+</p>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">Some ideas:</div><ul>
+<li>
+<p>
+An expression calculator (the beginnings of which we explore here.)
+</p>
+</li>
+<li>
+<p>
+Expanding tokens in typed text (think: snippets, abbrevs, maps.)
+</p>
+</li>
+<li>
+<p>
+Semantic analysis of code&#8201;&#8212;&#8201;for refactoring, reindenting (but sadly
+  not syntax highlighting yet.)
+</p>
+</li>
+<li>
+<p>
+C Code bifurcation based on #define values&#8201;&#8212;&#8201;want to see what the C
+  code would look like with <tt>#define DEBUG</tt> disabled?
+</p>
+</li>
+<li>
+<p>
+Coffeescript for Vim&#8201;&#8212;&#8201;sugar-coating some of the uglies in VimL&#8201;&#8212;&#8201;  this example will be presented in a subsequent Vimpeg article.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>In fact, most of these ideas have been explored in part inside the
+<tt>examples/</tt> directory of the <a href="https://github.com/dahu/Vimpeg">Vimpeg</a>
+plugin.</p></div>
+<div class="paragraph"><p>For the purposes of introducing Vimpeg and parsing in general (if
+you&#8217;re new to it), let&#8217;s consider a fairly easy example of reading &amp;
+understanding (perhaps calculating) a sum series of integers. They
+look like this:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>1 + 2 + 12 + 34</tt></pre>
+</div></div>
+<div class="paragraph"><p>They can be any (reasonable) length, from a single integer upwards.
+So, this is a valid input to our parser:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>123</tt></pre>
+</div></div>
+<div class="paragraph"><p>As are all of the following:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>1 + 2
+3 + 4 + 5
+123 + 456 + 789</tt></pre>
+</div></div>
+<div class="paragraph"><p>Stop. Right now. And think: How would <strong>you</strong> parse such an arbitrarily
+long series of integers separated by <tt> + </tt> operators? What tool
+would you reach for? What if you <strong>had</strong> to do it in Vim?</p></div>
+<div class="paragraph"><p>We&#8217;ll continue to use this example throughout this article and
+eventually show you how Vimpeg solves this little parsing requirement.</p></div>
+<div class="paragraph"><p>But first, let&#8217;s make sure we&#8217;re all on the same page about the
+question: &#8220;What is parsing?&#8221;</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parsing">Parsing</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Feel free to skip to the next section if you&#8217;re comfortable with the
+following concepts:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+parsing
+</p>
+</li>
+<li>
+<p>
+pasrer generators
+</p>
+</li>
+<li>
+<p>
+(E)BNF and PEGs
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Let&#8217;s begin by defining some terms:</p></div>
+<div class="paragraph"><p>(Let&#8217;s all assume we know what <a href="http://www.vim.org">Vim</a> is.)</p></div>
+<div class="sect2">
+<h3 id="_what_is_em_parsing_em">What is <em>Parsing</em>?</h3>
+<div class="paragraph"><p><a href="http://en.wikipedia.org/wiki/Parsing">Parsing</a> is making sense of
+something.  When we want a computer to understand something we&#8217;ve
+written down for it to do, it needs to <em>parse</em> that writing.  Without
+going into too much detail yet, let&#8217;s consider a sentence uttered at
+one time or another by your parental unit: "Take the rubbish out!".
+When you (eventually&#8201;&#8212;&#8201;after you unplug your iPod, put down your PS3
+controller, pocket your smart-phone and wipe the disdain off your
+face) parse this sentence, your brain goes through two processes:</p></div>
+<div class="ulist"><div class="title">firstly (syntax recognition):</div><ul>
+<li>
+<p>
+it scans the words to make sure they&#8217;re legitimate:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+they&#8217;re in a language you know
+</p>
+</li>
+<li>
+<p>
+they&#8217;re all valid words, and
+</p>
+</li>
+<li>
+<p>
+they&#8217;re all in the right order
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+<div class="ulist"><div class="title">and secondly (semantic analysis):</div><ul>
+<li>
+<p>
+it filters out the <em>meaning</em> and presents that to a higher actor
+  for further deliberation
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>In this case, the parser would extract the verb phrase <em>take out</em> and
+the noun <em>rubbish</em>. Your higher self (sarcasm aside) <strong>knows</strong> where
+this magic <em>out</em> place is. We&#8217;ll come back to these two processes
+(<em>syntax recognition</em> and <em>semantic analysis</em>) later.</p></div>
+<div class="paragraph"><p>In the case of our sum series of integers, syntax recognition would
+involve collecting the sequence of digits that comprise an integer,
+skipping unnecessary whitespace and expecting either an end of input
+or a <tt>&nbsp;+ </tt> character and another integer and&#8230; so on. If the input
+contained an alphabetic character it would fail in this phase&#8201;&#8212;&#8201;alphabetic characters are just not expected in the input. If the
+lexical recogniser found two integers separated by whitespace or two
+<tt>&nbsp;+ </tt> characters in a row&#8230;  it would <strong>not</strong> fail in this phase&#8201;&#8212;&#8201;these are all valid tokens in <em>this</em> lexical recogniser.</p></div>
+<div class="paragraph"><p>TODO: Clean this next paragraph up:</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">I am describing the more general process of lexical recognition and
+it being a seperate stage to semantic analysis which is typical of
+most parsers. PEG parsers, however, do not have separate phases as
+described here&#8201;&#8212;&#8201;they are quite strict about not only what shape the
+next token must have, but also its purpose in this place (context) of
+the input. Having two consecutive integers or two consecutive <tt> + </tt>
+characters <strong>will</strong> upset a PEG parser expecting a sum series of
+integers&#8201;&#8212;&#8201;it&#8217;s just that he gets upset all in his single parse phase&#8201;&#8212;&#8201;he doesn&#8217;t delay his expression of disappointment in not matching
+both the desired structure and the desired meaning simultaneously.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The semantic analysis phase is all about doing something
+&#8220;meaningful&#8221; with the collected integers. Maybe we should sum them?
+Maybe we just want to pass back a nested list structure representing
+the parse tree, like this:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>[1 '+' [2 '+' [3 + '4']]]</tt></pre>
+</div></div>
+<div class="paragraph"><p>given this input:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>1 + 2 + 3 + 4</tt></pre>
+</div></div>
+<div class="paragraph"><p>Either way, whatever is done, it&#8217;s the job of the semantic analysis
+phase to do so. In our example in this article, we produce a sum of
+the collected integer series. So, our parser would return: <tt>&nbsp;10 </tt>
+for the example input given above.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_what_is_a_em_parser_generator_em">What is a <em>Parser Generator</em>?</h3>
+<div class="paragraph"><p>Writing a parser is not easy. Well, it&#8217;s not simple. It&#8217;s fussy. It&#8217;s
+messy.  There&#8217;s a lot of repetition and many edge cases and minutia
+that bores a good coder to tears. Sure, writing your <strong>first</strong> recursive
+descent parser is better than sex, but writing your second one isn&#8217;t.
+Writing many is tending towards abstinence. Enough said.</p></div>
+<div class="paragraph"><p>So, we (as fun loving coders) want a better alternative.
+<a href="http://en.wikipedia.org/wiki/Parser_generator">Parser generators</a>
+provide that alternative. They generate parsers; which means they do
+all the boring, tedious, repetitive hard-labour and clerical
+book-keeping stuff for us. I hope I&#8217;ve painted that with just the
+right amount of negative emotion to convince you on a subliminal level
+that Parser Generators are a Good Thing&#8482;.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_how_do_they_generate_a_parser_or_what_8217_s_a_em_peg_em">How do they generate a parser? or What&#8217;s a <em>PEG</em>?</h3>
+<div class="paragraph"><p>Parser Generators are told <strong>what</strong> to expect (what is valid or invalid)
+through a grammar&#8201;&#8212;&#8201;a set of rules describing the allowed constructs
+in the language it&#8217;s reading. Defining these rules in a declarative
+form is <strong>much</strong> easier, quicker and less error-prone than hand-coding
+the equivalent parser.</p></div>
+<div class="paragraph"><p>Bryan Ford recently (circa 2004) described a better way[:footnote-1:]
+to declare these rules in the form of what he called
+<a href="http://en.wikipedia.org/wiki/Parsing_expression_grammar">Parsing
+Expression Grammars</a>&#8201;&#8212;&#8201;PEGs.</p></div>
+<div class="paragraph"><p>In a nutshell, PEGs describe what is
+expected in the input, rather than the (E)BNF approach of describing
+what is possible. The difference is subtle but liberating. We&#8217;ll not
+go too much into that now&#8201;&#8212;&#8201;except to say: PEGs offer a cleaner way
+to describe languages that computers are expected to parse. If you
+want to re-program your 13 year old brother, you might not reach for a
+PEG parser generator, but as we&#8217;re dabbling here in the confines of
+computers and the valley of vim, PEGs will do just fine.</p></div>
+<div class="paragraph"><p>A major benefit to PEG parsers is that there is no separate lexical
+analysis phase necessary. Because PEG parsers <em>expect</em> to see the
+input in a certain way, they can ask for it in those expected chunks.
+If it matches, great, move on. If it doesn&#8217;t match, try another
+alternative. If all the alternatives fail, then the input doesn&#8217;t
+match. Allow for backtracking, and you have all you need to parse
+<em>expected</em> input.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">Vimpeg is <strong>not</strong> a memoising (packrat) parser - not yet, anyway.</td>
+</tr></table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">A brief overview of the PEG parsing rule syntax:</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Terminal symbols are concrete and represent actual strings to be
+  matched.
+</p>
+</li>
+<li>
+<p>
+Non-terminal symbols are names referring to combinations of other
+  terminal and/or non-terminal symbols.
+</p>
+</li>
+<li>
+<p>
+Each rule is of the form:   <tt>A &#8592; e</tt>
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+<tt>A</tt> is a non-terminal symbol
+</p>
+</li>
+<li>
+<p>
+<tt>e</tt> is a parsing expression
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+Each parsing expression is either: a terminal symbol, a non-terminal
+  symbol or the empty string.
+</p>
+</li>
+<li>
+<p>
+Given the parsing expressions, <tt>e1</tt>, <tt>e2</tt>, and <tt>e3</tt>, a new
+  parsing expression can be constructed using the following operators:
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Sequence: <tt> e1 e2 </tt>
+</p>
+</li>
+<li>
+<p>
+Ordered choice: <tt> e1 / e2 </tt>
+</p>
+</li>
+<li>
+<p>
+Zero-or-more: <tt> e* </tt>
+</p>
+</li>
+<li>
+<p>
+One-or-more: <tt>e+ </tt>
+</p>
+</li>
+<li>
+<p>
+Optional: <tt> e? </tt>
+</p>
+</li>
+<li>
+<p>
+And-predicate: <tt> &amp;e </tt>
+</p>
+</li>
+<li>
+<p>
+Not-predicate: <tt> !e </tt>
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_a_conceptual_model_of_vimpeg">A Conceptual Model of Vimpeg</h3>
+<div class="sect3">
+<h4 id="_there_are_three_players_in_the_vimpeg_game">There are three players in the Vimpeg game</h4>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+The Vimpeg Parser Generator (Vim plugin)
+</p>
+</li>
+<li>
+<p>
+The Language Provider
+</p>
+</li>
+<li>
+<p>
+The Client
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><div class="title">The Vimpeg Parser Generator</div><p>This is a Vim <a href="https://github.com/dahu/Vimpeg">plugin</a> you&#8217;ll need to
+install to both create and use Vimpeg based parsers.</p></div>
+<div class="paragraph"><div class="title">The Language Provider</div><p>This is someone who creates a parser for a new or existing language or
+data-structure. They create the grammar, data-munging callbacks,
+utility functions and a public interface into their <em>parser</em>.</p></div>
+<div class="paragraph"><div class="title">The Client</div><p>This is someone who wants to <em>use</em> a parser to get some real work
+done. Clients can either be Vim end-users or other VimL coders using a
+parser as a support layer for even more awesome and complicated
+higher-level purposes.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_there_are_five_pieces_to_vimpeg">There are five pieces to Vimpeg</h4>
+<div class="paragraph"><p><span class="image">
+<img src="content/PegParserGenerator/vimpeg_puzzle.png" alt="content/PegParserGenerator/vimpeg_puzzle.png" />
+</span></p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+The Vimpeg library (plugin)
+</p>
+</li>
+<li>
+<p>
+A PEG Grammar (provider-side)
+</p>
+</li>
+<li>
+<p>
+Callbacks and utility functions [optional] (provider-side)
+</p>
+</li>
+<li>
+<p>
+A public interface (provider-side)
+</p>
+</li>
+<li>
+<p>
+Client code that calls the provider&#8217;s public interface.
+   (client-side)
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_our_parsing_example">Our Parsing Example</h3>
+<div class="paragraph"><p>Let&#8217;s return to our parsing example: recognising (and eventually
+summing) a sum series of integers.</p></div>
+<div class="ulist"><div class="title">Examples of our expected Input:</div><ul>
+<li>
+<p>
+123
+</p>
+</li>
+<li>
+<p>
+1 + 2 + 3
+</p>
+</li>
+<li>
+<p>
+12 + 34 + 56 + 78
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="title">The PEG for a Sum Series of Integers</div>
+<div class="content">
+<pre><tt>Integer    &lt;-- [0-9]+
+Sum        &lt;-- Integer '+' Expression
+Expression &lt;-- Sum / Integer</tt></pre>
+</div></div>
+<div class="paragraph"><p>In the above PEG for matching a Sum Series of Integers, we have:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Three non-terminal symbols: <em>Integer</em>, <em>Sum</em> and <em>Expression</em>
+</p>
+</li>
+<li>
+<p>
+Two terminal symbols: <tt>[0-9]+ </tt>  and  <tt><em>+</em> </tt>
+</p>
+</li>
+<li>
+<p>
+One use of <strong>Sequence</strong> with the three pieces: <em>Integer</em> '+' <em>Expression</em>
+</p>
+</li>
+<li>
+<p>
+One use of <strong>Ordered choice</strong>: <em>Sum</em> / <em>Integer</em>
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">The original (and actual) PEG formalism specifies the
+fundamental expression type as a simple string&#8201;&#8212;&#8201;hence the use of <tt>
+'+' </tt> to specify a literal <tt> + </tt> character. PEGs also provide
+some regular-expression-esque constructs too, like: <tt>[0-9]+ </tt> and
+the use of <tt>* </tt>, <tt> + </tt> and <tt>? </tt>.  However, any strings in PEGs
+are just that&#8201;&#8212;&#8201;strings, <strong>not</strong> rugular expressions. Vimpeg shuns (at
+probable cost) this restriction and allows regular expressions as the
+fundamental expression type. So, in Vimpeg, the <tt>[0-9]+ </tt> construct
+can more idiomatically be represented using the Vim regex: <tt>\d\+ </tt>.</td>
+</tr></table>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">The Vimpeg API</div>
+<div class="paragraph"><p>The Vimpeg API provides all of the standard PEG constructs:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>peg.e(expression, options)                  (Expression)
+peg.and(sequence, options)                  (Sequence)
+peg.or(choices, options)                    (Ordered Choice)
+peg.maybe_many(expression, options)         (Zero or More)
+peg.many(expression, options)               (One or More)
+peg.maybe_one(expression, options)          (Optional)
+peg.between(expression, min, max, options)
+peg.has(expression, options)                (And Predicate)
+peg.not_has(expression, options)            (Not Predicate)</tt></pre>
+</div></div>
+</div></div>
+<div class="listingblock">
+<div class="title">Defining the Sum Series of Integers PEG in Vimpeg</div>
+<div class="content"><div class="highlight"><pre><span class="k">let</span> <span class="k">p</span> <span class="p">=</span> Vimpeg<span class="p">(</span>{<span class="s1">&#39;skip_white&#39;</span>: <span class="m">1</span>}<span class="p">)</span>
+
+<span class="k">call</span> <span class="k">p</span>.<span class="k">e</span><span class="p">(</span><span class="s1">&#39;\d\+&#39;</span><span class="p">,</span> {<span class="s1">&#39;id&#39;</span>: <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;on_match&#39;</span>: <span class="s1">&#39;Integer&#39;</span>}<span class="p">)</span>
+<span class="k">call</span> <span class="k">p</span>.and<span class="p">(</span>[<span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="k">p</span>.<span class="k">e</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">),</span> <span class="s1">&#39;expression&#39;</span>]<span class="p">,</span> {<span class="s1">&#39;id&#39;</span>: <span class="s1">&#39;sum&#39;</span>}<span class="p">)</span>
+<span class="k">let</span> expression <span class="p">=</span>  <span class="k">p</span>.or<span class="p">(</span>[<span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span>]<span class="p">,</span> {<span class="s1">&#39;id&#39;</span>: <span class="s1">&#39;expression&#39;</span>}<span class="p">)</span>
+</pre></div></div></div>
+<div class="paragraph"><p>This example demonstrates several aspects of Vimpeg&#8217;s API:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Elements that have been <em>identfied</em> (using an <tt>'id'</tt> attribute)
+   can be referred to in other expressions. <em>Sum</em>, <em>Integer</em> and
+   <em>Expression</em> are all identified in this case and are all referenced
+   by other non-terminals.
+</p>
+</li>
+<li>
+<p>
+Only root-level elements need to be assigned to a Vim variable. In
+   this case, the <em>expression</em> element is considered to be a root
+   element&#8201;&#8212;&#8201;we can directly call on that element now to parse a sum
+   series of integers.
+</p>
+</li>
+<li>
+<p>
+Intermediate processing (for evaluations, reductions, lookups,
+   whatever) are achieved through callback functions through the
+   <tt>'on_match'</tt> attribute.  The <em>Integer</em> rule uses such a callback
+   to convert the string representation of the parsed series of digits
+   into a single integer value (using the builtin Vim function
+   <tt>str2nr()</tt>.) Here is that callback function:
+</p>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span class="k">function</span><span class="p">!</span> Integer<span class="p">(</span>elems<span class="p">)</span>
+  <span class="k">return</span> str2nr<span class="p">(</span><span class="k">a</span>:elems<span class="p">)</span>
+<span class="k">endfunction</span>
+</pre></div></div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">This is not <strong>strictly</strong> necessary in this example&#8201;&#8212;&#8201;Vim happily
+automatically converts string representations of numbers for us in all
+the right places for this example to work without the extra overhead
+of this callback. It was included in this example only for the purpose
+of showing you that it is possible to do so, and how you&#8217;d go about
+doing it.</td>
+</tr></table>
+</div>
+</li>
+</ol></div>
+<div class="listingblock">
+<div class="title">The public API interface:</div>
+<div class="content"><div class="highlight"><pre><span class="k">function</span><span class="p">!</span> Sum<span class="p">(</span>str<span class="p">)</span>
+  <span class="k">let</span> <span class="k">res</span> <span class="p">=</span> <span class="k">g</span>:expression.<span class="k">match</span><span class="p">(</span><span class="k">a</span>:str<span class="p">)</span>
+  <span class="k">if</span> <span class="k">res</span>[<span class="s1">&#39;is_matched&#39;</span>]
+    <span class="k">return</span> SumList<span class="p">(</span><span class="k">res</span>[<span class="s1">&#39;value&#39;</span>]<span class="p">)</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="k">res</span>[<span class="s1">&#39;errmsg&#39;</span>]
+  <span class="k">endif</span>
+<span class="k">endfunction</span>
+</pre></div></div></div>
+<div class="paragraph"><p>The <tt>res</tt> object holds a lot of information about what was actually
+parsed (and an <tt>errmsg</tt>  if parsing failed). The <tt><em>value</em></tt> element
+will contain the cumulative result of all the <em>on-match</em> callbacks as
+the input was being parsed.</p></div>
+<div class="listingblock">
+<div class="title">A provider-side utility function:</div>
+<div class="content"><div class="highlight"><pre><span class="k">function</span><span class="p">!</span> SumList<span class="p">(</span><span class="k">s</span><span class="p">)</span>
+  <span class="k">return</span> type<span class="p">(</span><span class="k">a</span>:<span class="k">s</span><span class="p">)</span> <span class="p">==</span> type<span class="p">(</span><span class="m">1</span><span class="p">)</span> ? <span class="k">a</span>:<span class="k">s</span> : <span class="k">a</span>:<span class="k">s</span>[<span class="m">0</span>] <span class="p">+</span> SumList<span class="p">(</span><span class="k">a</span>:<span class="k">s</span>[<span class="m">2</span>]<span class="p">)</span>
+<span class="k">endfunction</span>
+</pre></div></div></div>
+<div class="paragraph"><p>This function performs the second half of <em>semantic analysis</em>, which
+is transforming the successfully parsed inout into some desired output
+form. In this case, we desire the calculated sum of the series of
+integers. This recursive function performs that task on the
+intermediate parse-tree that Vimpeg built during the parsing phase.</p></div>
+<div class="paragraph"><p>Some might object to including this in <em>semantic analysis</em> and I
+concede it&#8217;s probably a bit shabby to do so. Call it what you will&#8230;
+this part of the process is all about taking a now known good
+intermediate structure and transforming it into a desired output
+structure.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_it">Using it</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre>echo Sum<span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="p">)</span>
+echo Sum<span class="p">(</span><span class="s1">&#39;1 + 2&#39;</span><span class="p">)</span>
+echo Sum<span class="p">(</span><span class="s1">&#39;1 + 2 + 3&#39;</span><span class="p">)</span>
+echo Sum<span class="p">(</span><span class="s1">&#39;12 + 34 + 56 + 78&#39;</span><span class="p">)</span>
+</pre></div></div></div>
+<div class="paragraph"><p>Not terribly exciting, granted, but hopefully this serves as a
+reasonable introduction to the Vimpeg Parser Generator. What can <strong>you</strong>
+do with it? I look forward to seeing weird and wonderful creations and
+possibilities in Vim now that real parsing tasks are more accessible.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resources">Resources</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://github.com/dahu/Vimpeg">http://github.com/dahu/Vimpeg</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_8217_s_next">What&#8217;s Next?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In the next article I will show an example of sugar-coating the VimL
+language to make function declarations both a little easier on the
+eyes and fingers as well as adding two long-missing features from
+VimL&#8201;&#8212;&#8201;default values in function parameters and inline function
+declarations, a la <tt> if &lt;condition&gt; | something | endif </tt>.</p></div>
+<div class="paragraph"><p>We <strong>used to</strong> declare these parsing rules in
+<a href="http://en.wikipedia.org/wiki/Ebnf">EBNF</a>, intended for a
+<a href="http://en.wikipedia.org/wiki/Recursive_descent_parser">recursive
+descent parser</a> (or an LL or LALR parser&#8201;&#8212;&#8201;which we will <strong>not</strong> go
+into here).  (And before you drown vsdi in comments of "They so still
+use that, dude!"&#8201;&#8212;&#8201;I know. <strong>They</strong> do.)</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 1.1<br />
+Last updated 2012-04-11 16:26:54 PDT
+</div>
+</div>
+</body>
+</html>
+
+    </div>
+        <div id="sidebar">
+        <h2><a href="/">Home</a></h2>
+        
+        <h3><a href="/advanced" rel="tag">advanced</a></h3>
+                <ul>
+                <li><a href="/asciidoc/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+                </ul>
+        
+        <h3><a href="/genius" rel="tag">genius</a></h3>
+                <ul>
+                <li><a href="/asciidoc/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/markdown/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+        <h3><a href="/learn" rel="tag">learn</a></h3>
+                <ul>
+                <li><a href="/asciidoc/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/asciidoc/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/markdown/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+        <h3><a href="/length" rel="tag">length</a></h3>
+                <ul>
+                <li><a href="/asciidoc/LongestLine/LongestLine/">The Longest Line</a></li>
+                </ul>
+        
+        <h3><a href="/test" rel="tag">test</a></h3>
+                <ul>
+                <li><a href="/about/">About</a></li>
+                </ul>
+        
+        <h3><a href="/vim" rel="tag">vim</a></h3>
+                <ul>
+                <li><a href="/about/">About</a></li><li><a href="/asciidoc/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/asciidoc/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/asciidoc/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/markdown/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+      <h2>nanoc</h2>
+      <ul>
+        <li><a href="http://nanoc.stoneship.org/docs/">Documentation</a></li>
+        <li><a href="http://nanoc.stoneship.org/docs/3-getting-started/">Getting Started</a></li>
+        <li><a href="http://groups.google.com/group/nanoc/">Discussion Group</a></li>
+        <li><a href="irc://chat.freenode.net/#nanoc">IRC Channel</a></li>
+        <li><a href="http://projects.stoneship.org/trac/nanoc/">Wiki</a></li>
+      </ul>
+    </div>
+
+        <div id="sidebar2">
+      <ul><h4>2012</h4>
+        
+             <li><a href="/about/">About</a></li>
+             <li><a href="/asciidoc/LongestLine/LongestLine/">The Longest Line</a></li>
+             <li><a href="/asciidoc/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+             <li><a href="/asciidoc/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li>
+             <li><a href="/markdown/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+       </ul>
+    </div>
+
+
+  </body>
+</html>
