@@ -31,7 +31,7 @@ else
   if ! rvm --create  "$environment_id"
   then
     echo "Failed to create RVM environment '${environment_id}'."
-    exit 1
+    return 1
   fi
 fi
 
@@ -47,9 +47,7 @@ fi
 # fi
 
 # If you use bundler, this might be useful to you:
-# if command -v bundle && [[ -s Gemfile ]]
-# then
-#   bundle install
-# fi
-
-
+if command -v bundle && [[ -s Gemfile ]]
+then
+  bundle install
+fi
