@@ -13,40 +13,27 @@
 #   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
 #   because “*” matches zero or more characters.
 
-
 ## Compilation Phase
+
+compile '/stylesheet|syntax/' do nothing; end
+
 compile '/asciidoc/*' do
-  if item.binary?
-    # don’t filter binary items
-  else
+  unless item.binary?
     filter :asciidoc
     layout 'default'
   end
 end
 
-## Compilation Phase
 compile '/markdown/*' do
-  if item.binary?
-    # don’t filter binary items
-  else
+  unless item.binary?
     # FIXME: kramdown is causing an encoding incompatibility problme
     #filter :kramdown
     layout 'default'
   end
 end
 
-compile '/syntax/' do
-  # don’t filter or layout
-end
-
-compile '/stylesheet/' do
-  # don’t filter or layout
-end
-
 compile '*' do
-  if item.binary?
-    # don’t filter binary items
-  else
+  unless item.binary?
     filter :erb
     filter :colorize_syntax,
            :default_colorizer => :pygmentize
@@ -55,12 +42,9 @@ compile '*' do
 end
 
 ## Routing Phase
-route '/stylesheet/' do
-  '/style.css'
-end
 
-route '/syntax/' do
-  '/syntax.css'
+route '/stylesheet|syntax/' do
+  file_name(item)
 end
 
 route '/images/icons/callouts/*' do
@@ -72,17 +56,9 @@ route '/images/icons/*' do
 end
 
 route '*' do
-  base = item.identifier
-  base.gsub!(/\/^asciidoc/, '')
-  puts "\'#{base}\'"
-  if item.binary?
-    # Write item with identifier /foo/ to /foo.ext
-    base.chop + '.' + item[:extension]
-  else
-    # Write item with identifier /foo/ to /foo/index.html
-    base + 'index.html'
-  end
+  file_for(item)
 end
 
 ## Layout Phase
+
 layout '*', :erb
