@@ -10,14 +10,14 @@ understand each other and where they're coming from.
 Facets
 ------
 
-Modal editing
-Normal Mode commands
-Ex Commands
-Creating Maps & Commands
-VimL
-Text objects
-usr_41
-macros
+* Modal editing
+* Normal Mode commands
+* Ex Commands
+* Creating Maps & Commands
+* VimL
+* Text objects
+* usr_41
+* macros
 
 Novice
 ------
@@ -64,8 +64,8 @@ Proficient
 * Able to quickly locate appropriate documentation using Vim's :help
   system
 * Creates and publishes new plugins for the Vim community
-* Supports the community through writing blog posts, participating on
-  #vim, subscribing to Vim mailing lists, etc.
+* Supports the community through writing blog posts, participating on `#vim`,
+  subscribing to Vim mailing lists, etc.
 
 Expert
 ------

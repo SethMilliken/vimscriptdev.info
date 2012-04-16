@@ -120,3 +120,17 @@ a:hover {
 
   line-height: 20px;
 }
+
+/* Typogruby Styles */
+.dquo {
+    margin-left: -0.5em;
+}
+.caps {
+    text-transform: uppercase;
+    font-size: 85%;
+    letter-spacing: 1px;
+}
+.amp {
+    font-family: "Goudy Old Style";
+    font-style: italic;
+}
