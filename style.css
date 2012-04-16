@@ -1,5 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Seth - </title>
+    <link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+    <!-- <link rel="stylesheet" type="text/css" href="/asciidoc.css" media="screen"> -->
+    <link rel="stylesheet" type="text/css" href="/syntax.css" media="screen">
+    <script type="text/javascript" src="/asciidoc.js"></script>
+    <meta name="generator" content="nanoc 3.3.2">
+  </head>
+  <body>
+    <div id="main">
+      <h1></h1>
 
-/*@import url('html5.css');@import url('fontfaces.css');@import url('pygmentize.css');@import url('verticalflow.css');@import url('disqus.css');body{background:#fff;font-family:'Gentiun Plus',Palatino,'Book Antiqua',Garamond,Times,'Times New Roman',sans-serif;font-size:100%;margin:3em 0 3em 0;color:#000}pre,code,samp,tt,kbd{font-family:'Anonymous Pro',Courier,'Courier New','Anonymous Pro',Monaco,monospace}code,samp,tt,kbd{font-size:95%}a{text-decoration:none;color:inherit;border-bottom:1px solid #ddd}article:hover a{background:#ffffe0;border-bottom:1px solid #E7D7AF}p:hover a,li:hover a,dl:hover a,table:hover a{background:#ffffc4;border-bottom:1px solid #E7D7AF}a:hover{color:#E32817;border-bottom:1px solid #AA362E !important}body>article,body>section{width:32em;margin:0 auto}article.summary{display:inline-block;width:15.9em;text-align:center;height:4.5em;overflow:hidden;padding:0;color:#333;opacity:.125}article.summary:nth-child(-n+9){opacity:.25}article.summary:nth-child(-n+7){opacity:.5}article.summary:nth-child(-n+5){opacity:.75}article.summary:nth-child(-n+3),article.summary:hover,section.visible article.summary{opacity:1}article.summary>a>h1{font-size:2.828em;line-height:1.0608;margin-top:.2652em;margin-bottom:-1.0608em;color:#eee}article.summary>a:hover>h1{color:#AA362E;opacity:.1}article.summary>a>h2{font-size:1.276em;line-height:1.1755;margin-top:.7836em;margin-bottom:0;font-weight:400}article.summary>a>h3{font-size:.9024em;line-height:1.6622;margin-top:0;margin-bottom:.5540em;font-weight:400;font-style:italic}article.summary>a{width:100%;height:4.5em;overflow:hidden;border-bottom:0 !important;display:inline-block}article.summary>a:hover{background:transparent !important}article>section#footnotes ol{border-top:1px solid #ddd}article>section#footnotes li{font-size:.7072em;color:#222}article>section#footnotes li>p{line-height:2.121}article>section#footnotes li:first-child{margin-top:1em}body>*>header{text-align:center;margin-bottom:4.5em}body>*>header h1{font-size:2.828em;line-height:1.0608;margin-top:.7956em;margin-bottom:.1326em}body>*>header h2{margin-top:.7956em;font-style:italic}body>article>footer p{margin-top:1.5em;text-align:right}body>article>footer time{font-style:italic}body>header{width:54em;height:1.5em;margin:0 auto;margin-bottom:5em;display:block;overflow:visible;border-bottom:1px solid #ccc}body>header h1{display:inline;font-size:1.414em;line-height:1.0608;margin-top:0;margin-bottom:0;font-variant:small-caps}body>header nav{position:relative;top:.5ex;display:inline;float:right;height:3em;overflow:visible}body>header nav li{display:inline-block;float:right}body>header nav li+li{padding-right:2ex}body>header nav ul{padding:0;display:inline-block;margin:0;list-style:none}body>header nav ul ul{display:block;position:absolute;top:1.5em;right:0;width:54em}body>header nav ul ul li{font-style:italic}body>header nav a:hover,body>footer nav a:hover{color:#E32817 !important;border-bottom:0 !important;background:transparent !important}body>header nav ul a,body>footer nav ul a{text-decoration:none;color:#666;border-bottom:0 !important;background:transparent !important}body>header nav ul li>a:not([href]),body>header nav ul li>a:not([href]):hover{color:#111 !important}body>header nav ul ul a{color:#ccc}body>header nav ul ul li>a:not([href]),body>header nav ul ul li>a:not([href]):hover{color:#444 !important}body>footer{width:32em;height:1.5em;margin:0 auto;margin-top:5.75em;display:block;overflow:visible;border-top:1px solid #ccc;margin-bottom:3em}body>footer p,body>footer li{font-size:.8048em;line-height:1.8638;color:#666}body>footer p{display:inline;font-style:italic}body>footer nav{display:inline;float:right}body>footer nav ul{padding:0;display:inline-block;margin:0;list-style:none}body>footer nav ul li{display:inline-block}body>footer nav li+li{padding-left:2ex}article img,article video,article audio{display:block;margin:1.75em auto;max-width:30em;background:#fafafa;padding:.5em;position:relative;top:-.25em}.photography{background:#fafafa;margin:0 auto}.photography+.photography{margin-top:1.5em}.photography a{border:0 !important;background:transparent !important;display:block}.photography img{margin-bottom:.25em;margin-top:0}.photography p+p{text-align:right;font-style:italic;padding:0 .75em;padding-bottom:.5em;margin-top:-.5em}.noindent,.next-noindent+p{text-indent:0}.FlattrButton{float:right;margin:.5em 0 1em 1em}blockquote p+p:last-child{text-align:right;font-style:normal}blockquote p+p:last-child:before{content:'— '}pre{font-family:'Anonymous Pro',Monaco,monospace !important;background:#fafafa;padding:.75em 1em}pre code{font-family:inherit !important;line-height:inherit !important}.prebg{background:#fafafa;position:absolute;width:100%;left:0}#sb-container a{border-bottom:none !important}
+
+      
+/*@import url('html5.css');@import url('fontfaces.css');@import url('pygmentize.css');@import url('verticalflow.css');@import url('disqus.css');body{background:#fff;font-family:'Gentiun Plus',Palatino,'Book Antiqua',Garamond,Times,'Times New Roman',sans-serif;font-size:100%;margin:3em 0 3em 0;color:#000}pre,code,samp,tt,kbd{font-family:'Anonymous Pro',Courier,'Courier New','Anonymous Pro',Monaco,monospace}code,samp,tt,kbd{font-size:95%}a{text-decoration:none;color:inherit;border-bottom:1px solid #ddd}article:hover a{background:#ffffe0;border-bottom:1px solid #E7D7AF}p:hover a,li:hover a,dl:hover a,table:hover a{background:#ffffc4;border-bottom:1px solid #E7D7AF}a:hover{color:#E32817;border-bottom:1px solid #AA362E !important}body&gt;article,body&gt;section{width:32em;margin:0 auto}article.summary{display:inline-block;width:15.9em;text-align:center;height:4.5em;overflow:hidden;padding:0;color:#333;opacity:.125}article.summary:nth-child(-n+9){opacity:.25}article.summary:nth-child(-n+7){opacity:.5}article.summary:nth-child(-n+5){opacity:.75}article.summary:nth-child(-n+3),article.summary:hover,section.visible article.summary{opacity:1}article.summary&gt;a&gt;h1{font-size:2.828em;line-height:1.0608;margin-top:.2652em;margin-bottom:-1.0608em;color:#eee}article.summary&gt;a:hover&gt;h1{color:#AA362E;opacity:.1}article.summary&gt;a&gt;h2{font-size:1.276em;line-height:1.1755;margin-top:.7836em;margin-bottom:0;font-weight:400}article.summary&gt;a&gt;h3{font-size:.9024em;line-height:1.6622;margin-top:0;margin-bottom:.5540em;font-weight:400;font-style:italic}article.summary&gt;a{width:100%;height:4.5em;overflow:hidden;border-bottom:0 !important;display:inline-block}article.summary&gt;a:hover{background:transparent !important}article&gt;section#footnotes ol{border-top:1px solid #ddd}article&gt;section#footnotes li{font-size:.7072em;color:#222}article&gt;section#footnotes li&gt;p{line-height:2.121}article&gt;section#footnotes li:first-child{margin-top:1em}body&gt;*&gt;header{text-align:center;margin-bottom:4.5em}body&gt;*&gt;header h1{font-size:2.828em;line-height:1.0608;margin-top:.7956em;margin-bottom:.1326em}body&gt;*&gt;header h2{margin-top:.7956em;font-style:italic}body&gt;article&gt;footer p{margin-top:1.5em;text-align:right}body&gt;article&gt;footer time{font-style:italic}body&gt;header{width:54em;height:1.5em;margin:0 auto;margin-bottom:5em;display:block;overflow:visible;border-bottom:1px solid #ccc}body&gt;header h1{display:inline;font-size:1.414em;line-height:1.0608;margin-top:0;margin-bottom:0;font-variant:small-caps}body&gt;header nav{position:relative;top:.5ex;display:inline;float:right;height:3em;overflow:visible}body&gt;header nav li{display:inline-block;float:right}body&gt;header nav li+li{padding-right:2ex}body&gt;header nav ul{padding:0;display:inline-block;margin:0;list-style:none}body&gt;header nav ul ul{display:block;position:absolute;top:1.5em;right:0;width:54em}body&gt;header nav ul ul li{font-style:italic}body&gt;header nav a:hover,body&gt;footer nav a:hover{color:#E32817 !important;border-bottom:0 !important;background:transparent !important}body&gt;header nav ul a,body&gt;footer nav ul a{text-decoration:none;color:#666;border-bottom:0 !important;background:transparent !important}body&gt;header nav ul li&gt;a:not([href]),body&gt;header nav ul li&gt;a:not([href]):hover{color:#111 !important}body&gt;header nav ul ul a{color:#ccc}body&gt;header nav ul ul li&gt;a:not([href]),body&gt;header nav ul ul li&gt;a:not([href]):hover{color:#444 !important}body&gt;footer{width:32em;height:1.5em;margin:0 auto;margin-top:5.75em;display:block;overflow:visible;border-top:1px solid #ccc;margin-bottom:3em}body&gt;footer p,body&gt;footer li{font-size:.8048em;line-height:1.8638;color:#666}body&gt;footer p{display:inline;font-style:italic}body&gt;footer nav{display:inline;float:right}body&gt;footer nav ul{padding:0;display:inline-block;margin:0;list-style:none}body&gt;footer nav ul li{display:inline-block}body&gt;footer nav li+li{padding-left:2ex}article img,article video,article audio{display:block;margin:1.75em auto;max-width:30em;background:#fafafa;padding:.5em;position:relative;top:-.25em}.photography{background:#fafafa;margin:0 auto}.photography+.photography{margin-top:1.5em}.photography a{border:0 !important;background:transparent !important;display:block}.photography img{margin-bottom:.25em;margin-top:0}.photography p+p{text-align:right;font-style:italic;padding:0 .75em;padding-bottom:.5em;margin-top:-.5em}.noindent,.next-noindent+p{text-indent:0}.FlattrButton{float:right;margin:.5em 0 1em 1em}blockquote p+p:last-child{text-align:right;font-style:normal}blockquote p+p:last-child:before{content:'— '}pre{font-family:'Anonymous Pro',Monaco,monospace !important;background:#fafafa;padding:.75em 1em}pre code{font-family:inherit !important;line-height:inherit !important}.prebg{background:#fafafa;position:absolute;width:100%;left:0}#sb-container a{border-bottom:none !important}
 */
 
 * {
@@ -35,7 +51,7 @@ a:hover {
   top: 40px;
   left: 280px;
 
-  width: 800px;
+  width: 650px;
 }
 
 #main h1 {
@@ -73,7 +89,7 @@ a:hover {
   position: absolute;
 
   top: 40px;
-  left: 1224px;
+  left: 924px;
   width: 200px;
 
   padding: 0px 0px 20px 20px;
@@ -120,3 +136,76 @@ a:hover {
 
   line-height: 20px;
 }
+
+/* Typogruby Styles */
+.dquo {
+    margin-left: -0.5em;
+}
+.caps {
+    text-transform: uppercase;
+    font-size: 85%;
+    letter-spacing: 1px;
+}
+.amp {
+    font-family: "Goudy Old Style";
+    font-style: italic;
+}
+
+    </div>
+    <div id="sidebar">
+        <h2><a href="/">Home</a></h2>
+        
+        <h3><a href="/advanced" rel="tag">advanced</a></h3>
+                <ul>
+                <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+                </ul>
+        
+        <h3><a href="/genius" rel="tag">genius</a></h3>
+                <ul>
+                <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+        <h3><a href="/learn" rel="tag">learn</a></h3>
+                <ul>
+                <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+        <h3><a href="/length" rel="tag">length</a></h3>
+                <ul>
+                <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li>
+                </ul>
+        
+        <h3><a href="/test" rel="tag">test</a></h3>
+                <ul>
+                <li><a href="/about/">About</a></li>
+                </ul>
+        
+        <h3><a href="/vim" rel="tag">vim</a></h3>
+                <ul>
+                <li><a href="/about/">About</a></li><li><a href="/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+      <h2>nanoc</h2>
+      <ul>
+        <li><a href="http://nanoc.stoneship.org/docs/">Documentation</a></li>
+        <li><a href="http://nanoc.stoneship.org/docs/3-getting-started/">Getting Started</a></li>
+        <li><a href="http://groups.google.com/group/nanoc/">Discussion Group</a></li>
+        <li><a href="irc://chat.freenode.net/#nanoc">IRC Channel</a></li>
+        <li><a href="http://projects.stoneship.org/trac/nanoc/">Wiki</a></li>
+      </ul>
+    </div>
+
+    <div id="sidebar2">
+      <ul><h4>2012</h4>
+        
+             <li><a href="/about/">About</a></li>
+             <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li>
+             <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+             <li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li>
+             <li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+       </ul>
+    </div>
+
+
+  </body>
+</html>

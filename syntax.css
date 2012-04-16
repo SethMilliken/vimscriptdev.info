@@ -1,4 +1,20 @@
-pre { color: #62acce; background-color: #222222; font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; padding: 1em           !important; } /* pre sections */
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Seth - </title>
+    <link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+    <!-- <link rel="stylesheet" type="text/css" href="/asciidoc.css" media="screen"> -->
+    <link rel="stylesheet" type="text/css" href="/syntax.css" media="screen">
+    <script type="text/javascript" src="/asciidoc.js"></script>
+    <meta name="generator" content="nanoc 3.3.2">
+  </head>
+  <body>
+    <div id="main">
+      <h1></h1>
+
+
+      pre { color: #62acce; background-color: #222222; font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; padding: 1em           !important; } /* pre sections */
 .highlight pre, pre tt, pre span, pre code {  color: #62acce; background-color: #222222; font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; !important; } /* pre sections */
 code { font-family: "Ubuntu Mono", Monaco, "Courier New", Courier,  monospace; font-size: 10; !important; } /* inline code sections */
 p tt, li code, p code{ padding:.1em .2em .1em .2em; color:#333333; background-color:#eeeeee; border:1px solid #aaaaaa;}
@@ -71,3 +87,62 @@ p tt, li code, p code{ padding:.1em .2em .1em .2em; color:#333333; background-co
 .vg  { color: #62acce;                                        !important; } /* Name.Variable.Global */
 .vi  { color: #62acce;                                        !important; } /* Name.Variable.Instance */
 .il  { color: #9ab2c8; font-weight: bold;                     !important; } /* Literal.Number.Integer.Long */
+
+    </div>
+    <div id="sidebar">
+        <h2><a href="/">Home</a></h2>
+        
+        <h3><a href="/advanced" rel="tag">advanced</a></h3>
+                <ul>
+                <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+                </ul>
+        
+        <h3><a href="/genius" rel="tag">genius</a></h3>
+                <ul>
+                <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+        <h3><a href="/learn" rel="tag">learn</a></h3>
+                <ul>
+                <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+        <h3><a href="/length" rel="tag">length</a></h3>
+                <ul>
+                <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li>
+                </ul>
+        
+        <h3><a href="/test" rel="tag">test</a></h3>
+                <ul>
+                <li><a href="/about/">About</a></li>
+                </ul>
+        
+        <h3><a href="/vim" rel="tag">vim</a></h3>
+                <ul>
+                <li><a href="/about/">About</a></li><li><a href="/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+                </ul>
+        
+      <h2>nanoc</h2>
+      <ul>
+        <li><a href="http://nanoc.stoneship.org/docs/">Documentation</a></li>
+        <li><a href="http://nanoc.stoneship.org/docs/3-getting-started/">Getting Started</a></li>
+        <li><a href="http://groups.google.com/group/nanoc/">Discussion Group</a></li>
+        <li><a href="irc://chat.freenode.net/#nanoc">IRC Channel</a></li>
+        <li><a href="http://projects.stoneship.org/trac/nanoc/">Wiki</a></li>
+      </ul>
+    </div>
+
+    <div id="sidebar2">
+      <ul><h4>2012</h4>
+        
+             <li><a href="/about/">About</a></li>
+             <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li>
+             <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+             <li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li>
+             <li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+       </ul>
+    </div>
+
+
+  </body>
+</html>
