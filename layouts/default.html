@@ -4,22 +4,24 @@
     <meta charset="utf-8">
     <title>Seth - <%= @item[:title] %></title>
     <link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+    <!-- <link rel="stylesheet" type="text/css" href="/asciidoc.css" media="screen"> -->
     <link rel="stylesheet" type="text/css" href="/syntax.css" media="screen">
+    <script type="text/javascript" src="/asciidoc.js"></script>
     <meta name="generator" content="nanoc 3.3.2">
   </head>
   <body>
     <div id="main">
       <h1><%= item[:title] %></h1>
-      <% unless item[:created_at].nil? %>
+<% unless item[:created_at].nil? %>
       <em><%= item[:created_at] %></em>
-      <% end %>
-      <% unless item[:tags].nil? or item[:tags].length < 1 %>
+<% end %>
+<% unless item[:tags].nil? or item[:tags].length < 1 %>
       <%= item[:tags].inspect %>
-      <% end %>
+<% end %>
       <%= yield %>
     </div>
-    <%= SIDEBAR  ||= render 'sidebar' %>
-    <%= SIDEBAR2 ||= render 'sidebar2' %>
+<%= SIDEBAR  ||= render 'sidebar' %>
+<%= SIDEBAR2 ||= render 'sidebar2' %>
 
   </body>
 </html>

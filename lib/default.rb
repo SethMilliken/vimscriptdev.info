@@ -1,5 +1,7 @@
 # All files in the 'lib' directory will be loaded
 # before nanoc starts compiling.
+
+# Standard Nanoc Helpers
 include Nanoc::Helpers::Tagging
 include Nanoc::Helpers::Blogging
 include Nanoc::Helpers::Breadcrumbs
@@ -38,6 +40,12 @@ def strip_processing_types_from(identifier)
     identifier.gsub!(/^\/#{type}/, '')
   end
   identifier
+end
+
+def mkdir_p(path)
+  output_dir = @site.config[:output_dir]
+  FileUtils.mkdir_p(output_dir + path)
+  path
 end
 
 def nothing

@@ -15,44 +15,54 @@
 
 ## Compilation Phase
 
-compile '/stylesheet|syntax/' do nothing; end
+compile "//stylesheet/|/syntax//" do nothing; end
+compile '/asciidoc/' do nothing; end
+compile '/ad/' do nothing; end
 
-compile '/asciidoc/*' do
-  unless item.binary?
-    filter :asciidoc
-    layout 'default'
-  end
-end
-
-compile '/markdown/*' do
-  unless item.binary?
-    # FIXME: kramdown is causing an encoding incompatibility problme
-    #filter :kramdown
-    layout 'default'
-  end
-end
-
+# Default
 compile '*' do
   unless item.binary?
-    filter :erb
-    filter :colorize_syntax,
-           :default_colorizer => :pygmentize
+    case item[:extension]
+    when /markdown|md|wiki/
+      filter :rdiscount
+      filter :typogruby
+    when "asciidoc"
+      filter :asciidoc
+      filter :cleanup
+    else
+      filter :erb
+      filter :colorize_syntax,
+        :default_colorizer => :pygmentize
+    end
     layout 'default'
   end
 end
 
 ## Routing Phase
 
-route '/stylesheet|syntax/' do
+route '/stylesheet/' do
+  '/style.css'
+end
+
+route '/syntax/' do
   file_name(item)
 end
 
+route '/asciidoc/' do
+  '/asciidoc.js'
+end
+
+route '/ad/' do
+  '/asciidoc.css'
+end
+
+
 route '/images/icons/callouts/*' do
-  '/images/icons/callouts/'
+  mkdir_p '/images/icons/callouts/'
 end
 
 route '/images/icons/*' do
-  '/images/icons/'
+  mkdir_p '/images/icons/'
 end
 
 route '*' do
