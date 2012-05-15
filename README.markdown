@@ -16,6 +16,7 @@ Start
   [attributes]
   pygments=
   icons=
+  iconsdir=/images/icons
   ```
 
 * `git clone git://github.com/SethMilliken/vimscriptdev.info.git`
