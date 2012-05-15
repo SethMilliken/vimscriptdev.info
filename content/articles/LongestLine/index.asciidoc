@@ -79,7 +79,7 @@ NOTE: the ++!++ at the end of ++normal!++ prevents Vim from using user-provided
 normal mode maps when executing the command. This should be the default when
 you write your own VimL - only use the bare ++normal++ when you _need_ to.
 
-image::./gaelic.png[]
+image:./gaelic_curse.png[]
 
 The end result is that the longest line number is now in the Unnamed
 register (++@"++) and ready to be used in a jump command like:
