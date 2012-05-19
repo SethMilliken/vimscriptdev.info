@@ -1,7 +1,7 @@
 Jump to the Longest Line
 ========================
 Barry Arthur
-v0.6, January 13, 2012
+v0.8, May 16, 2012
 
 __The evolution of a Vimmer__
 
@@ -9,14 +9,13 @@ Ignoring the prosaic question of ``Why would you ever want to?!'',
 consider how, in your editor of choice, you would jump to the longest
 line in the file.
 
-Vim provides a _lot_ of jump commands, possibly more so than any
-other editor. We can jump to a matching item; jump between words,
-sentences and paragraphs; jump between classes or #defined regions in
-a source file; jump between files and back and more.
-Jump-to-longest-line, however, is missing. This forces us to craft a
-solution using either existing builtin Vim commands, the ex commands,
-VimL (Vim's scripting language), or (more typically) a mixture of all
-three.
+Vim provides a _lot_ of jump commands, possibly more so than any other
+editor.  We can jump to a matching item; jump between words, sentences
+and paragraphs; jump between classes or #defined regions in a source
+file; jump between files and back and more.  Jump-to-longest-line,
+however, is missing. This forces us to craft a solution using either
+existing builtin Vim commands, the ex commands, VimL (Vim's scripting
+language), or (more typically) a mixture of all three.
 
 We compare three different approaches to solving this problem, each
 one arguably a little further along in the ``evolution'' of a Vim
@@ -30,9 +29,9 @@ Approach #1: Normal and Ex Commands
 ------------------------------------------------------------------
 
   function! LongestLine_Ex()
-    global/^/substitute/^/\=len(getline('.')).' '.line('.').' '
+    silent %substitute/^/\=len(getline('.')).' '.line('.').' '
     sort n
-    normal! Gwyiwu
+    silent normal! Gwywu
     return @"
   endfunction
 
@@ -50,36 +49,44 @@ briefly stored in macros.
 Walkthrough
 ~~~~~~~~~~~
 
-The Ex command ++global/\^/++ on line 2 is a way to do something for every line
-of the file. Every line, even a blank one, matches ++/^/++. The
-++substitute///++ prepends the length of the line and the line number as two
-space-delimited fields to the beginning of the current line (and as that is a
-sub-command of the ++global++ command, for every line of the file.)
+The ++substitute///++ prepends the length of the line and the line
+number as two space-delimited fields to the beginning of the current
+line.
 
-NOTE: The ++ ''.'' ++ parameter of the ++getline()++ function means
-'current line in the file'.
+[NOTE]
+====
+
+* The ++.++ parameter of the ++getline()++ function means 'current line'
+  in the file.
+
+* I'm using ++silent++ in this function to suppress the usual noise from
+  the ++substitute++ and ++normal!++ commands.
+
+====
 
 Line 3 uses the Ex command ++sort n++ which does a numeric sort of the whole
 file -- putting the longest line at the bottom of the file.
 
-The series of Normal mode commands on line 4 (+Gwyiwu+) look like a
+The series of Normal mode commands on line 4 (+Gwywu+) look like a
 Gaelic curse, but they really mean:
 
-  * +G+ = Go to the end of the file
+image:/images/gaelic_curse.png[align="right"]
+
+* +G+ = Go to the end of the file
 +
 NOTE: the cursor will already be in column 1 due to the preceding commands.
 +
-  * +w+ = Move forward one word (jumping over the line length)
-  * +yiw+ = Yank the next inner word (the line number before sort)
-  * +u+ = undo (the sort and line modifications. NOTE: If this were in a
-    macro or the commands were issued manually, you would need two
-    undo commands here.)
+* +w+ = Move forward one word (jumping over the line length)
+* +yw+ = Yank the next word (the line number before sort)
+* +u+ = undo (the sort and line modifications.
 +
-NOTE: the ++!++ at the end of ++normal!++ prevents Vim from using user-provided
-normal mode maps when executing the command. This should be the default when
-you write your own VimL - only use the bare ++normal++ when you _need_ to.
-
-image:/images/gaelic_curse.png[]
+NOTE: If this were in a macro or the commands were issued manually,
+      you would need two undo commands here.
++
+The ++!++ at the end of ++normal!++ prevents Vim from using
+user-provided normal mode maps when executing the command. This should
+be the default when you write your own VimL -- only use the bare
+++normal++ when you _need_ to.
 
 The end result is that the longest line number is now in the Unnamed
 register (++@"++) and ready to be used in a jump command like:
@@ -144,7 +151,7 @@ unnamed register like we did with the ++LongestLine_Ex++ version.
 
 Okay, so it's a tad longer in SLOC than the ++LongestLine_Ex++
 version, and could still benefit from a drop or two of optimisation
-yet (removing the extra call to len(), for instance)... but it's
+yet (removing the extra call to ++len()++, for instance)... but it's
 certainly **no worse** than our previous attempt.
 
 Walkthrough
@@ -156,11 +163,14 @@ There isn't too much to explain here, except:
 * ++getline(1, ''$'')++ returns all the lines in the file as a list (the
   ++ ''$'' ++ parameter means 'last line in the file'.)
 
-NOTE: ++getline(1)++ differs from ++getline(1,2)++ -- in the first case, a
+[NOTE]
+====
+++getline(1)++ differs from ++getline(1,2)++ -- in the first case, a
 string is returned containing the requested line, but in the second case, a
-list of strings is returned. Earlier we used the form ++getline( ''.'' )++
-(where ++ ''.'' ++ means the 'current line') which is the single argument form
+list of strings is returned. Earlier we used the form ++getline(''.'')++
+(where ++''.''++ means the 'current line') which is the single argument form
 and therefore returns a string.
+====
 
 Is this as good as it gets? While we're feeling all sort of warm and
 comfortable, gloating in our achievements, the emacsians are laughing
@@ -223,7 +233,7 @@ image::/images/frank_thinks_in_sexps.png[]
 The petulant proceduralist within you might be grumbling now that all
 we've done is hide the looping behind a layer of functions. ``We could
 do that in [our procedural] language too! In a library!'' It's not
-that we're merely hding the toys under our bed here. The point is that
+that we're merely hiding the toys under our bed here. The point is that
 *someone* would still have to write that (procedural) library and all
 the messy looping therein. In Functionally Friendly languages, this
 goodness is already baked right in, ready for your lists from the
@@ -254,26 +264,26 @@ Anyone familiar with ++lisp++ or 'any' of the modern hip languages
 applies a function to every element of a list and then returns each
 so-modified element in a new list.
 
-.Using ++map++ in Python: Collecting line lengths for a file:
 [caption=""]
-======================================================================
+.Using +map+ in Python -- collecting line lengths for a file:
+====
 
 [source,python,numbered]
----------------------------------------------------------------------
+----
 
   file = open("somefile.txt")
   lines = map(len, file.readlines())
 
----------------------------------------------------------------------
+----
 
 The ++lines++ list will now contain not the actual text lines of
 ++somefile.txt++, but the corresponding line lengths for each line in
 that file.
-======================================================================
 
+====
 
 [NOTE]
-======================================================================
+====
 Most languages, like python, perl and even lisp use the following
 signature for the ++map()++ function:
 
@@ -287,13 +297,12 @@ But in VimL it is the reverse:
 
 Where:
 
-  * \{expr\} is a list (or a dictionary - but we won't worry about that
-    here), and
-  * \{string\} is 'evaluated' for each element of \{expr\}
-
-NOTE: ++v:val++ is Vim's way of referring to the current element of
-the list within the evaluated string.
-======================================================================
+  * ++\{expr\}++ is a list (or a dictionary - but we won't worry about
+    that here), and
+  * ++\{string\}++ is 'evaluated' for each element of ++\{expr\}++
+  * ++v:val++ is Vim's way of referring to the current element of
+    the list within the evaluated string.
+====
 
 In ++LongestLine_newVimL++, the function being applied is ++len()++.
 So, all said, line 1 creates a list of line lengths for each line in
@@ -323,14 +332,17 @@ Recall that the ++lines++ list contains an 'ordered' (in the 'same'
 order as the original file) list of line lengths. Line 1's length is
 in position 0 (VimL uses zero-based lists, as you would expect), and
 line 2's length is in position 1, etc. The longest line is in position
-++index(lines, max(lines)) +1 ++ (the ++ +1 ++ being necessary to allow
+++index(lines, max(lines)) +1++ (the +++1++ being necessary to allow
 for zero-based indexing.)
 
-NOTE: Of course, if there is more than one maximally long line in the
+[NOTE]
+====
+Of course, if there is more than one maximally long line in the
 file then this function (and the ++LongestLine_VimL++ version) will
 return the (original line-order-ly) first one. Due to the use of
 ++:sort++, the ++LongestLine_Ex++ version will return the 'last' such
 line.
+====
 
 So, that's newVimL. You might be wondering why I call it newVimL. It's
 inspired by my newfound interest in the newLisp language
