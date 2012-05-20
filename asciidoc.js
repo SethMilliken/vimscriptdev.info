@@ -188,3 +188,4 @@ install: function(toclevels) {
 
 }
 asciidoc.install();
+

@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Seth - VimscriptDev.Info</title>
+    
+    <title>vimscriptdev.info - Home</title>
     <link rel="stylesheet" type="text/css" href="/style.css" media="screen">
     <!-- <link rel="stylesheet" type="text/css" href="/asciidoc.css" media="screen"> -->
     <link rel="stylesheet" type="text/css" href="/syntax.css" media="screen">
@@ -10,535 +11,164 @@
     <meta name="generator" content="nanoc 3.3.2">
   </head>
   <body>
+    <div id="topnav">
+        vimscriptdev.info topnav
+    </div><!-- topnav -->
+
     <div id="main">
-      <h1>VimscriptDev.Info</h1>
 
-
-      
-             <h2><a href="/about/">About</a></h2>
-             Hi, I'm a new item!
+      <div class="entry">
+        <div id="info">
+          <h2><a href="/about/">About</a></h2>
+          
+          <div class="created_at">2012-04-10 12:34:32 -0700</div>
+          
+          <div class="tags"><a href="/test" rel="tag">test</a> <a href="/vim" rel="tag">vim</a></div>
+        </div><!-- info -->
+        <div id="content">
+          Hi, I'm a new item!
 
 This is about what it is.
 
+        </div><!-- content -->
+      </div><!-- entry -->
 
-             <h2><a href="/LongestLine/LongestLine/">The Longest Line</a></h2>
-             
+      <div class="entry">
+        <div id="info">
+          <h2><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></h2>
+          
+          <div class="created_at">2012-04-10 11:34:32 -0700</div>
+          
+          <div class="tags"><a href="/learn" rel="tag">learn</a> <a href="/vim" rel="tag">vim</a></div>
+        </div><!-- info -->
+        <div id="content">
+          
 <!-- begin article -->
 <div class="article">
 <div id="header">
-<h1>Jump to the Longest Line</h1>
-<span id="author">Barry Arthur</span><br><span id="revnumber">version 0.6,</span>
-<span id="revdate">January 13, 2012</span>
+<h1>Cut Some Code On The Wild Side</h1>
+<span id="author">Barry Arthur</span><br />
+<span id="revnumber">version 1.1,</span>
+<span id="revdate">May 10, 2011</span>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph"><p><em>The evolution of a Vimmer</em></p></div>
-<div class="paragraph"><p>Ignoring the prosaic question of “Why would you ever want to?!”,
-consider how, in your editor of choice, you would jump to the longest
-line in the file.</p></div>
-<div class="paragraph"><p>Vim provides a <em>lot</em> of jump commands, possibly more so than any
-other editor. We can jump to a matching item; jump between words,
-sentences and paragraphs; jump between classes or #defined regions in
-a source file; jump between files and back and more.
-Jump-to-longest-line, however, is missing. This forces us to craft a
-solution using either existing builtin Vim commands, the ex commands,
-VimL (Vim’s scripting language), or (more typically) a mixture of all
-three.</p></div>
-<div class="paragraph"><p>We compare three different approaches to solving this problem, each
-one arguably a little further along in the “evolution” of a Vim
-user.</p></div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_approach_1_normal_and_ex_commands">Approach #1: Normal and Ex Commands</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="title">
-<tt>LongestLine_Ex</tt> - Uses mostly Vim Normal and Ex commands:</div>
-<div class="content"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td>
-<td class="code">
-<div class="highlight"><pre>  <span class="k">function</span><span class="p">!</span> LongestLine_Ex<span class="p">()</span>
-    global<span class="sr">/^/</span>substitute<span class="sr">/^/</span>\<span class="p">=</span>len<span class="p">(</span>getline<span class="p">(</span><span class="s1">'.'</span><span class="p">))</span>.<span class="s1">' '</span>.line<span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>.<span class="s1">' '</span>
-    <span class="k">sort</span> <span class="k">n</span>
-    normal<span class="p">!</span> Gwyiwu
-    <span class="k">return</span> @"
-  <span class="k">endfunction</span>
-</pre></div>
-</td>
-</tr></table></div>
-</div>
-<div class="paragraph"><p>This style of solution would be considered by capable Vim users who
-have not yet ventured very far (if at all) into VimL — limiting their
-choices to just Normal Mode and Ex commands.</p></div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">Although this solution is presented here in a function (for
-comparative purposes with the other solutions presented later), these
-sorts of solutions are typically hand-typed when needed or, at best,
-briefly stored in macros.</td>
-</tr></table>
-</div>
-<div class="sect2">
-<h3 id="_walkthrough">Walkthrough</h3>
-<div class="paragraph"><p>The Ex command <tt>global/^/</tt> on line 2 is a way to do something for every line
-of the file. Every line, even a blank one, matches <tt>/^/</tt>. The
-<tt>substitute///</tt> prepends the length of the line and the line number as two
-space-delimited fields to the beginning of the current line (and as that is a
-sub-command of the <tt>global</tt> command, for every line of the file.)</p></div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">The <tt> <em>'.</em>' </tt> parameter of the <tt>getline()</tt> function means
-<em>current line in the file</em>.</td>
-</tr></table>
-</div>
-<div class="paragraph"><p>Line 3 uses the Ex command <tt>sort n</tt> which does a numeric sort of the whole
-file — putting the longest line at the bottom of the file.</p></div>
-<div class="paragraph"><p>The series of Normal mode commands on line 4 (<tt>Gwyiwu</tt>) look like a
-Gaelic curse, but they really mean:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-<tt>G</tt> = Go to the end of the file
-</p>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">the cursor will already be in column 1 due to the preceding commands.</td>
-</tr></table>
-</div>
-</li>
-<li>
-<p>
-<tt>w</tt> = Move forward one word (jumping over the line length)
-</p>
-</li>
-<li>
-<p>
-<tt>yiw</tt> = Yank the next inner word (the line number before sort)
-</p>
-</li>
-<li>
-<p>
-<tt>u</tt> = undo (the sort and line modifications. NOTE: If this were in a
-    macro or the commands were issued manually, you would need two
-    undo commands here.)
-</p>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">the <tt>!</tt> at the end of <tt>normal!</tt> prevents Vim from using user-provided
-normal mode maps when executing the command. This should be the default when
-you write your own VimL - only use the bare <tt>normal</tt> when you <em>need</em> to.</td>
-</tr></table>
-</div>
-</li>
-</ul></div>
-<div class="imageblock">
-<div class="content">
-<img src="/LongestLine/gaelic.png" alt="/LongestLine/gaelic.png">
-</div>
-</div>
-<div class="paragraph"><p>The end result is that the longest line number is now in the Unnamed
-register (<tt>@"</tt>) and ready to be used in a jump command like:</p></div>
-<div class="literalblock">
-<div class="content">
-<pre><tt>:&lt;c-r&gt;"&lt;CR&gt;</tt></pre>
-</div>
-</div>
-<div class="paragraph"><p>If you’re wondering if this is the messiest solution possible, then
-know that it isn’t. It’s close though.</p></div>
+<div class="paragraph"><p><em>(apologies to Lou Reed)</em></p></div>
+<div class="paragraph"><p>Thanks to Belinda Allan and Timo Schmiade for assistance with the
+lyrics.</p></div>
+<div class="verseblock">
+<pre class="content"><strong>Jo</strong>hnny came <strong>from</strong> a <strong>small</strong> dev <strong>shop</strong>,
+<strong>Used</strong> only <strong>tools</strong> from <strong>Mi</strong>cro<strong>soft</strong>,
+<strong>Tried</strong> out <strong>Ru</strong>by <strong>on</strong> a <strong>whim</strong>,
+<strong>Tossed</strong> C<strong>#</strong> and <strong>in</strong>stalled <strong>Vim</strong>; he said
+
+Hey, mate, cut some code on the wild side
+Said hey buddy, cut some code on the wild side
+
+<strong>Ti</strong>mo<strong>thy</strong> <strong>on</strong>ly knew <strong>C</strong>
+<strong>Ne</strong>ver <strong>knew</strong> he <strong>di</strong>dn&#8217;t need <strong>free()</strong>
+<strong>Leaves</strong> his <strong>ob</strong>jects <strong>for</strong> g<strong>c</strong>
+<strong>Now</strong> that he <strong>codes</strong> <strong>in</strong> Ru<strong>by</strong>; he says
+
+Hey, mate, cut some code on the wild side
+Said hey buddy, cut some code on the wild side
+And Ruby coders can do do do-do-do do
+
+<strong>Sa</strong>rah <strong>thought</strong> <strong>she</strong> was doing <strong>fine</strong>
+<strong>Wri</strong>ting <strong>Ja</strong>va <strong>all</strong> of the <strong>time</strong>
+<strong>Wa</strong>tched a <strong>co</strong>lleague <strong>fi</strong>nish a <strong>task</strong>
+<strong>Did</strong> it in <strong>ru</strong>by <strong>twice</strong> as <strong>fast</strong>; he said
+
+Hey, babe, cut some code on the wild side
+Said hey honey, cut some code on the wild side
+
+<strong>Jim</strong> using <strong>Py</strong>thon <strong>thought</strong> he was <strong>cool</strong>
+But There&#8217;s <strong>Only</strong> One <strong>Way</strong> to <strong>use</strong> that <strong>tool</strong>
+<strong>Ru</strong>by likes to <strong>do</strong> it <strong>di</strong>fferent <strong>ways</strong>
+She <strong>lets</strong> you <strong>choose</strong> <strong>how</strong> you <strong>play</strong>; she says
+
+Hey, babe, cut some code on the wild side
+Said hey buddy, cut some code on the wild side
+
+<strong>Phil</strong> built his <strong>sites</strong> in <strong>P</strong>H<strong>P</strong>
+"<strong>Ain&#8217;t</strong> gonna <strong>change</strong>, I&#8217;m <strong>old</strong>-skool, <strong>me</strong>."
+<strong>Saw</strong> a rails<strong>cast</strong> and <strong>said</strong>, "No <strong>way</strong>!"
+<strong>Now</strong> he uses <strong>rails</strong> to <strong>earn</strong> his <strong>pay</strong>; he says
+
+Hey, mate, cut some code on the wild side
+Said hey buddy, cut some code on the wild side
+And Ruby coders can do do do-do-do do
+
+<strong>Pe</strong>ter <strong>spent</strong> every <strong>night</strong> with <strong>Perl</strong>
+He <strong>thought</strong> of <strong>her</strong> <strong>as</strong> his <strong>girl</strong>
+<strong>Ru</strong>by <strong>caught</strong> his <strong>eye</strong> one <strong>day</strong>
+<strong>Se</strong>duced <strong>him</strong> <strong>to</strong> her <strong>Way</strong>; she said
+
+Hey, babe, cut some code on the wild side
+Said hey honey, cut some code on the wild side
+
+<strong>Old</strong> man <strong>Doug</strong> was a <strong>whiz</strong> at <strong>lisp</strong>
+He <strong>knew</strong> it <strong>like</strong> <strong>no</strong>one&#8217;s <strong>biz</strong>
+<strong>Ru</strong>by&#8217;s <strong>clo</strong>sures <strong>are</strong> so <strong>fine</strong>
+But <strong>lisp&#8217;s</strong> had <strong>that</strong> since <strong>'59</strong>; he said
+
+Hey, pup, cut some code on the wild side
+Said hey sonny, cut some code on the wild side
+
+Been <strong>u</strong>sing <strong>Ru</strong>by for <strong>quite</strong> a <strong>while</strong>
+She <strong>warms</strong> my <strong>heart</strong> and <strong>makes</strong> me <strong>smile</strong>
+But <strong>try</strong> as I <strong>might</strong>, <strong>much</strong> as I&#8217;ve <strong>plead</strong>
+<strong>Just</strong> can&#8217;t <strong>get</strong> her to <strong>warm</strong> my <strong>bed</strong>; she says
+
+Hey, man, spend some time on the wild side
+Said hey honey, take a girl on a wild ride
+And I just might do do do-do-do do
+
+I just might <strong>do</strong> that..
+
+do do do-do-do do</pre>
+<div class="attribution">
+</div></div>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_approach_2_procedural_viml">Approach #2: Procedural VimL</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>If you’re a programmer of C (or java/perl/python) descent then this
-will feel like more familiar ground to you. How would a C programmer
-think about the problem at hand?</p></div>
-<div class="paragraph"><p><strong>Input:</strong> &lt;nothing (additional)&gt;</p></div>
-<div class="paragraph"><p><strong>Output:</strong> line number of the longest line in the file</p></div>
-<div class="paragraph"><p><strong>Processing:</strong></p></div>
-<div class="listingblock">
-<div class="content"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td>
-<td class="code">
-<div class="highlight"><pre>  <span class="k">for</span> <span class="nb">lines</span> <span class="k">in</span> <span class="k">file</span>
-    <span class="k">if</span> len<span class="p">(</span>line<span class="p">)</span> <span class="p">&gt;</span> max_len
-      max_len <span class="p">=</span> len<span class="p">(</span>line<span class="p">)</span>
-      max_line <span class="p">=</span> current<span class="p">-</span>line<span class="p">-</span><span class="k">number</span>
-    <span class="k">endif</span>
-  <span class="k">endfor</span>
-  <span class="k">return</span> max_line
-</pre></div>
-</td>
-</tr></table></div>
-</div>
-<div class="paragraph"><p>Nice. Simple. Neat. Small. Easy… <em>Let’s do it!</em></p></div>
-<div class="listingblock">
-<div class="title">
-<tt>LongestLine_VimL</tt> — Uses all (procedural) VimL:</div>
-<div class="content"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td>
-<td class="code">
-<div class="highlight"><pre>  <span class="k">function</span><span class="p">!</span> LongestLine_VimL<span class="p">()</span>
-    <span class="k">let</span> max_len <span class="p">=</span> <span class="m">0</span>
-    <span class="k">let</span> max_line <span class="p">=</span> <span class="m">0</span>
-    <span class="k">let</span> current_line_number <span class="p">=</span> <span class="m">0</span>
-    <span class="k">for</span> line <span class="k">in</span> getline<span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s1">'$'</span><span class="p">)</span>
-      <span class="k">let</span> current_line_number <span class="p">+=</span> <span class="m">1</span>
-      <span class="k">if</span> len<span class="p">(</span>line<span class="p">)</span> <span class="p">&gt;</span> max_len
-        <span class="k">let</span> max_len  <span class="p">=</span> len<span class="p">(</span>line<span class="p">)</span>
-        <span class="k">let</span> max_line <span class="p">=</span> current_line_number
-      <span class="k">endif</span>
-    <span class="k">endfor</span>
-    <span class="k">return</span> max_line
-  <span class="k">endfunction</span>
-</pre></div>
-</td>
-</tr></table></div>
-</div>
-<div class="paragraph"><p>That has to be better, right? For one, we’re <strong>NOT</strong> modifying the
-buffer — always a good thing when you don’t need to. Secondly, we’re
-not messing with the registers — we don’t lose whatever was in the
-unnamed register like we did with the <tt>LongestLine_Ex</tt> version.</p></div>
-<div class="paragraph"><p>Okay, so it’s a tad longer in SLOC than the <tt>LongestLine_Ex</tt>
-version, and could still benefit from a drop or two of optimisation
-yet (removing the extra call to len(), for instance)… but it’s
-certainly <strong>no worse</strong> than our previous attempt.</p></div>
-<div class="sect2">
-<h3 id="_walkthrough_2">Walkthrough</h3>
-<div class="paragraph"><p>There isn’t too much to explain here, except:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-<tt>len()</tt> returns the length of a string, as the name suggests.
-</p>
-</li>
-<li>
-<p>
-<tt>getline(1, <em>'$</em>')</tt> returns all the lines in the file as a list (the
-  <tt> <em>'$</em>' </tt> parameter means <em>last line in the file</em>.)
-</p>
-</li>
-</ul></div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">
-<tt>getline(1)</tt> differs from <tt>getline(1,2)</tt> — in the first case, a
-string is returned containing the requested line, but in the second case, a
-list of strings is returned. Earlier we used the form <tt>getline( <em>'.</em>' )</tt>
-(where <tt> <em>'.</em>' </tt> means the <em>current line</em>) which is the single argument form
-and therefore returns a string.</td>
-</tr></table>
-</div>
-<div class="paragraph"><p>Is this as good as it gets? While we’re feeling all sort of warm and
-comfortable, gloating in our achievements, the emacsians are laughing
-at us from their REPLs. Fear not; we need not cringe at their taunts
-any longer. We now have powers in VimL equal to the task and packed
-with the sort of expressiveness that will raise an eyebrow of even the
-most ardent Functional Programmer.</p></div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_approach_3_functional_ish_viml">Approach #3: Functional(ish) VimL</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>Sometimes as (procedurally indoctinated) programmers we think too much
-in the <em>How</em> of things rather than seeing the <em>What</em>. We’re too close
-to the trees to see the forest, or in coderspeak, too close to the code
-to see the abstractions. When we start thinking about a problem like
-this our problem solving hammer starts banging away at a solution,
-cranking out gobs of loops and conditions and assignments. Before
-we’ve even begun to think of the bigger picture, our minds are fussing
-over the minutia — “should I use a while loop here or a for loop?”</p></div>
-<div class="imageblock">
-<div class="content">
-<img src="/LongestLine/hammer.png" alt="/LongestLine/hammer.png">
-</div>
-</div>
-<div class="paragraph"><p>The cure for this begins with the mantra: <em>Don’t Use Loops!</em></p></div>
-<div class="paragraph"><p>Ok, so that might be a <em>bit</em> strong, but it might be just what’s
-necessary to break the habit you’re in of reaching for <em>How</em> pieces
-before you’ve fully digested the <em>What</em>.</p></div>
-<div class="paragraph"><p>This philosophy is succinctly reduced to the pithy aphorism that, “if
-you have a dog you shouldn’t do your own barking”. If you have lists
-and functions that process those lists… don’t write your own loop
-code.</p></div>
-<div class="paragraph"><p>Lispers and other Functional thinkers approach problems in a different
-way. They don’t worry about how to iterate the elements of a list, or
-oftentimes <em>that</em> they’re even <em>iterating</em> it. They think about the
-deeper abstractions of manipulating and shaping the data from source
-to target. They do this by thinking of functions to apply to the
-elements of lists. Languages that support this type of programming
-(thinking) provide numerous functions that can operate on whole lists
-and the elements of lists. Functions to apply another function to each
-element, collecting and returning the resulting elements in a new
-list; functions to remove elements from a list that match (or don’t)
-an expression; functions to sort lists (using definable comparators if
-necessary); functions to reverse lists; functions to split strings
-into lists and join lists into strings, and more…</p></div>
-<div class="paragraph"><p>Clearly there are times when you <em>need</em> to write loops — the
-point is, be on the lookout for times when you <em>shouldn’t</em>. Look for
-patterns that walk and talk like a list. Start asking yourself, “Can
-I solve this through a series of operations on a list?” and “If this
-data were in a list, could I join(sort(map(filter(split(…))))) the
-sucker to get what I want?”</p></div>
-<div class="paragraph"><p>Eventually, you might even start thinking in S-Expressions all the
-time…</p></div>
-<div class="imageblock">
-<div class="content">
-<img src="/LongestLine/frank_take_her.png" alt="/LongestLine/frank_take_her.png">
-</div>
-</div>
-<div class="paragraph"><p>The petulant proceduralist within you might be grumbling now that all
-we’ve done is hide the looping behind a layer of functions. “We could
-do that in [our procedural] language too! In a library!” It’s not
-that we’re merely hding the toys under our bed here. The point is that
-<strong>someone</strong> would still have to write that (procedural) library and all
-the messy looping therein. In Functionally Friendly languages, this
-goodness is already baked right in, ready for your lists from the
-get-go.</p></div>
-<div class="paragraph"><p>Here’s a functional approach to our longest line problem:</p></div>
-<div class="listingblock">
-<div class="title">
-<tt>LongestLine_newVimL</tt> — Uses newVimL — it’s all about lists, baby:</div>
-<div class="content"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td>
-<td class="code">
-<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> LongestLine_newVimL<span class="p">()</span>
-  <span class="k">let</span> <span class="nb">lines</span> <span class="p">=</span> map<span class="p">(</span>getline<span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s1">'$'</span><span class="p">),</span> <span class="s1">'len(v:val)'</span><span class="p">)</span>
-  <span class="k">return</span> index<span class="p">(</span><span class="nb">lines</span><span class="p">,</span> max<span class="p">(</span><span class="nb">lines</span><span class="p">))+</span><span class="m">1</span>
-<span class="k">endfunction</span>
-</pre></div>
-</td>
-</tr></table></div>
-</div>
-<div class="sect2">
-<h3 id="_walkthrough_3">Walkthrough</h3>
-<div class="paragraph"><p>Don’t be deceived by the small SLOC count. This version packs some
-conceptual punch. Remembering that we’re taking a lisp-y list approach
-in this version, let’s first talk about <tt>map()</tt>.</p></div>
-<div class="paragraph"><p>Anyone familiar with <tt>lisp</tt> or <em>any</em> of the modern hip languages
-(perl, python and ruby just to name a few) will know that <tt>map()</tt>
-applies a function to every element of a list and then returns each
-so-modified element in a new list.</p></div>
-<div class="exampleblock">
-<div class="title">Using <tt>map</tt> in Python: Collecting line lengths for a file:</div>
-<div class="content">
-<div class="listingblock">
-<div class="content"><table class="highlighttable"><tr>
-<td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td>
-<td class="code">
-<div class="highlight"><pre>  <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"somefile.txt"</span><span class="p">)</span>
-  <span class="n">lines</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="nb">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
-</pre></div>
-</td>
-</tr></table></div>
-</div>
-<div class="paragraph"><p>The <tt>lines</tt> list will now contain not the actual text lines of
-<tt>somefile.txt</tt>, but the corresponding line lengths for each line in
-that file.</p></div>
-</div>
-</div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">
-<div class="paragraph"><p>Most languages, like python, perl and even lisp use the following
-signature for the <tt>map()</tt> function:</p></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span class="nb">map</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
-</pre></div></div>
-</div>
-<div class="paragraph"><p>But in VimL it is the reverse:</p></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre>map<span class="p">(</span>{expr}<span class="p">,</span> {string}<span class="p">)</span>
-</pre></div></div>
-</div>
-<div class="paragraph"><p>Where:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-{expr} is a list (or a dictionary - but we won’t worry about that
-    here), and
-</p>
-</li>
-<li>
-<p>
-{string} is <em>evaluated</em> for each element of {expr}
-</p>
-</li>
-</ul></div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">
-<tt>v:val</tt> is Vim’s way of referring to the current element of
-the list within the evaluated string.</td>
-</tr></table>
-</div>
-</td>
-</tr></table>
-</div>
-<div class="paragraph"><p>In <tt>LongestLine_newVimL</tt>, the function being applied is <tt>len()</tt>.
-So, all said, line 1 creates a list of line lengths for each line in
-the file. The resulting <tt>lines</tt> list will have as many entries as
-there are lines in the file, each entry corresponding to that line’s
-length (exactly as the python example earlier did).</p></div>
-<div class="paragraph"><p>Which brings us to the second and final line:</p></div>
-<div class="listingblock">
-<div class="content"><div class="highlight"><pre><span class="k">return</span> index<span class="p">(</span><span class="nb">lines</span><span class="p">,</span> max<span class="p">(</span><span class="nb">lines</span><span class="p">))+</span><span class="m">1</span>
-</pre></div></div>
-</div>
-<div class="paragraph"><p>This might take some mind bending to see what’s happening, so we’ll
-break it down:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-the <tt>max(lines)</tt> function will return the maximum (longest) line
-  length from the <tt>lines</tt> list. Great. That’s a number, but not
-  <em>the</em> number we want. We don’t want to know <em>how long</em> the longest
-  line is… we want to know on which line that longest line is. That
-  is, we want the <em>line number</em>.
-</p>
-</li>
-<li>
-<p>
-the <tt>index(lines, &lt;number&gt;)</tt> function returns the position within the
-  <tt>lines</tt> list that contains &lt;number&gt; (remembering here that
-  &lt;number&gt; is the length of the longest line as returned by
-  <tt>max()</tt>.)
-</p>
-</li>
-</ul></div>
-<div class="paragraph"><p>Recall that the <tt>lines</tt> list contains an <em>ordered</em> (in the <em>same</em>
-order as the original file) list of line lengths. Line 1’s length is
-in position 0 (VimL uses zero-based lists, as you would expect), and
-line 2’s length is in position 1, etc. The longest line is in position
-<tt>index(lines, max(lines)) +1 </tt> (the <tt> +1 </tt> being necessary to allow
-for zero-based indexing.)</p></div>
-<div class="admonitionblock">
-<table><tr>
-<td class="icon">
-<img src="./images/icons/note.png" alt="Note">
-</td>
-<td class="content">Of course, if there is more than one maximally long line in the
-file then this function (and the <tt>LongestLine_VimL</tt> version) will
-return the (original line-order-ly) first one. Due to the use of
-<tt>:sort</tt>, the <tt>LongestLine_Ex</tt> version will return the <em>last</em> such
-line.</td>
-</tr></table>
-</div>
-<div class="paragraph"><p>So, that’s newVimL. You might be wondering why I call it newVimL. It’s
-inspired by my newfound interest in the newLisp language
-(<a href="http://www.newlisp.org">http://www.newlisp.org</a>). There is a (sickening to the initiated)
-adage that “Learning lisp will forever change your thinking as a
-programmer, even if you never <strong>use</strong> lisp in anger.” (Some might argue
-that they <strong>only</strong> use lisp in anger.) I’m here to say: yep. Worked for
-me. After learning the mind-bending (there is no spoon, after all)
-Ways of Lisp… My approach to VimL changed dramatically. “What?! I
-have to loop?! No! Where’s my map()?! Oh! VimL <strong>has</strong> map()?! And
-filter()! OMFG!” &lt;enlightenment/&gt;</p></div>
-<div class="paragraph">
-<div class="title">Credit where due…</div>
-<p>Just over a year ago, while hanging out on <tt>#vim</tt>, as all the cool
-kids do, someone asked for something and I sprang into action. “I can
-do this!” I said hubrisly. I crafted a solution in my awkward
-procedural VimL and pastie’d it to the channel. It worked. I was a god
-among vimmers. The angelic choir hymned. Life was good… Until
-godlygeek crushed me with a one-liner of near-indecipherable newVimL.</p>
-</div>
-<div class="paragraph"><p>It had join and split and map and filter all wrapped mischievously,
-one around the other, performing some arcane dance I, at that time,
-couldn’t fathom. It worked though. Whatever he’d conjured, it actually
-worked. It looked to me like… fucking magic.</p></div>
-<div class="paragraph"><p>This was all the motivation I needed. A good and thorough pantsing
-often does that, happily. And that’s the story of how I started to
-drag my consciousness up to the level of Lisp. I’m not there yet, by a
-long shot. But I’m far enough along now to start to know how much I
-<em>really</em> don’t know, and to be able to help others find the path too.</p></div>
-<div class="paragraph">
-<div class="title">Brave newVimL World</div>
-<p>So… welcome to the brave newVimL world. If you find a new and exotic
-flower along the path, share it with your fellow travellers. If you
-find a thorn, share that too - who are we, after all, to decide which
-one holds more value?</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="footnotes"><hr></div>
+<div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 0.6<br>
-Last updated 2012-04-15 23:54:57 PDT
+Version 1.1<br />
+Last updated 2012-05-20 21:04:13 PDT
 </div>
 </div>
 </div>
 <!-- end article -->
+        </div><!-- content -->
+      </div><!-- entry -->
 
-             <h2><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></h2>
-             
+      <div class="entry">
+        <div id="info">
+          <h2><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></h2>
+          
+          <div class="created_at">2012-04-10 11:34:32 -0700</div>
+          
+          <div class="tags"><a href="/advanced" rel="tag">advanced</a> <a href="/learn" rel="tag">learn</a> <a href="/vim" rel="tag">vim</a></div>
+        </div><!-- info -->
+        <div id="content">
+          
 <!-- begin article -->
 <div class="article">
 <div id="header">
-<h1>Introducing Vimpeg — A PEG Parser Generator for Vim</h1>
-<span id="author">Barry Arthur</span><br><span id="revnumber">version 1.1,</span>
+<h1>Introducing Vimpeg&#8201;&#8212;&#8201;A PEG Parser Generator for Vim</h1>
+<span id="author">Barry Arthur</span><br />
+<span id="revnumber">version 1.1,</span>
 <span id="revdate">October 10, 2011</span>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph"><p><span class="image">
-<img src="/PegParserGenerator/vimpeg.png" alt="/PegParserGenerator/vimpeg.png"></span></p></div>
+<img src="/PegParserGenerator/vimpeg.png" alt="/PegParserGenerator/vimpeg.png" />
+</span></p></div>
 </div>
 </div>
 <div class="sect1">
@@ -554,45 +184,40 @@ Grammar formalism to specify the parse rules.</p></div>
 <div class="paragraph"><p>Vim is a powerful editor. It has lots of features baked right in to
 make it an editor most awesome. It has a deliciously potent regular
 expression engine, jaw-dropping text-object manipulations, and
-fabulous scriptability — just to name a few of its aces.</p></div>
+fabulous scriptability&#8201;&#8212;&#8201;just to name a few of its aces.</p></div>
 <div class="paragraph"><p>One thing our little Vim still lacks, though, is an actual parser.
-Regular expressions will only get you so far when you’re trying to
+Regular expressions will only get you so far when you&#8217;re trying to
 analyse and understand complex chunks of text. If your text is
 inherently infinite or recursive, then regular expressions become at
 best combersome, and at worst, useless.</p></div>
-<div class="paragraph"><p>So, Vim <strong>needs</strong> a parser. I’ve needed one myself several times when
-wanting to build a new plugin — "awesome! This idea will so rock! Now
-all I need to do is parse &lt;SomeLanguage&gt; and I’ll be able to… awww…
-:-(" I’ve seen people ask on <tt>#vim</tt>: How can I
+<div class="paragraph"><p>So, Vim <strong>needs</strong> a parser. I&#8217;ve needed one myself several times when
+wanting to build a new plugin&#8201;&#8212;&#8201;"awesome! This idea will so rock! Now
+all I need to do is parse &lt;SomeLanguage&gt; and I&#8217;ll be able to&#8230; awww&#8230;
+:-(" I&#8217;ve seen people ask on <tt>#vim</tt>: How can I
 &lt;DoSomethingThatNeedsAParser&gt;? And invariable the answer is: You
-can’t.</p></div>
-<div class="paragraph"><p>Well…</p></div>
-<div class="paragraph"><p>You <strong>couldn’t</strong>. Until now. Vimpeg aims to solve this problem.</p></div>
-<div class="ulist">
-<div class="title">What would I use Vimpeg for?</div>
-<ul>
+can&#8217;t.</p></div>
+<div class="paragraph"><p>Well&#8230;</p></div>
+<div class="paragraph"><p>You <strong>couldn&#8217;t</strong>. Until now. Vimpeg aims to solve this problem.</p></div>
+<div class="ulist"><div class="title">What would I use Vimpeg for?</div><ul>
 <li>
 <p>
-You’ve come to that paralysing sinkhole in your Vimming when you’ve
-  said to youself, "Damn… I wish Vim had a parser."
+You&#8217;ve come to that paralysing sinkhole in your Vimming when you&#8217;ve
+  said to youself, "Damn&#8230; I wish Vim had a parser."
 </p>
 </li>
 <li>
 <p>
-You’ve asked for something on #vim and the reply is "you can’t do
-  that because Vim doesn’t have a parser."
+You&#8217;ve asked for something on #vim and the reply is "you can&#8217;t do
+  that because Vim doesn&#8217;t have a parser."
 </p>
 </li>
 <li>
 <p>
-You’re up to your neck in wrecklessly recursive regexes.
+You&#8217;re up to your neck in wrecklessly recursive regexes.
 </p>
 </li>
-</ul>
-</div>
-<div class="ulist">
-<div class="title">Some ideas:</div>
-<ul>
+</ul></div>
+<div class="ulist"><div class="title">Some ideas:</div><ul>
 <li>
 <p>
 An expression calculator (the beginnings of which we explore here.)
@@ -605,63 +230,59 @@ Expanding tokens in typed text (think: snippets, abbrevs, maps.)
 </li>
 <li>
 <p>
-Semantic analysis of code — for refactoring, reindenting (but sadly
+Semantic analysis of code&#8201;&#8212;&#8201;for refactoring, reindenting (but sadly
   not syntax highlighting yet.)
 </p>
 </li>
 <li>
 <p>
-C Code bifurcation based on #define values — want to see what the C
+C Code bifurcation based on #define values&#8201;&#8212;&#8201;want to see what the C
   code would look like with <tt>#define DEBUG</tt> disabled?
 </p>
 </li>
 <li>
 <p>
-Coffeescript for Vim — sugar-coating some of the uglies in VimL —   this example will be presented in a subsequent Vimpeg article.
+Coffeescript for Vim&#8201;&#8212;&#8201;sugar-coating some of the uglies in VimL&#8201;&#8212;&#8201;  this example will be presented in a subsequent Vimpeg article.
 </p>
 </li>
-</ul>
-</div>
+</ul></div>
 <div class="paragraph"><p>In fact, most of these ideas have been explored in part inside the
 <tt>examples/</tt> directory of the <a href="https://github.com/dahu/Vimpeg">Vimpeg</a>
 plugin.</p></div>
 <div class="paragraph"><p>For the purposes of introducing Vimpeg and parsing in general (if
-you’re new to it), let’s consider a fairly easy example of reading &amp;
+you&#8217;re new to it), let&#8217;s consider a fairly easy example of reading &amp;
 understanding (perhaps calculating) a sum series of integers. They
 look like this:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>1 + 2 + 12 + 34</tt></pre>
-</div>
-</div>
+</div></div>
 <div class="paragraph"><p>They can be any (reasonable) length, from a single integer upwards.
 So, this is a valid input to our parser:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>123</tt></pre>
-</div>
-</div>
+</div></div>
 <div class="paragraph"><p>As are all of the following:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>1 + 2
 3 + 4 + 5
 123 + 456 + 789</tt></pre>
-</div>
-</div>
+</div></div>
 <div class="paragraph"><p>Stop. Right now. And think: How would <strong>you</strong> parse such an arbitrarily
 long series of integers separated by <tt> + </tt> operators? What tool
 would you reach for? What if you <strong>had</strong> to do it in Vim?</p></div>
-<div class="paragraph"><p>We’ll continue to use this example throughout this article and
+<div class="paragraph"><p>We&#8217;ll continue to use this example throughout this article and
 eventually show you how Vimpeg solves this little parsing requirement.</p></div>
-<div class="paragraph"><p>But first, let’s make sure we’re all on the same page about the
-question: “What is parsing?”</p></div>
+<div class="paragraph"><p>But first, let&#8217;s make sure we&#8217;re all on the same page about the
+question: &#8220;What is parsing?&#8221;</p></div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_parsing">Parsing</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>Feel free to skip to the next section if you’re comfortable with the
+<div class="paragraph"><p>Feel free to skip to the next section if you&#8217;re comfortable with the
 following concepts:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -680,149 +301,141 @@ pasrer generators
 </p>
 </li>
 </ul></div>
-<div class="paragraph"><p>Let’s begin by defining some terms:</p></div>
-<div class="paragraph"><p>(Let’s all assume we know what <a href="http://www.vim.org">Vim</a> is.)</p></div>
+<div class="paragraph"><p>Let&#8217;s begin by defining some terms:</p></div>
+<div class="paragraph"><p>(Let&#8217;s all assume we know what <a href="http://www.vim.org">Vim</a> is.)</p></div>
 <div class="sect2">
 <h3 id="_what_is_em_parsing_em">What is <em>Parsing</em>?</h3>
 <div class="paragraph"><p><a href="http://en.wikipedia.org/wiki/Parsing">Parsing</a> is making sense of
-something.  When we want a computer to understand something we’ve
+something.  When we want a computer to understand something we&#8217;ve
 written down for it to do, it needs to <em>parse</em> that writing.  Without
-going into too much detail yet, let’s consider a sentence uttered at
+going into too much detail yet, let&#8217;s consider a sentence uttered at
 one time or another by your parental unit: "Take the rubbish out!".
-When you (eventually — after you unplug your iPod, put down your PS3
+When you (eventually&#8201;&#8212;&#8201;after you unplug your iPod, put down your PS3
 controller, pocket your smart-phone and wipe the disdain off your
 face) parse this sentence, your brain goes through two processes:</p></div>
-<div class="ulist">
-<div class="title">firstly (syntax recognition):</div>
-<ul>
+<div class="ulist"><div class="title">firstly (syntax recognition):</div><ul>
 <li>
 <p>
-it scans the words to make sure they’re legitimate:
+it scans the words to make sure they&#8217;re legitimate:
 </p>
 <div class="ulist"><ul>
 <li>
 <p>
-they’re in a language you know
+they&#8217;re in a language you know
 </p>
 </li>
 <li>
 <p>
-they’re all valid words, and
+they&#8217;re all valid words, and
 </p>
 </li>
 <li>
 <p>
-they’re all in the right order
+they&#8217;re all in the right order
 </p>
 </li>
 </ul></div>
 </li>
-</ul>
-</div>
-<div class="ulist">
-<div class="title">and secondly (semantic analysis):</div>
-<ul>
+</ul></div>
+<div class="ulist"><div class="title">and secondly (semantic analysis):</div><ul>
 <li>
 <p>
 it filters out the <em>meaning</em> and presents that to a higher actor
   for further deliberation
 </p>
 </li>
-</ul>
-</div>
+</ul></div>
 <div class="paragraph"><p>In this case, the parser would extract the verb phrase <em>take out</em> and
 the noun <em>rubbish</em>. Your higher self (sarcasm aside) <strong>knows</strong> where
-this magic <em>out</em> place is. We’ll come back to these two processes
+this magic <em>out</em> place is. We&#8217;ll come back to these two processes
 (<em>syntax recognition</em> and <em>semantic analysis</em>) later.</p></div>
 <div class="paragraph"><p>In the case of our sum series of integers, syntax recognition would
 involve collecting the sequence of digits that comprise an integer,
 skipping unnecessary whitespace and expecting either an end of input
-or a <tt> + </tt> character and another integer and… so on. If the input
-contained an alphabetic character it would fail in this phase — alphabetic characters are just not expected in the input. If the
+or a <tt>&nbsp;+ </tt> character and another integer and&#8230; so on. If the input
+contained an alphabetic character it would fail in this phase&#8201;&#8212;&#8201;alphabetic characters are just not expected in the input. If the
 lexical recogniser found two integers separated by whitespace or two
-<tt> + </tt> characters in a row…  it would <strong>not</strong> fail in this phase — these are all valid tokens in <em>this</em> lexical recogniser.</p></div>
+<tt>&nbsp;+ </tt> characters in a row&#8230;  it would <strong>not</strong> fail in this phase&#8201;&#8212;&#8201;these are all valid tokens in <em>this</em> lexical recogniser.</p></div>
 <div class="paragraph"><p>TODO: Clean this next paragraph up:</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
-<img src="./images/icons/note.png" alt="Note">
+<img src="/images/icons/note.png" alt="Note" />
 </td>
 <td class="content">I am describing the more general process of lexical recognition and
 it being a seperate stage to semantic analysis which is typical of
 most parsers. PEG parsers, however, do not have separate phases as
-described here — they are quite strict about not only what shape the
+described here&#8201;&#8212;&#8201;they are quite strict about not only what shape the
 next token must have, but also its purpose in this place (context) of
 the input. Having two consecutive integers or two consecutive <tt> + </tt>
 characters <strong>will</strong> upset a PEG parser expecting a sum series of
-integers — it’s just that he gets upset all in his single parse phase — he doesn’t delay his expression of disappointment in not matching
+integers&#8201;&#8212;&#8201;it&#8217;s just that he gets upset all in his single parse phase&#8201;&#8212;&#8201;he doesn&#8217;t delay his expression of disappointment in not matching
 both the desired structure and the desired meaning simultaneously.</td>
 </tr></table>
 </div>
 <div class="paragraph"><p>The semantic analysis phase is all about doing something
-“meaningful” with the collected integers. Maybe we should sum them?
+&#8220;meaningful&#8221; with the collected integers. Maybe we should sum them?
 Maybe we just want to pass back a nested list structure representing
 the parse tree, like this:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>[1 '+' [2 '+' [3 + '4']]]</tt></pre>
-</div>
-</div>
+</div></div>
 <div class="paragraph"><p>given this input:</p></div>
 <div class="literalblock">
 <div class="content">
 <pre><tt>1 + 2 + 3 + 4</tt></pre>
-</div>
-</div>
-<div class="paragraph"><p>Either way, whatever is done, it’s the job of the semantic analysis
+</div></div>
+<div class="paragraph"><p>Either way, whatever is done, it&#8217;s the job of the semantic analysis
 phase to do so. In our example in this article, we produce a sum of
-the collected integer series. So, our parser would return: <tt> 10 </tt>
+the collected integer series. So, our parser would return: <tt>&nbsp;10 </tt>
 for the example input given above.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_what_is_a_em_parser_generator_em">What is a <em>Parser Generator</em>?</h3>
-<div class="paragraph"><p>Writing a parser is not easy. Well, it’s not simple. It’s fussy. It’s
-messy.  There’s a lot of repetition and many edge cases and minutia
+<div class="paragraph"><p>Writing a parser is not easy. Well, it&#8217;s not simple. It&#8217;s fussy. It&#8217;s
+messy.  There&#8217;s a lot of repetition and many edge cases and minutia
 that bores a good coder to tears. Sure, writing your <strong>first</strong> recursive
-descent parser is better than sex, but writing your second one isn’t.
+descent parser is better than sex, but writing your second one isn&#8217;t.
 Writing many is tending towards abstinence. Enough said.</p></div>
 <div class="paragraph"><p>So, we (as fun loving coders) want a better alternative.
 <a href="http://en.wikipedia.org/wiki/Parser_generator">Parser generators</a>
 provide that alternative. They generate parsers; which means they do
 all the boring, tedious, repetitive hard-labour and clerical
-book-keeping stuff for us. I hope I’ve painted that with just the
+book-keeping stuff for us. I hope I&#8217;ve painted that with just the
 right amount of negative emotion to convince you on a subliminal level
-that Parser Generators are a Good Thing™.</p></div>
+that Parser Generators are a Good Thing&#8482;.</p></div>
 </div>
 <div class="sect2">
-<h3 id="_how_do_they_generate_a_parser_or_what_8217_s_a_em_peg_em">How do they generate a parser? or What’s a <em>PEG</em>?</h3>
+<h3 id="_how_do_they_generate_a_parser_or_what_8217_s_a_em_peg_em">How do they generate a parser? or What&#8217;s a <em>PEG</em>?</h3>
 <div class="paragraph"><p>Parser Generators are told <strong>what</strong> to expect (what is valid or invalid)
-through a grammar — a set of rules describing the allowed constructs
-in the language it’s reading. Defining these rules in a declarative
+through a grammar&#8201;&#8212;&#8201;a set of rules describing the allowed constructs
+in the language it&#8217;s reading. Defining these rules in a declarative
 form is <strong>much</strong> easier, quicker and less error-prone than hand-coding
 the equivalent parser.</p></div>
 <div class="paragraph"><p>Bryan Ford recently (circa 2004) described a better way[:footnote-1:]
 to declare these rules in the form of what he called
 <a href="http://en.wikipedia.org/wiki/Parsing_expression_grammar">Parsing
-Expression Grammars</a> — PEGs.</p></div>
+Expression Grammars</a>&#8201;&#8212;&#8201;PEGs.</p></div>
 <div class="paragraph"><p>In a nutshell, PEGs describe what is
 expected in the input, rather than the (E)BNF approach of describing
-what is possible. The difference is subtle but liberating. We’ll not
-go too much into that now — except to say: PEGs offer a cleaner way
+what is possible. The difference is subtle but liberating. We&#8217;ll not
+go too much into that now&#8201;&#8212;&#8201;except to say: PEGs offer a cleaner way
 to describe languages that computers are expected to parse. If you
 want to re-program your 13 year old brother, you might not reach for a
-PEG parser generator, but as we’re dabbling here in the confines of
+PEG parser generator, but as we&#8217;re dabbling here in the confines of
 computers and the valley of vim, PEGs will do just fine.</p></div>
 <div class="paragraph"><p>A major benefit to PEG parsers is that there is no separate lexical
 analysis phase necessary. Because PEG parsers <em>expect</em> to see the
 input in a certain way, they can ask for it in those expected chunks.
-If it matches, great, move on. If it doesn’t match, try another
-alternative. If all the alternatives fail, then the input doesn’t
+If it matches, great, move on. If it doesn&#8217;t match, try another
+alternative. If all the alternatives fail, then the input doesn&#8217;t
 match. Allow for backtracking, and you have all you need to parse
 <em>expected</em> input.</p></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
-<img src="./images/icons/note.png" alt="Note">
+<img src="/images/icons/note.png" alt="Note" />
 </td>
 <td class="content">Vimpeg is <strong>not</strong> a memoising (packrat) parser - not yet, anyway.</td>
 </tr></table>
@@ -845,7 +458,7 @@ Non-terminal symbols are names referring to combinations of other
 </li>
 <li>
 <p>
-Each rule is of the form:   <tt>A ← e</tt>
+Each rule is of the form:   <tt>A &#8592; e</tt>
 </p>
 <div class="ulist"><ul>
 <li>
@@ -910,8 +523,7 @@ Not-predicate: <tt> !e </tt>
 </ul></div>
 </li>
 </ul></div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="sect2">
 <h3 id="_a_conceptual_model_of_vimpeg">A Conceptual Model of Vimpeg</h3>
@@ -934,29 +546,21 @@ The Client
 </p>
 </li>
 </ol></div>
-<div class="paragraph">
-<div class="title">The Vimpeg Parser Generator</div>
-<p>This is a Vim <a href="https://github.com/dahu/Vimpeg">plugin</a> you’ll need to
-install to both create and use Vimpeg based parsers.</p>
-</div>
-<div class="paragraph">
-<div class="title">The Language Provider</div>
-<p>This is someone who creates a parser for a new or existing language or
+<div class="paragraph"><div class="title">The Vimpeg Parser Generator</div><p>This is a Vim <a href="https://github.com/dahu/Vimpeg">plugin</a> you&#8217;ll need to
+install to both create and use Vimpeg based parsers.</p></div>
+<div class="paragraph"><div class="title">The Language Provider</div><p>This is someone who creates a parser for a new or existing language or
 data-structure. They create the grammar, data-munging callbacks,
-utility functions and a public interface into their <em>parser</em>.</p>
-</div>
-<div class="paragraph">
-<div class="title">The Client</div>
-<p>This is someone who wants to <em>use</em> a parser to get some real work
+utility functions and a public interface into their <em>parser</em>.</p></div>
+<div class="paragraph"><div class="title">The Client</div><p>This is someone who wants to <em>use</em> a parser to get some real work
 done. Clients can either be Vim end-users or other VimL coders using a
 parser as a support layer for even more awesome and complicated
-higher-level purposes.</p>
-</div>
+higher-level purposes.</p></div>
 </div>
 <div class="sect3">
 <h4 id="_there_are_five_pieces_to_vimpeg">There are five pieces to Vimpeg</h4>
 <div class="paragraph"><p><span class="image">
-<img src="content/PegParserGenerator/vimpeg_puzzle.png" alt="content/PegParserGenerator/vimpeg_puzzle.png"></span></p></div>
+<img src="content/PegParserGenerator/vimpeg_puzzle.png" alt="content/PegParserGenerator/vimpeg_puzzle.png" />
+</span></p></div>
 <div class="olist arabic"><ol class="arabic">
 <li>
 <p>
@@ -980,7 +584,7 @@ A public interface (provider-side)
 </li>
 <li>
 <p>
-Client code that calls the provider’s public interface.
+Client code that calls the provider&#8217;s public interface.
    (client-side)
 </p>
 </li>
@@ -989,11 +593,9 @@ Client code that calls the provider’s public interface.
 </div>
 <div class="sect2">
 <h3 id="_our_parsing_example">Our Parsing Example</h3>
-<div class="paragraph"><p>Let’s return to our parsing example: recognising (and eventually
+<div class="paragraph"><p>Let&#8217;s return to our parsing example: recognising (and eventually
 summing) a sum series of integers.</p></div>
-<div class="ulist">
-<div class="title">Examples of our expected Input:</div>
-<ul>
+<div class="ulist"><div class="title">Examples of our expected Input:</div><ul>
 <li>
 <p>
 123
@@ -1009,16 +611,14 @@ summing) a sum series of integers.</p></div>
 12 + 34 + 56 + 78
 </p>
 </li>
-</ul>
-</div>
+</ul></div>
 <div class="listingblock">
 <div class="title">The PEG for a Sum Series of Integers</div>
 <div class="content">
 <pre><tt>Integer    &lt;-- [0-9]+
 Sum        &lt;-- Integer '+' Expression
 Expression &lt;-- Sum / Integer</tt></pre>
-</div>
-</div>
+</div></div>
 <div class="paragraph"><p>In the above PEG for matching a Sum Series of Integers, we have:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -1045,14 +645,14 @@ One use of <strong>Ordered choice</strong>: <em>Sum</em> / <em>Integer</em>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
-<img src="./images/icons/note.png" alt="Note">
+<img src="/images/icons/note.png" alt="Note" />
 </td>
 <td class="content">The original (and actual) PEG formalism specifies the
-fundamental expression type as a simple string — hence the use of <tt>
+fundamental expression type as a simple string&#8201;&#8212;&#8201;hence the use of <tt>
 '+' </tt> to specify a literal <tt> + </tt> character. PEGs also provide
 some regular-expression-esque constructs too, like: <tt>[0-9]+ </tt> and
 the use of <tt>* </tt>, <tt> + </tt> and <tt>? </tt>.  However, any strings in PEGs
-are just that — strings, <strong>not</strong> rugular expressions. Vimpeg shuns (at
+are just that&#8201;&#8212;&#8201;strings, <strong>not</strong> rugular expressions. Vimpeg shuns (at
 probable cost) this restriction and allows regular expressions as the
 fundamental expression type. So, in Vimpeg, the <tt>[0-9]+ </tt> construct
 can more idiomatically be represented using the Vim regex: <tt>\d\+ </tt>.</td>
@@ -1073,20 +673,17 @@ peg.maybe_one(expression, options)          (Optional)
 peg.between(expression, min, max, options)
 peg.has(expression, options)                (And Predicate)
 peg.not_has(expression, options)            (Not Predicate)</tt></pre>
-</div>
-</div>
-</div>
-</div>
+</div></div>
+</div></div>
 <div class="listingblock">
 <div class="title">Defining the Sum Series of Integers PEG in Vimpeg</div>
-<div class="content"><div class="highlight"><pre><span class="k">let</span> <span class="k">p</span> <span class="p">=</span> Vimpeg<span class="p">(</span>{<span class="s1">'skip_white'</span>: <span class="m">1</span>}<span class="p">)</span>
+<div class="content"><div class="highlight"><pre><span class="k">let</span> <span class="k">p</span> <span class="p">=</span> Vimpeg<span class="p">(</span>{<span class="s1">&#39;skip_white&#39;</span>: <span class="m">1</span>}<span class="p">)</span>
 
-<span class="k">call</span> <span class="k">p</span>.<span class="k">e</span><span class="p">(</span><span class="s1">'\d\+'</span><span class="p">,</span> {<span class="s1">'id'</span>: <span class="s1">'integer'</span><span class="p">,</span> <span class="s1">'on_match'</span>: <span class="s1">'Integer'</span>}<span class="p">)</span>
-<span class="k">call</span> <span class="k">p</span>.and<span class="p">(</span>[<span class="s1">'integer'</span><span class="p">,</span> <span class="k">p</span>.<span class="k">e</span><span class="p">(</span><span class="s1">'+'</span><span class="p">),</span> <span class="s1">'expression'</span>]<span class="p">,</span> {<span class="s1">'id'</span>: <span class="s1">'sum'</span>}<span class="p">)</span>
-<span class="k">let</span> expression <span class="p">=</span>  <span class="k">p</span>.or<span class="p">(</span>[<span class="s1">'sum'</span><span class="p">,</span> <span class="s1">'integer'</span>]<span class="p">,</span> {<span class="s1">'id'</span>: <span class="s1">'expression'</span>}<span class="p">)</span>
-</pre></div></div>
-</div>
-<div class="paragraph"><p>This example demonstrates several aspects of Vimpeg’s API:</p></div>
+<span class="k">call</span> <span class="k">p</span>.<span class="k">e</span><span class="p">(</span><span class="s1">&#39;\d\+&#39;</span><span class="p">,</span> {<span class="s1">&#39;id&#39;</span>: <span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="s1">&#39;on_match&#39;</span>: <span class="s1">&#39;Integer&#39;</span>}<span class="p">)</span>
+<span class="k">call</span> <span class="k">p</span>.and<span class="p">(</span>[<span class="s1">&#39;integer&#39;</span><span class="p">,</span> <span class="k">p</span>.<span class="k">e</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">),</span> <span class="s1">&#39;expression&#39;</span>]<span class="p">,</span> {<span class="s1">&#39;id&#39;</span>: <span class="s1">&#39;sum&#39;</span>}<span class="p">)</span>
+<span class="k">let</span> expression <span class="p">=</span>  <span class="k">p</span>.or<span class="p">(</span>[<span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;integer&#39;</span>]<span class="p">,</span> {<span class="s1">&#39;id&#39;</span>: <span class="s1">&#39;expression&#39;</span>}<span class="p">)</span>
+</pre></div></div></div>
+<div class="paragraph"><p>This example demonstrates several aspects of Vimpeg&#8217;s API:</p></div>
 <div class="olist arabic"><ol class="arabic">
 <li>
 <p>
@@ -1100,7 +697,7 @@ Elements that have been <em>identfied</em> (using an <tt>'id'</tt> attribute)
 <p>
 Only root-level elements need to be assigned to a Vim variable. In
    this case, the <em>expression</em> element is considered to be a root
-   element — we can directly call on that element now to parse a sum
+   element&#8201;&#8212;&#8201;we can directly call on that element now to parse a sum
    series of integers.
 </p>
 </li>
@@ -1117,18 +714,17 @@ Intermediate processing (for evaluations, reductions, lookups,
 <div class="content"><div class="highlight"><pre><span class="k">function</span><span class="p">!</span> Integer<span class="p">(</span>elems<span class="p">)</span>
   <span class="k">return</span> str2nr<span class="p">(</span>a:elems<span class="p">)</span>
 <span class="k">endfunction</span>
-</pre></div></div>
-</div>
+</pre></div></div></div>
 <div class="admonitionblock">
 <table><tr>
 <td class="icon">
-<img src="./images/icons/note.png" alt="Note">
+<img src="/images/icons/note.png" alt="Note" />
 </td>
-<td class="content">This is not <strong>strictly</strong> necessary in this example — Vim happily
+<td class="content">This is not <strong>strictly</strong> necessary in this example&#8201;&#8212;&#8201;Vim happily
 automatically converts string representations of numbers for us in all
 the right places for this example to work without the extra overhead
 of this callback. It was included in this example only for the purpose
-of showing you that it is possible to do so, and how you’d go about
+of showing you that it is possible to do so, and how you&#8217;d go about
 doing it.</td>
 </tr></table>
 </div>
@@ -1138,14 +734,13 @@ doing it.</td>
 <div class="title">The public API interface:</div>
 <div class="content"><div class="highlight"><pre><span class="k">function</span><span class="p">!</span> Sum<span class="p">(</span>str<span class="p">)</span>
   <span class="k">let</span> <span class="k">res</span> <span class="p">=</span> g:expression.<span class="k">match</span><span class="p">(</span>a:str<span class="p">)</span>
-  <span class="k">if</span> <span class="k">res</span>[<span class="s1">'is_matched'</span>]
-    <span class="k">return</span> SumList<span class="p">(</span><span class="k">res</span>[<span class="s1">'value'</span>]<span class="p">)</span>
+  <span class="k">if</span> <span class="k">res</span>[<span class="s1">&#39;is_matched&#39;</span>]
+    <span class="k">return</span> SumList<span class="p">(</span><span class="k">res</span>[<span class="s1">&#39;value&#39;</span>]<span class="p">)</span>
   <span class="k">else</span>
-    <span class="k">return</span> <span class="k">res</span>[<span class="s1">'errmsg'</span>]
+    <span class="k">return</span> <span class="k">res</span>[<span class="s1">&#39;errmsg&#39;</span>]
   <span class="k">endif</span>
 <span class="k">endfunction</span>
-</pre></div></div>
-</div>
+</pre></div></div></div>
 <div class="paragraph"><p>The <tt>res</tt> object holds a lot of information about what was actually
 parsed (and an <tt>errmsg</tt>  if parsing failed). The <tt><em>value</em></tt> element
 will contain the cumulative result of all the <em>on-match</em> callbacks as
@@ -1155,15 +750,14 @@ the input was being parsed.</p></div>
 <div class="content"><div class="highlight"><pre><span class="k">function</span><span class="p">!</span> SumList<span class="p">(</span>s<span class="p">)</span>
   <span class="k">return</span> type<span class="p">(</span>a:s<span class="p">)</span> <span class="p">==</span> type<span class="p">(</span><span class="m">1</span><span class="p">)</span> ? a:s : a:s[<span class="m">0</span>] <span class="p">+</span> SumList<span class="p">(</span>a:s[<span class="m">2</span>]<span class="p">)</span>
 <span class="k">endfunction</span>
-</pre></div></div>
-</div>
+</pre></div></div></div>
 <div class="paragraph"><p>This function performs the second half of <em>semantic analysis</em>, which
 is transforming the successfully parsed inout into some desired output
 form. In this case, we desire the calculated sum of the series of
 integers. This recursive function performs that task on the
 intermediate parse-tree that Vimpeg built during the parsing phase.</p></div>
 <div class="paragraph"><p>Some might object to including this in <em>semantic analysis</em> and I
-concede it’s probably a bit shabby to do so. Call it what you will…
+concede it&#8217;s probably a bit shabby to do so. Call it what you will&#8230;
 this part of the process is all about taking a now known good
 intermediate structure and transforming it into a desired output
 structure.</p></div>
@@ -1174,12 +768,11 @@ structure.</p></div>
 <h2 id="_using_it">Using it</h2>
 <div class="sectionbody">
 <div class="listingblock">
-<div class="content"><div class="highlight"><pre>echo Sum<span class="p">(</span><span class="s1">'123'</span><span class="p">)</span>
-echo Sum<span class="p">(</span><span class="s1">'1 + 2'</span><span class="p">)</span>
-echo Sum<span class="p">(</span><span class="s1">'1 + 2 + 3'</span><span class="p">)</span>
-echo Sum<span class="p">(</span><span class="s1">'12 + 34 + 56 + 78'</span><span class="p">)</span>
-</pre></div></div>
-</div>
+<div class="content"><div class="highlight"><pre>echo Sum<span class="p">(</span><span class="s1">&#39;123&#39;</span><span class="p">)</span>
+echo Sum<span class="p">(</span><span class="s1">&#39;1 + 2&#39;</span><span class="p">)</span>
+echo Sum<span class="p">(</span><span class="s1">&#39;1 + 2 + 3&#39;</span><span class="p">)</span>
+echo Sum<span class="p">(</span><span class="s1">&#39;12 + 34 + 56 + 78&#39;</span><span class="p">)</span>
+</pre></div></div></div>
 <div class="paragraph"><p>Not terribly exciting, granted, but hopefully this serves as a
 reasonable introduction to the Vimpeg Parser Generator. What can <strong>you</strong>
 do with it? I look forward to seeing weird and wonderful creations and
@@ -1199,262 +792,670 @@ possibilities in Vim now that real parsing tasks are more accessible.</p></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_what_8217_s_next">What’s Next?</h2>
+<h2 id="_what_8217_s_next">What&#8217;s Next?</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>In the next article I will show an example of sugar-coating the VimL
 language to make function declarations both a little easier on the
 eyes and fingers as well as adding two long-missing features from
-VimL — default values in function parameters and inline function
+VimL&#8201;&#8212;&#8201;default values in function parameters and inline function
 declarations, a la <tt> if &lt;condition&gt; | something | endif </tt>.</p></div>
 <div class="paragraph"><p>We <strong>used to</strong> declare these parsing rules in
 <a href="http://en.wikipedia.org/wiki/Ebnf">EBNF</a>, intended for a
 <a href="http://en.wikipedia.org/wiki/Recursive_descent_parser">recursive
-descent parser</a> (or an LL or LALR parser — which we will <strong>not</strong> go
+descent parser</a> (or an LL or LALR parser&#8201;&#8212;&#8201;which we will <strong>not</strong> go
 into here).  (And before you drown vsdi in comments of "They so still
-use that, dude!" — I know. <strong>They</strong> do.)</p></div>
+use that, dude!"&#8201;&#8212;&#8201;I know. <strong>They</strong> do.)</p></div>
 </div>
 </div>
 </div>
-<div id="footnotes"><hr></div>
+<div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1<br>
-Last updated 2012-04-15 23:55:00 PDT
+Version 1.1<br />
+Last updated 2012-05-20 21:04:14 PDT
 </div>
 </div>
 </div>
 <!-- end article -->
+        </div><!-- content -->
+      </div><!-- entry -->
 
-             <h2><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></h2>
-             
+      <div class="entry">
+        <div id="info">
+          <h2><a href="/articles/LongestLine/">The Longest Line</a></h2>
+          
+          <div class="created_at">2012-04-10 11:34:32 -0700</div>
+          
+          <div class="tags"><a href="/genius" rel="tag">genius</a> <a href="/length" rel="tag">length</a> <a href="/vim" rel="tag">vim</a></div>
+        </div><!-- info -->
+        <div id="content">
+          
 <!-- begin article -->
 <div class="article">
 <div id="header">
-<h1>Cut Some Code On The Wild Side</h1>
-<span id="author">Barry Arthur</span><br><span id="revnumber">version 1.1,</span>
-<span id="revdate">May 10, 2011</span>
+<h1>Jump to the Longest Line</h1>
+<span id="author">Barry Arthur</span><br />
+<span id="revnumber">version 0.6,</span>
+<span id="revdate">January 13, 2012</span>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph"><p><em>(apologies to Lou Reed)</em></p></div>
-<div class="paragraph"><p>Thanks to Belinda Allan and Timo Schmiade for assistance with the
-lyrics.</p></div>
-<div class="verseblock">
-<pre class="content"><strong>Jo</strong>hnny came <strong>from</strong> a <strong>small</strong> dev <strong>shop</strong>,
-<strong>Used</strong> only <strong>tools</strong> from <strong>Mi</strong>cro<strong>soft</strong>,
-<strong>Tried</strong> out <strong>Ru</strong>by <strong>on</strong> a <strong>whim</strong>,
-<strong>Tossed</strong> C<strong>#</strong> and <strong>in</strong>stalled <strong>Vim</strong>; he said
-
-Hey, mate, cut some code on the wild side
-Said hey buddy, cut some code on the wild side
-
-<strong>Ti</strong>mo<strong>thy</strong> <strong>on</strong>ly knew <strong>C</strong>
-<strong>Ne</strong>ver <strong>knew</strong> he <strong>di</strong>dn’t need <strong>free()</strong>
-<strong>Leaves</strong> his <strong>ob</strong>jects <strong>for</strong> g<strong>c</strong>
-<strong>Now</strong> that he <strong>codes</strong> <strong>in</strong> Ru<strong>by</strong>; he says
-
-Hey, mate, cut some code on the wild side
-Said hey buddy, cut some code on the wild side
-And Ruby coders can do do do-do-do do
-
-<strong>Sa</strong>rah <strong>thought</strong> <strong>she</strong> was doing <strong>fine</strong>
-<strong>Wri</strong>ting <strong>Ja</strong>va <strong>all</strong> of the <strong>time</strong>
-<strong>Wa</strong>tched a <strong>co</strong>lleague <strong>fi</strong>nish a <strong>task</strong>
-<strong>Did</strong> it in <strong>ru</strong>by <strong>twice</strong> as <strong>fast</strong>; he said
-
-Hey, babe, cut some code on the wild side
-Said hey honey, cut some code on the wild side
-
-<strong>Jim</strong> using <strong>Py</strong>thon <strong>thought</strong> he was <strong>cool</strong>
-But There’s <strong>Only</strong> One <strong>Way</strong> to <strong>use</strong> that <strong>tool</strong>
-<strong>Ru</strong>by likes to <strong>do</strong> it <strong>di</strong>fferent <strong>ways</strong>
-She <strong>lets</strong> you <strong>choose</strong> <strong>how</strong> you <strong>play</strong>; she says
-
-Hey, babe, cut some code on the wild side
-Said hey buddy, cut some code on the wild side
-
-<strong>Phil</strong> built his <strong>sites</strong> in <strong>P</strong>H<strong>P</strong>
-"<strong>Ain’t</strong> gonna <strong>change</strong>, I’m <strong>old</strong>-skool, <strong>me</strong>."
-<strong>Saw</strong> a rails<strong>cast</strong> and <strong>said</strong>, "No <strong>way</strong>!"
-<strong>Now</strong> he uses <strong>rails</strong> to <strong>earn</strong> his <strong>pay</strong>; he says
-
-Hey, mate, cut some code on the wild side
-Said hey buddy, cut some code on the wild side
-And Ruby coders can do do do-do-do do
-
-<strong>Pe</strong>ter <strong>spent</strong> every <strong>night</strong> with <strong>Perl</strong>
-He <strong>thought</strong> of <strong>her</strong> <strong>as</strong> his <strong>girl</strong>
-<strong>Ru</strong>by <strong>caught</strong> his <strong>eye</strong> one <strong>day</strong>
-<strong>Se</strong>duced <strong>him</strong> <strong>to</strong> her <strong>Way</strong>; she said
-
-Hey, babe, cut some code on the wild side
-Said hey honey, cut some code on the wild side
-
-<strong>Old</strong> man <strong>Doug</strong> was a <strong>whiz</strong> at <strong>lisp</strong>
-He <strong>knew</strong> it <strong>like</strong> <strong>no</strong>one’s <strong>biz</strong>
-<strong>Ru</strong>by’s <strong>clo</strong>sures <strong>are</strong> so <strong>fine</strong>
-But <strong>lisp’s</strong> had <strong>that</strong> since <strong>'59</strong>; he said
-
-Hey, pup, cut some code on the wild side
-Said hey sonny, cut some code on the wild side
-
-Been <strong>u</strong>sing <strong>Ru</strong>by for <strong>quite</strong> a <strong>while</strong>
-She <strong>warms</strong> my <strong>heart</strong> and <strong>makes</strong> me <strong>smile</strong>
-But <strong>try</strong> as I <strong>might</strong>, <strong>much</strong> as I’ve <strong>plead</strong>
-<strong>Just</strong> can’t <strong>get</strong> her to <strong>warm</strong> my <strong>bed</strong>; she says
-
-Hey, man, spend some time on the wild side
-Said hey honey, take a girl on a wild ride
-And I just might do do do-do-do do
-
-I just might <strong>do</strong> that..
-
-do do do-do-do do</pre>
-<div class="attribution">
+<div class="paragraph"><p><em>The evolution of a Vimmer</em></p></div>
+<div class="paragraph"><p>Ignoring the prosaic question of &#8220;Why would you ever want to?!&#8221;,
+consider how, in your editor of choice, you would jump to the longest
+line in the file.</p></div>
+<div class="paragraph"><p>Vim provides a <em>lot</em> of jump commands, possibly more so than any
+other editor. We can jump to a matching item; jump between words,
+sentences and paragraphs; jump between classes or #defined regions in
+a source file; jump between files and back and more.
+Jump-to-longest-line, however, is missing. This forces us to craft a
+solution using either existing builtin Vim commands, the ex commands,
+VimL (Vim&#8217;s scripting language), or (more typically) a mixture of all
+three.</p></div>
+<div class="paragraph"><p>We compare three different approaches to solving this problem, each
+one arguably a little further along in the &#8220;evolution&#8221; of a Vim
+user.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_approach_1_normal_and_ex_commands">Approach #1: Normal and Ex Commands</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title"><tt>LongestLine_Ex</tt> - Uses mostly Vim Normal and Ex commands:</div>
+<div class="content"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="k">function</span><span class="p">!</span> LongestLine_Ex<span class="p">()</span>
+    global<span class="sr">/^/</span>substitute<span class="sr">/^/</span>\<span class="p">=</span>len<span class="p">(</span>getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">))</span>.<span class="s1">&#39; &#39;</span>.line<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>.<span class="s1">&#39; &#39;</span>
+    <span class="k">sort</span> <span class="k">n</span>
+    normal<span class="p">!</span> Gwyiwu
+    <span class="k">return</span> @&quot;
+  <span class="k">endfunction</span>
+</pre></div>
+</td></tr></table></div></div>
+<div class="paragraph"><p>This style of solution would be considered by capable Vim users who
+have not yet ventured very far (if at all) into VimL&#8201;&#8212;&#8201;limiting their
+choices to just Normal Mode and Ex commands.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content">Although this solution is presented here in a function (for
+comparative purposes with the other solutions presented later), these
+sorts of solutions are typically hand-typed when needed or, at best,
+briefly stored in macros.</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_walkthrough">Walkthrough</h3>
+<div class="paragraph"><p>The Ex command <tt>global/^/</tt> on line 2 is a way to do something for every line
+of the file. Every line, even a blank one, matches <tt>/^/</tt>. The
+<tt>substitute///</tt> prepends the length of the line and the line number as two
+space-delimited fields to the beginning of the current line (and as that is a
+sub-command of the <tt>global</tt> command, for every line of the file.)</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content">The <tt> <em>'.</em>' </tt> parameter of the <tt>getline()</tt> function means
+<em>current line in the file</em>.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Line 3 uses the Ex command <tt>sort n</tt> which does a numeric sort of the whole
+file&#8201;&#8212;&#8201;putting the longest line at the bottom of the file.</p></div>
+<div class="paragraph"><p>The series of Normal mode commands on line 4 (<tt>Gwyiwu</tt>) look like a
+Gaelic curse, but they really mean:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<tt>G</tt> = Go to the end of the file
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content">the cursor will already be in column 1 due to the preceding commands.</td>
+</tr></table>
+</div>
+</li>
+<li>
+<p>
+<tt>w</tt> = Move forward one word (jumping over the line length)
+</p>
+</li>
+<li>
+<p>
+<tt>yiw</tt> = Yank the next inner word (the line number before sort)
+</p>
+</li>
+<li>
+<p>
+<tt>u</tt> = undo (the sort and line modifications. NOTE: If this were in a
+    macro or the commands were issued manually, you would need two
+    undo commands here.)
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content">the <tt>!</tt> at the end of <tt>normal!</tt> prevents Vim from using user-provided
+normal mode maps when executing the command. This should be the default when
+you write your own VimL - only use the bare <tt>normal</tt> when you <em>need</em> to.</td>
+</tr></table>
+</div>
+</li>
+</ul></div>
+<div class="paragraph"><p><span class="image">
+<img src="/images/gaelic_curse.png" alt="/images/gaelic_curse.png" />
+</span></p></div>
+<div class="paragraph"><p>The end result is that the longest line number is now in the Unnamed
+register (<tt>@"</tt>) and ready to be used in a jump command like:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>:&lt;c-r&gt;"&lt;CR&gt;</tt></pre>
+</div></div>
+<div class="paragraph"><p>If you&#8217;re wondering if this is the messiest solution possible, then
+know that it isn&#8217;t. It&#8217;s close though.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_approach_2_procedural_viml">Approach #2: Procedural VimL</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you&#8217;re a programmer of C (or java/perl/python) descent then this
+will feel like more familiar ground to you. How would a C programmer
+think about the problem at hand?</p></div>
+<div class="paragraph"><p><strong>Input:</strong> &lt;nothing (additional)&gt;</p></div>
+<div class="paragraph"><p><strong>Output:</strong> line number of the longest line in the file</p></div>
+<div class="paragraph"><p><strong>Processing:</strong></p></div>
+<div class="listingblock">
+<div class="content"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="k">for</span> <span class="nb">lines</span> <span class="k">in</span> <span class="k">file</span>
+    <span class="k">if</span> len<span class="p">(</span>line<span class="p">)</span> <span class="p">&gt;</span> max_len
+      max_len <span class="p">=</span> len<span class="p">(</span>line<span class="p">)</span>
+      max_line <span class="p">=</span> current<span class="p">-</span>line<span class="p">-</span><span class="k">number</span>
+    <span class="k">endif</span>
+  <span class="k">endfor</span>
+  <span class="k">return</span> max_line
+</pre></div>
+</td></tr></table></div></div>
+<div class="paragraph"><p>Nice. Simple. Neat. Small. Easy&#8230; <em>Let&#8217;s do it!</em></p></div>
+<div class="listingblock">
+<div class="title"><tt>LongestLine_VimL</tt>&#8201;&#8212;&#8201;Uses all (procedural) VimL:</div>
+<div class="content"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="k">function</span><span class="p">!</span> LongestLine_VimL<span class="p">()</span>
+    <span class="k">let</span> max_len <span class="p">=</span> <span class="m">0</span>
+    <span class="k">let</span> max_line <span class="p">=</span> <span class="m">0</span>
+    <span class="k">let</span> current_line_number <span class="p">=</span> <span class="m">0</span>
+    <span class="k">for</span> line <span class="k">in</span> getline<span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">)</span>
+      <span class="k">let</span> current_line_number <span class="p">+=</span> <span class="m">1</span>
+      <span class="k">if</span> len<span class="p">(</span>line<span class="p">)</span> <span class="p">&gt;</span> max_len
+        <span class="k">let</span> max_len  <span class="p">=</span> len<span class="p">(</span>line<span class="p">)</span>
+        <span class="k">let</span> max_line <span class="p">=</span> current_line_number
+      <span class="k">endif</span>
+    <span class="k">endfor</span>
+    <span class="k">return</span> max_line
+  <span class="k">endfunction</span>
+</pre></div>
+</td></tr></table></div></div>
+<div class="paragraph"><p>That has to be better, right? For one, we&#8217;re <strong>NOT</strong> modifying the
+buffer&#8201;&#8212;&#8201;always a good thing when you don&#8217;t need to. Secondly, we&#8217;re
+not messing with the registers&#8201;&#8212;&#8201;we don&#8217;t lose whatever was in the
+unnamed register like we did with the <tt>LongestLine_Ex</tt> version.</p></div>
+<div class="paragraph"><p>Okay, so it&#8217;s a tad longer in SLOC than the <tt>LongestLine_Ex</tt>
+version, and could still benefit from a drop or two of optimisation
+yet (removing the extra call to len(), for instance)&#8230; but it&#8217;s
+certainly <strong>no worse</strong> than our previous attempt.</p></div>
+<div class="sect2">
+<h3 id="_walkthrough_2">Walkthrough</h3>
+<div class="paragraph"><p>There isn&#8217;t too much to explain here, except:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<tt>len()</tt> returns the length of a string, as the name suggests.
+</p>
+</li>
+<li>
+<p>
+<tt>getline(1, <em>'$</em>')</tt> returns all the lines in the file as a list (the
+  <tt> <em>'$</em>' </tt> parameter means <em>last line in the file</em>.)
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content"><tt>getline(1)</tt> differs from <tt>getline(1,2)</tt>&#8201;&#8212;&#8201;in the first case, a
+string is returned containing the requested line, but in the second case, a
+list of strings is returned. Earlier we used the form <tt>getline( <em>'.</em>' )</tt>
+(where <tt> <em>'.</em>' </tt> means the <em>current line</em>) which is the single argument form
+and therefore returns a string.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>Is this as good as it gets? While we&#8217;re feeling all sort of warm and
+comfortable, gloating in our achievements, the emacsians are laughing
+at us from their REPLs. Fear not; we need not cringe at their taunts
+any longer. We now have powers in VimL equal to the task and packed
+with the sort of expressiveness that will raise an eyebrow of even the
+most ardent Functional Programmer.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_approach_3_functional_ish_viml">Approach #3: Functional(ish) VimL</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Sometimes as (procedurally indoctinated) programmers we think too much
+in the <em>How</em> of things rather than seeing the <em>What</em>. We&#8217;re too close
+to the trees to see the forest, or in coderspeak, too close to the code
+to see the abstractions. When we start thinking about a problem like
+this our problem solving hammer starts banging away at a solution,
+cranking out gobs of loops and conditions and assignments. Before
+we&#8217;ve even begun to think of the bigger picture, our minds are fussing
+over the minutia&#8201;&#8212;&#8201;&#8220;should I use a while loop here or a for loop?&#8221;</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/procedural_hammer.png" alt="/images/procedural_hammer.png" />
+</div>
+</div>
+<div class="paragraph"><p>The cure for this begins with the mantra: <em>Don&#8217;t Use Loops!</em></p></div>
+<div class="paragraph"><p>Ok, so that might be a <em>bit</em> strong, but it might be just what&#8217;s
+necessary to break the habit you&#8217;re in of reaching for <em>How</em> pieces
+before you&#8217;ve fully digested the <em>What</em>.</p></div>
+<div class="paragraph"><p>This philosophy is succinctly reduced to the pithy aphorism that, &#8220;if
+you have a dog you shouldn&#8217;t do your own barking&#8221;. If you have lists
+and functions that process those lists&#8230; don&#8217;t write your own loop
+code.</p></div>
+<div class="paragraph"><p>Lispers and other Functional thinkers approach problems in a different
+way. They don&#8217;t worry about how to iterate the elements of a list, or
+oftentimes <em>that</em> they&#8217;re even <em>iterating</em> it. They think about the
+deeper abstractions of manipulating and shaping the data from source
+to target. They do this by thinking of functions to apply to the
+elements of lists. Languages that support this type of programming
+(thinking) provide numerous functions that can operate on whole lists
+and the elements of lists. Functions to apply another function to each
+element, collecting and returning the resulting elements in a new
+list; functions to remove elements from a list that match (or don&#8217;t)
+an expression; functions to sort lists (using definable comparators if
+necessary); functions to reverse lists; functions to split strings
+into lists and join lists into strings, and more&#8230;</p></div>
+<div class="paragraph"><p>Clearly there are times when you <em>need</em> to write loops&#8201;&#8212;&#8201;the
+point is, be on the lookout for times when you <em>shouldn&#8217;t</em>. Look for
+patterns that walk and talk like a list. Start asking yourself, &#8220;Can
+I solve this through a series of operations on a list?&#8221; and &#8220;If this
+data were in a list, could I join(sort(map(filter(split(&#8230;))))) the
+sucker to get what I want?&#8221;</p></div>
+<div class="paragraph"><p>Eventually, you might even start thinking in S-Expressions all the
+time&#8230;</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/frank_thinks_in_sexps.png" alt="/images/frank_thinks_in_sexps.png" />
+</div>
+</div>
+<div class="paragraph"><p>The petulant proceduralist within you might be grumbling now that all
+we&#8217;ve done is hide the looping behind a layer of functions. &#8220;We could
+do that in [our procedural] language too! In a library!&#8221; It&#8217;s not
+that we&#8217;re merely hding the toys under our bed here. The point is that
+<strong>someone</strong> would still have to write that (procedural) library and all
+the messy looping therein. In Functionally Friendly languages, this
+goodness is already baked right in, ready for your lists from the
+get-go.</p></div>
+<div class="paragraph"><p>Here&#8217;s a functional approach to our longest line problem:</p></div>
+<div class="listingblock">
+<div class="title"><tt>LongestLine_newVimL</tt>&#8201;&#8212;&#8201;Uses newVimL&#8201;&#8212;&#8201;it&#8217;s all about lists, baby:</div>
+<div class="content"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">function</span><span class="p">!</span> LongestLine_newVimL<span class="p">()</span>
+  <span class="k">let</span> <span class="nb">lines</span> <span class="p">=</span> map<span class="p">(</span>getline<span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">),</span> <span class="s1">&#39;len(v:val)&#39;</span><span class="p">)</span>
+  <span class="k">return</span> index<span class="p">(</span><span class="nb">lines</span><span class="p">,</span> max<span class="p">(</span><span class="nb">lines</span><span class="p">))+</span><span class="m">1</span>
+<span class="k">endfunction</span>
+</pre></div>
+</td></tr></table></div></div>
+<div class="sect2">
+<h3 id="_walkthrough_3">Walkthrough</h3>
+<div class="paragraph"><p>Don&#8217;t be deceived by the small SLOC count. This version packs some
+conceptual punch. Remembering that we&#8217;re taking a lisp-y list approach
+in this version, let&#8217;s first talk about <tt>map()</tt>.</p></div>
+<div class="paragraph"><p>Anyone familiar with <tt>lisp</tt> or <em>any</em> of the modern hip languages
+(perl, python and ruby just to name a few) will know that <tt>map()</tt>
+applies a function to every element of a list and then returns each
+so-modified element in a new list.</p></div>
+<div class="exampleblock">
+<div class="title">Using <tt>map</tt> in Python: Collecting line lengths for a file:</div>
+<div class="content">
+<div class="listingblock">
+<div class="content"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre>  <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;somefile.txt&quot;</span><span class="p">)</span>
+  <span class="n">lines</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="nb">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+</pre></div>
+</td></tr></table></div></div>
+<div class="paragraph"><p>The <tt>lines</tt> list will now contain not the actual text lines of
+<tt>somefile.txt</tt>, but the corresponding line lengths for each line in
+that file.</p></div>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content">
+<div class="paragraph"><p>Most languages, like python, perl and even lisp use the following
+signature for the <tt>map()</tt> function:</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span class="nb">map</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+</pre></div></div></div>
+<div class="paragraph"><p>But in VimL it is the reverse:</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre>map<span class="p">(</span>{expr}<span class="p">,</span> {string}<span class="p">)</span>
+</pre></div></div></div>
+<div class="paragraph"><p>Where:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+{expr} is a list (or a dictionary - but we won&#8217;t worry about that
+    here), and
+</p>
+</li>
+<li>
+<p>
+{string} is <em>evaluated</em> for each element of {expr}
+</p>
+</li>
+</ul></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content"><tt>v:val</tt> is Vim&#8217;s way of referring to the current element of
+the list within the evaluated string.</td>
+</tr></table>
+</div>
+</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>In <tt>LongestLine_newVimL</tt>, the function being applied is <tt>len()</tt>.
+So, all said, line 1 creates a list of line lengths for each line in
+the file. The resulting <tt>lines</tt> list will have as many entries as
+there are lines in the file, each entry corresponding to that line&#8217;s
+length (exactly as the python example earlier did).</p></div>
+<div class="paragraph"><p>Which brings us to the second and final line:</p></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span class="k">return</span> index<span class="p">(</span><span class="nb">lines</span><span class="p">,</span> max<span class="p">(</span><span class="nb">lines</span><span class="p">))+</span><span class="m">1</span>
+</pre></div></div></div>
+<div class="paragraph"><p>This might take some mind bending to see what&#8217;s happening, so we&#8217;ll
+break it down:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+the <tt>max(lines)</tt> function will return the maximum (longest) line
+  length from the <tt>lines</tt> list. Great. That&#8217;s a number, but not
+  <em>the</em> number we want. We don&#8217;t want to know <em>how long</em> the longest
+  line is&#8230; we want to know on which line that longest line is. That
+  is, we want the <em>line number</em>.
+</p>
+</li>
+<li>
+<p>
+the <tt>index(lines, &lt;number&gt;)</tt> function returns the position within the
+  <tt>lines</tt> list that contains &lt;number&gt; (remembering here that
+  &lt;number&gt; is the length of the longest line as returned by
+  <tt>max()</tt>.)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Recall that the <tt>lines</tt> list contains an <em>ordered</em> (in the <em>same</em>
+order as the original file) list of line lengths. Line 1&#8217;s length is
+in position 0 (VimL uses zero-based lists, as you would expect), and
+line 2&#8217;s length is in position 1, etc. The longest line is in position
+<tt>index(lines, max(lines)) +1 </tt> (the <tt> +1 </tt> being necessary to allow
+for zero-based indexing.)</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="/images/icons/note.png" alt="Note" />
+</td>
+<td class="content">Of course, if there is more than one maximally long line in the
+file then this function (and the <tt>LongestLine_VimL</tt> version) will
+return the (original line-order-ly) first one. Due to the use of
+<tt>:sort</tt>, the <tt>LongestLine_Ex</tt> version will return the <em>last</em> such
+line.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>So, that&#8217;s newVimL. You might be wondering why I call it newVimL. It&#8217;s
+inspired by my newfound interest in the newLisp language
+(<a href="http://www.newlisp.org">http://www.newlisp.org</a>). There is a (sickening to the initiated)
+adage that &#8220;Learning lisp will forever change your thinking as a
+programmer, even if you never <strong>use</strong> lisp in anger.&#8221; (Some might argue
+that they <strong>only</strong> use lisp in anger.) I&#8217;m here to say: yep. Worked for
+me. After learning the mind-bending (there is no spoon, after all)
+Ways of Lisp&#8230; My approach to VimL changed dramatically. &#8220;What?! I
+have to loop?! No! Where&#8217;s my map()?! Oh! VimL <strong>has</strong> map()?! And
+filter()! OMFG!&#8221; &lt;enlightenment/&gt;</p></div>
+<div class="paragraph"><div class="title">Credit where due&#8230;</div><p>Just over a year ago, while hanging out on <tt>#vim</tt>, as all the cool
+kids do, someone asked for something and I sprang into action. &#8220;I can
+do this!&#8221; I said hubrisly. I crafted a solution in my awkward
+procedural VimL and pastie&#8217;d it to the channel. It worked. I was a god
+among vimmers. The angelic choir hymned. Life was good&#8230; Until
+godlygeek crushed me with a one-liner of near-indecipherable newVimL.</p></div>
+<div class="paragraph"><p>It had join and split and map and filter all wrapped mischievously,
+one around the other, performing some arcane dance I, at that time,
+couldn&#8217;t fathom. It worked though. Whatever he&#8217;d conjured, it actually
+worked. It looked to me like&#8230; fucking magic.</p></div>
+<div class="paragraph"><p>This was all the motivation I needed. A good and thorough pantsing
+often does that, happily. And that&#8217;s the story of how I started to
+drag my consciousness up to the level of Lisp. I&#8217;m not there yet, by a
+long shot. But I&#8217;m far enough along now to start to know how much I
+<em>really</em> don&#8217;t know, and to be able to help others find the path too.</p></div>
+<div class="paragraph"><div class="title">Brave newVimL World</div><p>So&#8230; welcome to the brave newVimL world. If you find a new and exotic
+flower along the path, share it with your fellow travellers. If you
+find a thorn, share that too - who are we, after all, to decide which
+one holds more value?</p></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div id="footnotes"><hr></div>
+<div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.1<br>
-Last updated 2012-04-15 23:54:56 PDT
+Version 0.6<br />
+Last updated 2012-05-20 21:04:09 PDT
 </div>
 </div>
 </div>
 <!-- end article -->
+        </div><!-- content -->
+      </div><!-- entry -->
 
-             <h2><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></h2>
-             <h1>The Vim Learning Curve</h1>
+      <div class="entry">
+        <div id="info">
+          <h2><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></h2>
+          
+          <div class="created_at">2012-04-10 11:34:32 -0700</div>
+          
+          <div class="tags"><a href="/genius" rel="tag">genius</a> <a href="/learn" rel="tag">learn</a> <a href="/vim" rel="tag">vim</a></div>
+        </div><!-- info -->
+        <div id="content">
+          <h1>The Vim Learning&nbsp;Curve</h1>
 
 <p><span class="caps">ARB</span>
-v<span class="caps">1.0</span>, September 17, 2011</p>
+v<span class="caps">1.0</span>, September 17,&nbsp;2011</p>
 
-<p>The more people recognize what level they’re at and what the
-characteristics are at that level, the better they are able to
-understand each other and where they’re coming from.</p>
+<p>The more people recognize what level they&#8217;re at and what&nbsp;the
+characteristics are at that level, the better they are able&nbsp;to
+understand each other and where they&#8217;re coming&nbsp;from.</p>
 
 <h2>Facets</h2>
 
 <ul>
-<li>Modal editing</li>
-<li>Normal Mode commands</li>
-<li>Ex Commands</li>
-<li>Creating Maps <span class="amp">&amp;</span> Commands</li>
+<li>Modal&nbsp;editing</li>
+<li>Normal Mode&nbsp;commands</li>
+<li>Ex&nbsp;Commands</li>
+<li>Creating Maps <span class="amp">&amp;</span>&nbsp;Commands</li>
 <li>VimL</li>
-<li>Text objects</li>
+<li>Text&nbsp;objects</li>
 <li>usr_41</li>
 <li>macros</li>
-</ul><h2>Novice</h2>
-
-<ul>
-<li>Stops crying about modal editing</li>
-<li>Went through vimtutor</li>
-<li>Little to no experience with creating maps and commands</li>
-<li>No macro skills</li>
-<li>No VimL skills</li>
-<li>Doesn’t have a .vimrc, or has copied one and doesn’t know some or
-any of the commands therein</li>
-</ul><h2>Advanced Beginner</h2>
-
-<ul>
-<li>Able to use Vim’s normal and ex mode commands efficiently</li>
-<li>Totally comfortable and conversant with Text Objects</li>
-<li>Creates small macros, but infrequently</li>
-<li>Little to no experince using VimL</li>
-<li>Starting to create maps and commands</li>
-<li>Knows of .vimrc’s existence and is starting to play with settings</li>
-</ul><h2>Competent</h2>
-
-<ul>
-<li>Able to find help using Vim’s built-in documentation or from other
-sources</li>
-<li>Able to ask pertinent questions of Proficient and Expert users</li>
-<li>Able to help Novice and Advanced Beginner users</li>
-<li>Explores Vim and experiments with new features and combinations to
-extend understanding.</li>
-<li>Creates macros as and when needed</li>
-<li>Uses VimL when needed, but needs to refer to documentation
-frequently</li>
-<li>Well versed in Vim regular expressions</li>
-<li>Knows about usr_41 and tries to adhere to the guidelines</li>
-</ul><h2>Proficient</h2>
-
-<ul>
-<li>Knows the right type of solution for a given problem and adheres to
-Best Practice approaches as outlined in usr_41 and other
-authoritative sources</li>
-<li>Able to quickly locate appropriate documentation using Vim’s :help
-system</li>
-<li>Creates and publishes new plugins for the Vim community</li>
-<li>Supports the community through writing blog posts, participating on <code>#vim</code>,
-subscribing to Vim mailing lists, etc.</li>
-</ul><h2>Expert</h2>
-
-<ul>
-<li>Sets Best Practice guidelines for others to follow</li>
-<li>Able to distill expert knowledge into lessons for others to follow
-(lessons that Proficient users understand completely and Competent
-users are able to study/learn from)</li>
 </ul>
-    </div>
+
+
+<h2>Novice</h2>
+
+<ul>
+<li>Stops crying about modal&nbsp;editing</li>
+<li>Went through&nbsp;vimtutor</li>
+<li>Little to no experience with creating maps and&nbsp;commands</li>
+<li>No macro&nbsp;skills</li>
+<li>No VimL&nbsp;skills</li>
+<li>Doesn&#8217;t have a .vimrc, or has copied one and doesn&#8217;t know some&nbsp;or
+any of the commands&nbsp;therein</li>
+</ul>
+
+
+<h2>Advanced&nbsp;Beginner</h2>
+
+<ul>
+<li>Able to use Vim&#8217;s normal and ex mode commands&nbsp;efficiently</li>
+<li>Totally comfortable and conversant with Text&nbsp;Objects</li>
+<li>Creates small macros, but&nbsp;infrequently</li>
+<li>Little to no experince using&nbsp;VimL</li>
+<li>Starting to create maps and&nbsp;commands</li>
+<li>Knows of .vimrc&#8217;s existence and is starting to play with&nbsp;settings</li>
+</ul>
+
+
+<h2>Competent</h2>
+
+<ul>
+<li>Able to find help using Vim&#8217;s built-in documentation or from&nbsp;other
+sources</li>
+<li>Able to ask pertinent questions of Proficient and Expert&nbsp;users</li>
+<li>Able to help Novice and Advanced Beginner&nbsp;users</li>
+<li>Explores Vim and experiments with new features and combinations&nbsp;to
+extend&nbsp;understanding.</li>
+<li>Creates macros as and when&nbsp;needed</li>
+<li>Uses VimL when needed, but needs to refer to&nbsp;documentation
+frequently</li>
+<li>Well versed in Vim regular&nbsp;expressions</li>
+<li>Knows about usr_41 and tries to adhere to the&nbsp;guidelines</li>
+</ul>
+
+
+<h2>Proficient</h2>
+
+<ul>
+<li>Knows the right type of solution for a given problem and adheres&nbsp;to
+Best Practice approaches as outlined in usr_41 and&nbsp;other
+authoritative&nbsp;sources</li>
+<li>Able to quickly locate appropriate documentation using Vim&#8217;s&nbsp;:help
+system</li>
+<li>Creates and publishes new plugins for the Vim&nbsp;community</li>
+<li>Supports the community through writing blog posts, participating on&nbsp;<code>#vim</code>,
+subscribing to Vim mailing lists,&nbsp;etc.</li>
+</ul>
+
+
+<h2>Expert</h2>
+
+<ul>
+<li>Sets Best Practice guidelines for others to&nbsp;follow</li>
+<li>Able to distill expert knowledge into lessons for others to&nbsp;follow
+(lessons that Proficient users understand completely and&nbsp;Competent
+users are able to study/learn&nbsp;from)</li>
+</ul>
+
+
+        </div><!-- content -->
+      </div><!-- entry -->
+
+    </div><!-- main -->
+
     <div id="sidebar">
-        <h2><a href="/">Home</a></h2>
-        
+      <h2><a href="/">Home</a></h2>
+      
+      <ul class='tag_group'>
         <h3><a href="/advanced" rel="tag">advanced</a></h3>
-                <ul>
-                <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
-                </ul>
-        
+        <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+      </ul><!-- tag_group -->
+      
+      <ul class='tag_group'>
         <h3><a href="/genius" rel="tag">genius</a></h3>
-                <ul>
-                <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
-                </ul>
-        
+        <li><a href="/articles/LongestLine/">The Longest Line</a></li>
+        <li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+      </ul><!-- tag_group -->
+      
+      <ul class='tag_group'>
         <h3><a href="/learn" rel="tag">learn</a></h3>
-                <ul>
-                <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
-                </ul>
-        
+        <li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li>
+        <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+        <li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+      </ul><!-- tag_group -->
+      
+      <ul class='tag_group'>
         <h3><a href="/length" rel="tag">length</a></h3>
-                <ul>
-                <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li>
-                </ul>
-        
+        <li><a href="/articles/LongestLine/">The Longest Line</a></li>
+      </ul><!-- tag_group -->
+      
+      <ul class='tag_group'>
         <h3><a href="/test" rel="tag">test</a></h3>
-                <ul>
-                <li><a href="/about/">About</a></li>
-                </ul>
-        
+        <li><a href="/about/">About</a></li>
+      </ul><!-- tag_group -->
+      
+      <ul class='tag_group'>
         <h3><a href="/vim" rel="tag">vim</a></h3>
-                <ul>
-                <li><a href="/about/">About</a></li><li><a href="/LongestLine/LongestLine/">The Longest Line</a></li><li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li><li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li><li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
-                </ul>
-        
-      <h2>nanoc</h2>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li>
+        <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+        <li><a href="/articles/LongestLine/">The Longest Line</a></li>
+        <li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+      </ul><!-- tag_group -->
+      
       <ul>
+        <h2>nanoc</h2>
         <li><a href="http://nanoc.stoneship.org/docs/">Documentation</a></li>
         <li><a href="http://nanoc.stoneship.org/docs/3-getting-started/">Getting Started</a></li>
         <li><a href="http://groups.google.com/group/nanoc/">Discussion Group</a></li>
         <li><a href="irc://chat.freenode.net/#nanoc">IRC Channel</a></li>
         <li><a href="http://projects.stoneship.org/trac/nanoc/">Wiki</a></li>
       </ul>
-    </div>
+    </div><!-- sidebar -->
 
     <div id="sidebar2">
-      <ul><h4>2012</h4>
-        
-             <li><a href="/about/">About</a></li>
-             <li><a href="/LongestLine/LongestLine/">The Longest Line</a></li>
-             <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
-             <li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li>
-             <li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
-       </ul>
-    </div>
-
+      <ul class='year_group'>
+        <h4>2012</h4>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/CutSomeCode/CutSomeCodeOnTheWildSide/">Cut Some Code On The Wild Side</a></li>
+        <li><a href="/PegParserGenerator/PegParserGeneratorIntro/">Peg Parser Generator</a></li>
+        <li><a href="/articles/LongestLine/">The Longest Line</a></li>
+        <li><a href="/VimLearningCurve/VimLearningCurve/">Vim Learning Curve</a></li>
+      </ul><!-- year_group -->
+    </div><!-- sidebar2 -->
 
   </body>
 </html>
+
