@@ -20,6 +20,19 @@ def file_for(item)
   end
 end
 
+def tags
+  return @alltags if @alltags
+  tags = []
+  @items.each do |item|
+    if item[:title].to_s.length > 0 && item.identifier != "/"
+      unless item[:tags].nil?
+        tags |= item[:tags]
+      end
+    end
+  end
+  @alltags = tags
+end
+
 # Write item with identifier /foo/ to /foo/index.html
 def article_name(item)
   base = strip_processing_types_from(item.identifier)

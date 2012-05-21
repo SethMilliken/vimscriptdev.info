@@ -1,19 +1,10 @@
     <div id="sidebar">
       <h2><a href="/">Home</a></h2>
       <%
-      tags = []
-      @items.each do |item|
-           if item[:title].to_s.length > 0 && item.identifier != "/"
-           unless item[:tags].nil?
-             tags |= item[:tags]
-           end
-      %><%
-      end
-      end %><%
         tags.sort.each do |tag|
       %>
       <ul class='tag_group'>
-        <h3><%= link_for_tag(tag, "/") %></h3><%
+        <h3><%= link_for_tag(tag, "/tag/") %></h3><%
               articles = sorted_articles & items_with_tag(tag)
               articles.each do |item| %>
         <li><a href="<%= item.identifier %>"><%= item[:title] %></a></li><% end %>

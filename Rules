@@ -13,12 +13,28 @@
 #   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
 #   because “*” matches zero or more characters.
 
+## Preprocessor Phase
+
+preprocess do
+  tags.each do |tag|
+    @items << Nanoc::Item.new(%[ <%= render 'tag', :tagname => "#{tag}" %> ], { :title => "#{tag}"}, "/tag/#{tag}" )
+  end
+
+  @items << Nanoc::Item.new("", { :title => "Home"}, "/" )
+end
+
 ## Compilation Phase
 
 compile '/' do
   printf "processing: %10s item %s\n", item[:extension], item.identifier
   filter :erb
   layout 'main'
+end
+
+compile '/tag/*' do
+  filter :erb
+  snapshot :content
+  layout 'article'
 end
 
 compile '*' do
@@ -47,6 +63,14 @@ compile '*' do
 end
 
 ## Routing Phase
+
+route '/' do
+  '/index.html'
+end
+
+route '/tag/*' do
+  item.identifier + 'index.html'
+end
 
 route '/stylesheet/' do
   '/style.css'
