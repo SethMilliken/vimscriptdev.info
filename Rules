@@ -17,7 +17,7 @@
 
 preprocess do
   tags.each do |tag|
-    @items << Nanoc::Item.new(%[ <%= render 'tag', :tagname => "#{tag}" %> ], { :title => "#{tag}"}, "/tag/#{tag}" )
+    @items << Nanoc::Item.new(%[ <%= render '_tag', :tagname => "#{tag}" %> ], { :title => "#{tag}"}, "/tag/#{tag}" )
   end
 
   @items << Nanoc::Item.new("", { :title => "Home"}, "/" )
