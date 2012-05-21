@@ -5,6 +5,7 @@ source :rubygems
 gem "adsf"
 gem "haml"
 gem "less"
+gem "mime-types"
 gem "nanoc"
 gem "nokogiri", "~> 1.5.2"
 gem "rdiscount"
