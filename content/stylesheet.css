@@ -69,6 +69,14 @@ a:hover {
   list-style-type: square;
 }
 
+#info {
+  margin-bottom: 1.5em;
+}
+
+#entry {
+  margin-bottom: 1.5em;
+}
+
 #sidebar2 {
   position: absolute;
 
