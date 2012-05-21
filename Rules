@@ -15,26 +15,34 @@
 
 ## Compilation Phase
 
-compile "//stylesheet/|/syntax//" do nothing; end
-compile '/asciidoc/' do nothing; end
-compile '/ad/' do nothing; end
+compile '/' do
+  printf "processing: %10s item %s\n", item[:extension], item.identifier
+  filter :erb
+  layout 'main'
+end
 
-# Default
 compile '*' do
   unless item.binary?
+    printf "processing: %10s item %s\n", item[:extension], item.identifier
     case item[:extension]
+    when /css|js/
+      layout 'none'
     when /markdown|md|wiki/
       filter :rdiscount
       filter :typogruby
+      snapshot :content
+      layout 'article'
     when "asciidoc"
       filter :asciidoc
       filter :cleanup
+      snapshot :content
+      layout 'article'
     else
       filter :erb
-      filter :colorize_syntax,
-        :default_colorizer => :pygmentize
+      filter :colorize_syntax, :default_colorizer => :pygmentize
+      snapshot :content
+      layout 'article'
     end
-    layout 'default'
   end
 end
 
