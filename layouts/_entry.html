@@ -5,7 +5,7 @@
           <% unless item[:created_at].nil? %>
           <div class="created_at"><%= item[:created_at] %></div>
           <% end %>
-          <div class="tags"><%= tags_for(item, :base_url => '/', :separator => ' ', :none_text => '') %></div>
+          <div class="tags"><%= tags_for(item, :base_url => '/tag/', :separator => ' ', :none_text => '') %></div>
         </div><!-- info -->
         <div id="content">
           <%= item.compiled_content(:snapshot => :content) %>
