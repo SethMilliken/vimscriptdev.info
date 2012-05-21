@@ -2,12 +2,12 @@
 # before nanoc starts compiling.
 
 # Standard Nanoc Helpers
-include Nanoc::Helpers::Tagging
 include Nanoc::Helpers::Blogging
 include Nanoc::Helpers::Breadcrumbs
+include Nanoc::Helpers::Capturing
 include Nanoc::Helpers::LinkTo
 include Nanoc::Helpers::Rendering
-include Nanoc::Helpers::Capturing
+include Nanoc::Helpers::Tagging
 
 PROCESSING_TYPES=["asciidoc", "markdown"]
 
