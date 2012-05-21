@@ -3,9 +3,7 @@ Introducing Vimpeg -- A PEG Parser Generator for Vim
 Barry Arthur
 v1.1, October 10, 2011
 
-image:/PegParserGenerator/vimpeg.png[]
-
-:pygments:
+image:/images/vimpeg_banner.png[]
 
 What is Vimpeg?
 ---------------
@@ -277,7 +275,7 @@ higher-level purposes.
 There are five pieces to Vimpeg
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-image:content/PegParserGenerator/vimpeg_puzzle.png[]
+image:/images/vimpeg_puzzle.png[]
 
 1. The Vimpeg library (plugin)
 2. A PEG Grammar (provider-side)
@@ -456,4 +454,4 @@ http://en.wikipedia.org/wiki/Ebnf[EBNF], intended for a
 http://en.wikipedia.org/wiki/Recursive_descent_parser[recursive
 descent parser] (or an LL or LALR parser -- which we will *not* go
 into here).  (And before you drown vsdi in comments of "They so still
-use that, dude!" -- I know. *They* do.) 
+use that, dude!" -- I know. *They* do.)
