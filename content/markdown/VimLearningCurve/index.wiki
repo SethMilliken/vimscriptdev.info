@@ -36,7 +36,7 @@ Advanced Beginner
 * Able to use Vim's normal and ex mode commands efficiently
 * Totally comfortable and conversant with Text Objects
 * Creates small macros, but infrequently
-* Little to no experince using VimL
+* Little to no experience using VimL
 * Starting to create maps and commands
 * Knows of .vimrc's existence and is starting to play with settings
 
