@@ -1,0 +1,45 @@
+:if
+===
+
+_Apologies to JRK_
+
+[verse]
+____
+If you can write your code when all about you
+Are wasting time and blaming it on tools;
+If you can :find your &path when work you do,
+And not get caught in GUIs like the other fools;
+If you can move without thought to motion,
+Or address your :ex with the love afforded :normal;
+Or ask for :help and consider your :options,
+And yet don't act on #vim too formal;
+
+If you can think in regex and yet know when to pass;
+If you can record your steps and play them back on wont;
+If you can can meet with :registers and :marks
+And pull from them the things you want;
+If you can cast your charms without the mouse debased,
+Poised atop the keyboard with a graceful whirl;
+Or yank and put betwixt the 'paste;
+And carve your objects without a purl;
+
+If you can :map your keys to do your bidding
+And :command that actions be taken
+And write a script when it is fitting
+And release it as a plugin unshaken;
+If you can :set your favourite options
+To change :au the event that has come
+And so code on with new &filetype adoptions
+Allowing not an end to the awesome fun.
+
+If you can look upon your :buffers list
+And :b not bound by impartial mates;
+If neither quickfix nor preview you miss
+And with your :compiler your projects :make;
+If you can :split the window beneath you
+Housed in :tabs each their own glimmer -
+Yours is the Edit and everything u,
+And - which is more - you'll be a Vimmer!
+____
+
+P.S. Everything bolded is a Vim :help topic.
