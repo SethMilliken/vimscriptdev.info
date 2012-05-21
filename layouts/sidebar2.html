@@ -1,21 +1,17 @@
     <div id="sidebar2">
-      <ul><%
-                current_year = ""
-                testing = sorted_articles
-
-                testing.each do |item|
-                year = item[:created_at].to_s[/..../]
-                if current_year.start_with? year
-                  show_year = nil
-                else
-                  current_year = year
-                  show_year = true
-                end
-                if show_year
-        %><h4><%= current_year %></h4>
-        <% end %>
-             <li><a href="<%= item.identifier %>"><%= item[:title] %></a></li><%
-                end
-                %>
-       </ul>
-    </div>
+      <ul class='year_group'><%
+          current_year = ""
+  
+          sorted_articles.each do |item|
+            year = item[:created_at].to_s[/..../]
+            if current_year.start_with? year
+              show_year = nil
+            else
+              current_year = year
+              show_year = true
+            end
+            if show_year %>
+        <h4><%= current_year %></h4><% end %>
+        <li><a href="<%= item.identifier %>"><%= item[:title] %></a></li><% end %>
+      </ul><!-- year_group -->
+    </div><!-- sidebar2 -->

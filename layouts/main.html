@@ -1,0 +1,5 @@
+<%= render '_header', :title => 'Home' %><%
+sorted_articles.each do |item|
+  unless item[:title].to_s.length == 0 %><%= render '_entry', :item => item %><% end
+end
+%><%= FOOTER ||= render '_footer' %>

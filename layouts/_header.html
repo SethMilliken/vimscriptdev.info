@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <% title = @title || @item[:title] %>
+    <title>vimscriptdev.info - <%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+    <!-- <link rel="stylesheet" type="text/css" href="/asciidoc.css" media="screen"> -->
+    <link rel="stylesheet" type="text/css" href="/syntax.css" media="screen">
+    <script type="text/javascript" src="/asciidoc.js"></script>
+    <meta name="generator" content="nanoc 3.3.2">
+  </head>
+  <body>
+<%= TOPNAV  ||= render '_topnav' %>
+    <div id="main">

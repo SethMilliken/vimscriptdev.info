@@ -1,0 +1,13 @@
+<% unless item.identifier == '/' %>
+      <div class="entry">
+        <div id="info">
+          <h2><a href="<%= item.identifier %>"><%= item[:title] %></a></h2>
+          <% unless item[:created_at].nil? %>
+          <div class="created_at"><%= item[:created_at] %></div>
+          <% end %>
+          <div class="tags"><%= tags_for(item, :base_url => '/', :separator => ' ', :none_text => '') %></div>
+        </div><!-- info -->
+        <div id="content">
+          <%= item.compiled_content(:snapshot => :content) %>
+        </div><!-- content -->
+      </div><!-- entry --><% end %>
